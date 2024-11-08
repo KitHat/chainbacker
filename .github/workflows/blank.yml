@@ -37,7 +37,8 @@ jobs:
           node-version: 20
           cache: 'npm'
       - name: Move to subdirect and install dependencies
-        run: cd chainbacker-frontend npm i
+        run: cd chainbacker-frontend; 
+             npm i;
       - name: Build
         run: npm run build
       - name: Setup Pages
