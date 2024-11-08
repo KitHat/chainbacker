@@ -14,7 +14,11 @@
         <p class="text-2xl font-bold text-success-100">{{  PROJECT_MOCK.totalSum }}</p>
       </div>
     </section>
-    <ProgressBar class="mb-4" style="height: 10px" :value="progress"><span class="hidden">{{ value }}</span></ProgressBar>
+    <ProgressBar class="mb-4" style="height: 10px" :value="progress">
+      <template #default="{ value }">
+        <span class="hidden">{{ value }}</span>
+      </template>
+    </ProgressBar>
     <section class="mb-5 flex justify-between">
       <Chip :label="PROJECT_MOCK.type"></Chip>
       <div class="flex items-center gap-1">
