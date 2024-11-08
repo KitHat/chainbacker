@@ -1,23 +1,14 @@
-<script setup lang="ts">
-</script>
-
 <template>
-  <div class="welcome-screen">
-    <h1>Welcome chain backer</h1>
-    <img class="welcome-screen__image" src="./assets/images.jpeg" alt="">
+  <div class="pb-[120px] mt-[20px] pl-[28px] pr-[28px]">
+    <router-view />
   </div>
+  <Tabbar class="fixed bottom-[20px]" />
 </template>
 
-<style scoped>
-.welcome-screen {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-}
+<script setup lang="ts">
+import Tabbar from "@/components/Tabbar.vue";
+</script>
 
-.welcome-screen__image {
-  width: 300px;
-  height: 300px;
-}
+<style scoped>
+
 </style>
