@@ -11,9 +11,7 @@
     </template>
     <template #footer>
       <ProgressBar class="mb-4" style="height: 10px" :value="meterValue">
-        <template #default="{ value }">
-          <span class="hidden">{{ value }}</span>
-        </template>
+        <span class="hidden">{{ meterValue ?? 0 }}</span>
       </ProgressBar>
       <div class="flex gap-4 items-center">
         <Chip :label="type" />
@@ -25,7 +23,6 @@
 
 <script setup lang="ts">
 import Card from "primevue/card";
-import MeterGroup from 'primevue/metergroup';
 
 import { computed } from "vue";
 import Chip from "primevue/chip";

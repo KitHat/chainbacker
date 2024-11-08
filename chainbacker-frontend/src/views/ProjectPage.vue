@@ -15,9 +15,7 @@
       </div>
     </section>
     <ProgressBar class="mb-4" style="height: 10px" :value="progress">
-      <template #default="{ value }">
-        <span class="hidden">{{ value }}</span>
-      </template>
+      <span class="hidden">{{ progress }}</span>
     </ProgressBar>
     <section class="mb-5 flex justify-between">
       <Chip :label="PROJECT_MOCK.type"></Chip>

@@ -51,7 +51,6 @@
 import Tag from 'primevue/tag';
 import Card from "@/components/Card.vue";
 import Carousel from 'primevue/carousel';
-import Fluid from 'primevue/fluid';
 
 const CHIPS_FILTER_MOCK = ['Art & Design',
   'Technology & Gadgets',
