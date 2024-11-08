@@ -11,7 +11,7 @@ createApp(App).use(PrimeVue,  {
      theme: {
          preset: Lara,
              options: {
-             darkModeSelector: 'system',
+             darkModeSelector: '.my-app-dark',
              cssLayer: false
          }
      }
