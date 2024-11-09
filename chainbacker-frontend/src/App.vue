@@ -16,7 +16,11 @@ import Tabbar from "@/components/Tabbar.vue";
 import Dialog from 'primevue/dialog';
 import {ref} from "vue";
 import CreateModal from "@/components/modals/CreateModal.vue";
+import {useCreateProject} from "@/useCreateProject.ts";
 
+const { Reputation } = useCreateProject()
+
+console.warn('Reputation', Reputation)
 
 const isCreateModalOpened = ref(false)
 
