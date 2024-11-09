@@ -63,7 +63,7 @@ describe('Reputation', () => {
     })
 
     it('should pass valid request', async () => {
-        let resp = await reputation.sendNewKick(deployer.getSender(), toNano('0.01'), 124n, 90000000000n);
+        let resp = await reputation.sendNewKick(deployer.getSender(), toNano('0.01'), 124n, 90000000000n, 1762674312n, [[100000000n, 0n], [300000000n, 10n]]);
         expect(resp.transactions).toHaveTransaction({
             from: deployer.address,
             to: reputation.address,
@@ -78,7 +78,7 @@ describe('Reputation', () => {
     })
 
     it('should fail invalid request', async () => {
-        let resp = await reputation.sendNewKick(deployer.getSender(), toNano('0.01'), 124n, 200000000000n);
+        let resp = await reputation.sendNewKick(deployer.getSender(), toNano('0.01'), 124n, 200000000000n, 1762674312n, [[100000000n, 0n], [300000000n, 10n]]);
         expect(resp.transactions).toHaveTransaction({
             exitCode: 106
         });
