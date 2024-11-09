@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8f02abe-1c6a-4854-b971-bcd0ee5660b7" name="Changes" comment="feat: add composition template" />
+    <list default="true" id="c8f02abe-1c6a-4854-b971-bcd0ee5660b7" name="Changes" comment="fix: delete imports" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -53,6 +53,9 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/chainbacker-frontend" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/chainbacker-frontend/src/composables" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
@@ -81,7 +84,7 @@
       <updated>1731048729537</updated>
       <workItem from="1731048730665" duration="73000" />
       <workItem from="1731048942839" duration="3000" />
-      <workItem from="1731142953139" duration="2643000" />
+      <workItem from="1731142953139" duration="2967000" />
     </task>
     <task id="LOCAL-00001" summary="feat: add composition template">
       <option name="closed" value="true" />
@@ -91,7 +94,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731145281219</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="fix: delete imports">
+      <option name="closed" value="true" />
+      <created>1731145914538</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1731145914538</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -99,6 +110,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="feat: add composition template" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: add composition template" />
+    <MESSAGE value="fix: delete imports" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: delete imports" />
   </component>
 </project>
