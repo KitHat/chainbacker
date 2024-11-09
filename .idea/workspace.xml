@@ -6,10 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="c8f02abe-1c6a-4854-b971-bcd0ee5660b7" name="Changes" comment="build: add ton manifest">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/composables/useWallet.ts" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/composables/useWallet.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/main.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/mocks/mocks.ts" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/mocks/mocks.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/views/MainPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/views/MainPage.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,27 +40,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "com.codeium.enabled": "true",
-    "git-widget-placeholder": "feature/wallet__connect",
-    "last_opened_file_path": "/Users/vitalijlukanov/WebstormProjects/chainbacker/chainbacker-frontend",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "/Users/vitalijlukanov/WebstormProjects/chainbacker/chainbacker-frontend/node_modules/typescript/lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;com.codeium.enabled&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/wallet__connect&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/vitalijlukanov/WebstormProjects/chainbacker/chainbacker-frontend&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/vitalijlukanov/WebstormProjects/chainbacker/chainbacker-frontend/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "vue.recent.templates": [
-      "Vue Composition API Component"
+  &quot;keyToStringList&quot;: {
+    &quot;vue.recent.templates&quot;: [
+      &quot;Vue Composition API Component&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/chainbacker-frontend/src/compiled_contracts" />
@@ -105,9 +105,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.dev" />
         <item itemvalue="npm.build:wrappers" />
         <item itemvalue="npm.build" />
-        <item itemvalue="npm.dev" />
+        <item itemvalue="npm.build:wrappers" />
+        <item itemvalue="npm.build" />
       </list>
     </recent_temporary>
   </component>
@@ -179,7 +181,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731181919937</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="feat: add useTonAddress and useTonWallets">
+      <option name="closed" value="true" />
+      <created>1731187060909</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1731187060909</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -216,6 +226,7 @@
     <MESSAGE value="feat: add useSendTransaction composable" />
     <MESSAGE value="feat: send kick WIP" />
     <MESSAGE value="build: add ton manifest" />
-    <option name="LAST_COMMIT_MESSAGE" value="build: add ton manifest" />
+    <MESSAGE value="feat: add useTonAddress and useTonWallets" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add useTonAddress and useTonWallets" />
   </component>
 </project>

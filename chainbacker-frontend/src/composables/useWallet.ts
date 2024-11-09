@@ -18,18 +18,12 @@ export function useWallet() {
 
         walletAddress.value = useTonAddress()
 
-        // const key = await mnemonicToWalletKey(MNEMONIC_MOCK.split(" "));
-        //
-        // wallet.value = WalletContractV4.create({ publicKey: key.publicKey, workchain: 0 });
-        //
-        // walletAddress.value = wallet.value.address.toString({ testOnly: true })
-
         client.value = await getClient()
     }
 
     const getBalance = async () => {
         if (client.value && wallet.value) {
-            walletBalance.value = await client.value.getBalance(wallet.value.address)
+            walletBalance.value = await client.value.getBalance(walletAddress.value)
         }
     }
 

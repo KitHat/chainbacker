@@ -10,7 +10,7 @@
     flex flex-nowrap grow whitespace-nowrap no-scrollbar">
      <Tag v-for="chip in CHIPS_FILTER_MOCK"  :value="chip" :severity="'success'" />
     </div>
-    <section class="mb-5">
+    <section class="mb-5 -mx-2">
       <Carousel :value="CARDS_MOCK"
                 :num-visible="1"
                 :indicators-content-class="null"
@@ -19,7 +19,7 @@
       >
         <template #item="{ data }">
           <router-link :to="{ name: 'ProjectPage', params: {  id: data.id } }">
-            <Card class="w-full"
+            <Card class="m-2"
                   v-bind="data"
                   :key="data.id" />
           </router-link>
@@ -35,12 +35,12 @@
                 :show-indicators="false"
                 :show-navigators="false"
       >
-        <template #nexticon></template>
-        <template #previcon></template>
         <template #item="{ data }">
-          <Card
-                v-bind="data"
-                :key="data.id" />
+          <router-link :to="{ name: 'ProjectPage', params: {  id: data.id } }">
+            <Card class="m-2"
+                  v-bind="data"
+                  :key="data.id" />
+          </router-link>
         </template>
       </Carousel>
     </section>
