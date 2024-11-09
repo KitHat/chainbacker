@@ -4,6 +4,7 @@
     "scripts": {
         "start": "blueprint run",
         "build": "blueprint build",
+        "build:wrappers": "tsc",
         "test": "jest --verbose"
     },
     "devDependencies": {

@@ -90,9 +90,16 @@ import Fluid from "primevue/fluid";
 import Button from "primevue/button";
 import {reactive, ref} from "vue";
 import { DatePicker, InputNumber, Textarea, FileUpload } from "primevue";
+// import {useCreateProject} from "@/composables/useCreateProject.ts";
 
 const emit = defineEmits(['onClose'])
+
+// const { createKickInBlockchain } = useCreateProject()
 const onSubmit = () => {
+ //blockchain tiers, date, sum
+
+  // createKickInBlockchain(rewardTiers.value, form.expirationDate, sum)
+
   emit('onClose')
 }
 
@@ -133,7 +140,6 @@ const onFileSelect = (event: { files: File[] }) => {
   }
 };
 
-//blockchain tiers, date, sum
 // api
 </script>
 
