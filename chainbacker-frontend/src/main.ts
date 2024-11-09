@@ -6,6 +6,8 @@ import PrimeVue from 'primevue/config';
 import Lara from '@primevue/themes/lara';
 
 import { APP_ROUTER } from "./router.ts";
+import { useWallet } from "@/composables/useWallet.ts";
+const { initUserWallet } = useWallet()
 
 createApp(App).use(PrimeVue,  {
      theme: {
@@ -16,5 +18,8 @@ createApp(App).use(PrimeVue,  {
          }
      }
  }).use(APP_ROUTER).mount('#app')
+
+initUserWallet()
+
 
 

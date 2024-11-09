@@ -1,11 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8f02abe-1c6a-4854-b971-bcd0ee5660b7" name="Changes" comment="" />
+    <list default="true" id="c8f02abe-1c6a-4854-b971-bcd0ee5660b7" name="Changes" comment="build: add workspace">
+      <change afterPath="$PROJECT_DIR$/chainbacker-frontend/src/compiled_contracts/jest.config.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chainbacker-frontend/src/compiled_contracts/jest.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chainbacker-frontend/src/compiled_contracts/scripts/deployActiveKicks.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chainbacker-frontend/src/compiled_contracts/scripts/deployActiveKicks.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chainbacker-frontend/src/compiled_contracts/scripts/deployReputation.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chainbacker-frontend/src/compiled_contracts/scripts/deployReputation.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chainbacker-frontend/src/compiled_contracts/tests/ActiveKicks.spec.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chainbacker-frontend/src/compiled_contracts/tests/ActiveKicks.spec.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chainbacker-frontend/src/compiled_contracts/tests/Reputation.spec.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chainbacker-frontend/src/compiled_contracts/tests/Reputation.spec.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chainbacker-frontend/src/compiled_contracts/wrappers/ActiveKicks.compile.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chainbacker-frontend/src/compiled_contracts/wrappers/ActiveKicks.compile.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chainbacker-frontend/src/compiled_contracts/wrappers/ActiveKicks.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chainbacker-frontend/src/compiled_contracts/wrappers/ActiveKicks.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chainbacker-frontend/src/compiled_contracts/wrappers/Reputation.compile.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chainbacker-frontend/src/compiled_contracts/wrappers/Reputation.compile.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chainbacker-frontend/src/compiled_contracts/wrappers/Reputation.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chainbacker-frontend/src/compiled_contracts/wrappers/Reputation.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chainbacker-frontend/src/composables/useWallet.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chainbacker-frontend/src/views/ProfilePage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/components/Tabbar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/components/Tabbar.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/components/icons/ProfileIcon.vue" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/components/icons/ProfileIcon.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/components/modals/CreateModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/components/modals/CreateModal.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/composables/useCreateProject.ts" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/composables/useCreateProject.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/main.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/router.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/vite.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/vite.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/contract/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/contract/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/contract/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/contract/tsconfig.json" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Vue Composition API Component" />
+        <option value="TypeScript File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -15,23 +61,83 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectId" id="2oYZzCS6cKlFNtANcbk0MwSuxzE" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;com.codeium.enabled&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/frontend&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/vitalijlukanov/WebstormProjects/chainbacker&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "com.codeium.enabled": "true",
+    "git-widget-placeholder": "feature/create__modal",
+    "last_opened_file_path": "/Users/vitalijlukanov/WebstormProjects/chainbacker/chainbacker-frontend",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "ts.external.directory.path": "/Users/vitalijlukanov/WebstormProjects/chainbacker/chainbacker-frontend/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "vue.recent.templates": [
+      "Vue Composition API Component"
+    ]
   }
-}</component>
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/chainbacker-frontend" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/chainbacker-frontend/src" />
+      <recent name="$PROJECT_DIR$/chainbacker-frontend/src/composables" />
+    </key>
+  </component>
+  <component name="RunManager" selected="npm.build:wrappers">
+    <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/chainbacker-frontend/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="build" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="build:wrappers" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/contract/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="build:wrappers" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/chainbacker-frontend/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.build" />
+        <item itemvalue="npm.dev" />
+        <item itemvalue="npm.build:wrappers" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -42,10 +148,42 @@
       <updated>1731048729537</updated>
       <workItem from="1731048730665" duration="73000" />
       <workItem from="1731048942839" duration="3000" />
+      <workItem from="1731142953139" duration="12404000" />
     </task>
+    <task id="LOCAL-00001" summary="feat: add composition template">
+      <option name="closed" value="true" />
+      <created>1731145281219</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1731145281219</updated>
+    </task>
+    <task id="LOCAL-00002" summary="fix: delete imports">
+      <option name="closed" value="true" />
+      <created>1731145914538</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1731145914538</updated>
+    </task>
+    <task id="LOCAL-00003" summary="build: add workspace">
+      <option name="closed" value="true" />
+      <created>1731146029274</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1731146029274</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="feat: add composition template" />
+    <MESSAGE value="fix: delete imports" />
+    <MESSAGE value="build: add workspace" />
+    <option name="LAST_COMMIT_MESSAGE" value="build: add workspace" />
   </component>
 </project>

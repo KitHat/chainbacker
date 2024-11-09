@@ -10,7 +10,9 @@
         <CreateButton class="w-[56px]" @click="$emit('on-open')" />
       </template>
       <template #end>
-        <ProfileIcon class="w-[32px] text-white"/>
+        <router-link :to="{ name: 'ProfilePage' }">
+          <ProfileIcon class="w-[32px] h-[32px] text-white"/>
+        </router-link>
       </template>
     </Toolbar>
   </section>
