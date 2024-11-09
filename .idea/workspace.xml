@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8f02abe-1c6a-4854-b971-bcd0ee5660b7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/markdown.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chainbacker-frontend/src/useCreateProject.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/vite.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/vite.config.ts" afterDir="false" />
-    </list>
+    <list default="true" id="c8f02abe-1c6a-4854-b971-bcd0ee5660b7" name="Changes" comment="feat: add composition template" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -88,11 +81,24 @@
       <updated>1731048729537</updated>
       <workItem from="1731048730665" duration="73000" />
       <workItem from="1731048942839" duration="3000" />
-      <workItem from="1731142953139" duration="2206000" />
+      <workItem from="1731142953139" duration="2643000" />
     </task>
+    <task id="LOCAL-00001" summary="feat: add composition template">
+      <option name="closed" value="true" />
+      <created>1731145281219</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1731145281219</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="feat: add composition template" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add composition template" />
   </component>
 </project>
