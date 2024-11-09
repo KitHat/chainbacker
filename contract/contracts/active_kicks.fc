@@ -30,6 +30,7 @@
             kick_builder = kick_builder.store_uint(target, 256).store_uint(0, 256);
             int creator = in_msg_body~load_msg_addr();
             kick_builder = kick_builder.store_slice(creator);
+            int key = in_msg_body.load_uint(256);
             int valid_until = in_msg_body~load_uint(64);
             throw_if(111, valid_until < now());
             kick_builder = kick_builder.store_uint(valid_until, 256);
@@ -42,15 +43,11 @@
                 kick_builder = kick_builder.store_uint(level_price, 256).store_uint(level_limit, 16).store_uint(0, 16);
             }
             cell kick = kick_builder.end_cell();
-            (int key, cell max, int success) = dict~udict_get_max?(256);
-            int next_key = 1;
-            if (success == -1) {
-                next_key = next_key + key;
-            }
-            dict = dict~udict_set(256, key+1, kick.begin_parse());
+            dict = dict~udict_set(256, key, kick.begin_parse());
             set_data(dict);
         } elseif (op == 3) {
             ;; back a kick
+
         } elseif (op == 4) {
             ;; resolve kicks
         }
