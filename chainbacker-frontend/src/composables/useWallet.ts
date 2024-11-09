@@ -38,6 +38,7 @@ export function useWallet() {
     // const sendTransaction = async () => {}
 
     return {
+        client,
         wallet,
         initUserWallet,
         getBalance,

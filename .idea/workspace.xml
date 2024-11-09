@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8f02abe-1c6a-4854-b971-bcd0ee5660b7" name="Changes" comment="feat: add useSendTransaction composable">
-      <change afterPath="$PROJECT_DIR$/chainbacker-frontend/public/deton8_logo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chainbacker-frontend/public/tonconnect-manifest.json" afterDir="false" />
+    <list default="true" id="c8f02abe-1c6a-4854-b971-bcd0ee5660b7" name="Changes" comment="build: add ton manifest">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/composables/useSendTransaction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/composables/useSendTransaction.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/composables/useWallet.ts" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/composables/useWallet.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,7 +168,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731181300530</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="build: add ton manifest">
+      <option name="closed" value="true" />
+      <created>1731181919937</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1731181919937</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -181,6 +189,7 @@
     <MESSAGE value="feat: add compiled contracts and profile page" />
     <MESSAGE value="feat: add useSendTransaction composable" />
     <MESSAGE value="feat: send kick WIP" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: send kick WIP" />
+    <MESSAGE value="build: add ton manifest" />
+    <option name="LAST_COMMIT_MESSAGE" value="build: add ton manifest" />
   </component>
 </project>
