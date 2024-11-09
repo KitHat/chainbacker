@@ -1,6 +1,7 @@
 import { useWallet } from "@/composables/useWallet.ts";
 import { mnemonicToWalletKey } from "@ton/crypto";
 import { Reputation }  from "@/compiled_contracts/wrappers/Reputation";
+import {MNEMONIC_MOCK} from "@/mocks/mocks.ts";
 
 // function sleep(ms: number) {
 //     return new Promise(resolve => setTimeout(resolve, ms));
@@ -17,10 +18,12 @@ export const useSendTransaction = () => {
             return console.log("wallet is not deployed");
         }
 
-        const key = await mnemonicToWalletKey(mnemonic.split(TRANSACTION_ADDRESS_MOCK));
+        const key = await mnemonicToWalletKey(MNEMONIC_MOCK.split(' '));
 
         const walletContract = client.open(wallet.value);
         const walletSender = walletContract.sender(key.secretKey);
+
+        const kickTitle = 'test title';
 
         const kickExpirationDate = new Date().getTime();
 
@@ -32,7 +35,9 @@ export const useSendTransaction = () => {
             return acc
         }, [])
 
-        const result = await Reputation.sendNewKick(walletContract, walletSender, TRANSACTION_GAS_PRICE, 124n, kickMoneyTarget, kickExpirationDate, tiers);
+        const timestamp = new Date().getTime();
+
+        const result = await Reputation.sendNewKick(walletContract, walletSender, TRANSACTION_GAS_PRICE, 124n, kickMoneyTarget, kickExpirationDate, kickTitle, timestamp, tiers);
 
         console.warn('result', result)
 

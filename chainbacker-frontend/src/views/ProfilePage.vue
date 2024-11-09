@@ -11,6 +11,9 @@
       >
         Balance: {{ walletBalance }}
       </div>
+      <div v-else>
+        <TonConnectButton />
+      </div>
     </section>
   </section>
 </template>
@@ -18,6 +21,7 @@
 <script setup lang="ts">
 import { useWallet } from "@/composables/useWallet.ts";
 import {onBeforeMount} from "vue";
+import {TonConnectButton} from "@townsquarelabs/ui-vue";
 
 const { walletBalance, getBalance } = useWallet()
 

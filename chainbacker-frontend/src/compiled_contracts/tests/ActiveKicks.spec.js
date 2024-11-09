@@ -1,6 +1,6 @@
 import { Blockchain } from '@ton/sandbox';
 import { toNano } from '@ton/core';
-import { ActiveKicks } from '../wrappers/ActiveKicks.js';
+import { ActiveKicks } from '../wrappers/ActiveKicks';
 import '@ton/test-utils';
 import { compile } from '@ton/blueprint';
 describe('ActiveKicks', () => {

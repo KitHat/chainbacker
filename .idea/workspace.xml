@@ -5,9 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c8f02abe-1c6a-4854-b971-bcd0ee5660b7" name="Changes" comment="feat: add useSendTransaction composable">
+      <change afterPath="$PROJECT_DIR$/chainbacker-frontend/src/composables/useAsyncInitialize.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chainbacker-frontend/src/composables/useCounterContract.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chainbacker-frontend/src/composables/useTonClient.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chainbacker-frontend/src/mocks/mocks.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/composables/useCreateProject.ts" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/composables/useCreateProject.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/compiled_contracts/scripts/deployActiveKicks.js" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/compiled_contracts/scripts/deployActiveKicks.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/compiled_contracts/scripts/deployReputation.js" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/compiled_contracts/scripts/deployReputation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/compiled_contracts/tests/ActiveKicks.spec.js" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/compiled_contracts/tests/ActiveKicks.spec.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/compiled_contracts/tests/Reputation.spec.js" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/compiled_contracts/tests/Reputation.spec.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/compiled_contracts/wrappers/Reputation.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/compiled_contracts/wrappers/Reputation.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/compiled_contracts/wrappers/Reputation.js" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/compiled_contracts/wrappers/Reputation.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/composables/useSendTransaction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/composables/useSendTransaction.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/composables/useWallet.ts" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/composables/useWallet.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/main.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/views/ProfilePage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/views/ProfilePage.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,8 +55,8 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "com.codeium.enabled": "true",
-    "git-widget-placeholder": "feature/create__modal",
-    "last_opened_file_path": "/Users/vitalijlukanov/WebstormProjects/chainbacker/chainbacker-frontend",
+    "git-widget-placeholder": "feature/send-kick",
+    "last_opened_file_path": "/Users/vitalijlukanov/WebstormProjects/chainbacker/chainbacker-frontend/src/compiled_contracts",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -61,6 +73,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/chainbacker-frontend/src/compiled_contracts" />
       <recent name="$PROJECT_DIR$/chainbacker-frontend" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -101,9 +114,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.build:wrappers" />
         <item itemvalue="npm.build" />
         <item itemvalue="npm.dev" />
-        <item itemvalue="npm.build:wrappers" />
       </list>
     </recent_temporary>
   </component>
@@ -164,6 +177,29 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="feat: add composition template" />

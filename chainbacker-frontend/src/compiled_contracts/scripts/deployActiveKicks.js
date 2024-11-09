@@ -1,5 +1,5 @@
 import { toNano } from '@ton/core';
-import { ActiveKicks } from '../wrappers/ActiveKicks.js';
+import { ActiveKicks } from '../wrappers/ActiveKicks';
 import { compile } from '@ton/blueprint';
 export async function run(provider) {
     const activeKicks = provider.open(ActiveKicks.createFromConfig({}, await compile('ActiveKicks')));

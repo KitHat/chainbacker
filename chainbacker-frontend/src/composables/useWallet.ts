@@ -3,8 +3,6 @@ import {TonClient, WalletContractV4} from "@ton/ton";
 import {ref} from "vue";
 import {getHttpEndpoint} from "@orbs-network/ton-access";
 
-export const MNEMONIC_MOCK = "fuel indicate deliver sniff version fragile voice glad comfort destroy merge dinner oppose mention random cloth clay fossil dutch jungle cart man august confirm"
-
 const wallet = ref<WalletContractV4 | null>()
 const walletAddress = ref<string | null>()
 const walletBalance = ref<bigint | null>()
@@ -43,10 +41,4 @@ export function useWallet() {
         getBalance,
         walletBalance
     }
-}
-export async function getWalletAddress() {
-    // open wallet v4 (notice the correct wallet version here)
-    const mnemonic = "fuel indicate deliver sniff version fragile voice glad comfort destroy merge dinner oppose mention random cloth clay fossil dutch jungle cart man august confirm"; // your 24 secret words (replace ... with the rest of the words)
-    const key = await mnemonicToWalletKey(mnemonic.split(" "));
-    wallet.value = WalletContractV4.create({ publicKey: key.publicKey, workchain: 0 });
 }
