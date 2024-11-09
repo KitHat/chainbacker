@@ -1,4 +1,5 @@
 import { Address, beginCell, Cell, Contract, contractAddress, ContractProvider, Sender, SendMode } from '@ton/core';
+import crypto from 'crypto';
 
 export type ReputationConfig = {};
 
@@ -35,8 +36,10 @@ export class Reputation implements Contract {
         })
     }
 
-    async sendNewKick(provider: ContractProvider, via: Sender, value: bigint, queryId: bigint, target: bigint, kickEnd: bigint, levels: [bigint, bigint][]) {
-        let cell = beginCell().storeUint(2, 32).storeUint(queryId, 64).storeUint(target, 256).storeUint(kickEnd, 64).storeUint(levels.length, 16);
+    async sendNewKick(provider: ContractProvider, via: Sender, value: bigint, queryId: bigint, target: bigint, kickEnd: bigint, title: string, timestamp: number, levels: [bigint, bigint][]) {
+        let toHash = `${timestamp}${title}`;
+        let marker = crypto.createHash('md5').update(toHash).digest().readBigUint64BE();
+        let cell = beginCell().storeUint(2, 32).storeUint(queryId, 64).storeUint(target, 256).storeUint(marker, 256).storeUint(kickEnd, 64).storeUint(levels.length, 16);
         for (const level of levels) {
             cell = cell.storeUint(level[0], 256).storeUint(level[1], 16);
         }
