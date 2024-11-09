@@ -7,6 +7,7 @@
         </router-link>
       </template>
       <template #center>
+        <CreateButton class="w-[56px]" @click="$emit('on-open')" />
       </template>
       <template #end>
         <ProfileIcon class="w-[32px] text-white"/>
@@ -19,6 +20,7 @@
 import Toolbar from "primevue/toolbar"
 import HomeIcon from "@/components/icons/HomeIcon.vue";
 import ProfileIcon from "@/components/icons/ProfileIcon.vue";
+import CreateButton from "@/components/icons/CreateButton.vue";
 </script>
 
 <style scoped>

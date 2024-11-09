@@ -65,7 +65,13 @@ const CARDS_MOCK = [{
   totalSum: 500,
   backersCounter: 450,
   daysLeft: 28,
-  type: 'EdTech'
+  type: 'EdTech',
+  img: '',
+  tiers: [{
+    title: '',
+    description: '',
+    sum: 0
+  }]
 }, {
   id: 2,
   title: 'Light',
@@ -73,7 +79,8 @@ const CARDS_MOCK = [{
   totalSum: 500,
   backersCounter: 450,
   daysLeft: 28,
-  type: 'EdTech'
+  type: 'EdTech',
+  img: ''
 }, {
   id: 3,
   title: 'Light',
@@ -81,7 +88,8 @@ const CARDS_MOCK = [{
   totalSum: 500,
   backersCounter: 450,
   daysLeft: 28,
-  type: 'EdTech'
+  type: 'EdTech',
+  img: ''
 }]
 </script>
 
