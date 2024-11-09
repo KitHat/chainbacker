@@ -1,6 +1,6 @@
 import { ref, onMounted, watch } from 'vue';
 
-export function useAsyncInitialize(func, deps: any[] = []) {
+export function useAsyncInitialize(func: () => any, deps: any[] = []) {
     const state = ref<any>();
 
     async function initialize() {

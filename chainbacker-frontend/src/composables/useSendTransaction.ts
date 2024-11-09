@@ -1,26 +1,26 @@
 import { useWallet } from "@/composables/useWallet.ts";
 import { mnemonicToWalletKey } from "@ton/crypto";
 import { Reputation }  from "@/compiled_contracts/wrappers/Reputation";
-import {MNEMONIC_MOCK} from "@/mocks/mocks.ts";
+import { MNEMONIC_MOCK } from "@/mocks/mocks.ts";
 
 // function sleep(ms: number) {
 //     return new Promise(resolve => setTimeout(resolve, ms));
 // }
 
-const TRANSACTION_ADDRESS_MOCK = 'EQA4V9tF4lY2S_J-sEQR7aUj9IwW-Ou2vJQlCn--2DLOLR5e'
+// const TRANSACTION_ADDRESS_MOCK = 'EQA4V9tF4lY2S_J-sEQR7aUj9IwW-Ou2vJQlCn--2DLOLR5e'
 const TRANSACTION_GAS_PRICE = 0.01;
 
 export const useSendTransaction = () => {
     const { wallet, client } = useWallet();
     const sendTransaction = async () => {
-        if (!wallet.value || !await client.isContractDeployed(wallet.value.address)) {
+        if (!wallet.value || !client.value || !await client.value.isContractDeployed(wallet.value.address)) {
 
             return console.log("wallet is not deployed");
         }
 
         const key = await mnemonicToWalletKey(MNEMONIC_MOCK.split(' '));
 
-        const walletContract = client.open(wallet.value);
+        const walletContract = client.value.open(wallet.value);
         const walletSender = walletContract.sender(key.secretKey);
 
         const kickTitle = 'test title';
@@ -33,11 +33,11 @@ export const useSendTransaction = () => {
             acc.push([curr.price, 0])
 
             return acc
-        }, [])
+        }, [] as [number, number][])
 
         const timestamp = new Date().getTime();
 
-        const result = await Reputation.sendNewKick(walletContract, walletSender, TRANSACTION_GAS_PRICE, 124n, kickMoneyTarget, kickExpirationDate, kickTitle, timestamp, tiers);
+        const result = await (Reputation as any).sendNewKick(walletContract, walletSender, TRANSACTION_GAS_PRICE, 124n, kickMoneyTarget, kickExpirationDate, kickTitle, timestamp, tiers);
 
         console.warn('result', result)
 

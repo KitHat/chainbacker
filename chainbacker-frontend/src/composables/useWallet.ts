@@ -2,6 +2,7 @@ import { mnemonicToWalletKey } from "@ton/crypto";
 import {TonClient, WalletContractV4} from "@ton/ton";
 import {ref} from "vue";
 import {getHttpEndpoint} from "@orbs-network/ton-access";
+import {MNEMONIC_MOCK} from "@/mocks/mocks.ts";
 
 const wallet = ref<WalletContractV4 | null>()
 const walletAddress = ref<string | null>()
@@ -36,6 +37,7 @@ export function useWallet() {
     // const sendTransaction = async () => {}
 
     return {
+        client,
         wallet,
         initUserWallet,
         getBalance,

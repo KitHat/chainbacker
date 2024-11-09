@@ -1,18 +1,18 @@
-import { ref, watch, onMounted } from 'vue';
-import Counter from '../contracts/counter';
+import { ref, watch } from 'vue';
 import { useTonClient } from './useTonClient';
 import { useAsyncInitialize } from './useAsyncInitialize';
 import { Address } from '@ton/core';
+import {Reputation} from "@/compiled_contracts/wrappers/Reputation";
 
 export function useCounterContract() {
     const client = useTonClient();
 
-    const val = ref(null);
+    const val = ref<number | null>(null);
 
     const counterContract = useAsyncInitialize(async () => {
         if (!client.value) return;
 
-        const contract = new Counter(
+        const contract = new Reputation(
             Address.parse('EQBYLTm4nsvoqJRvs_L-IGNKwWs5RKe19HBK_lFadf19FUfb') // Replace with your actual address
         );
 
@@ -20,9 +20,14 @@ export function useCounterContract() {
     }, [client]);
 
     async function getValue() {
-        if (!counterContract.value) return;
+        if (!counterContract.value) {
+            return
+        };
+
         val.value = null;
+
         const value = await counterContract.value.getCounter();
+
         val.value = Number(value);
     }
 
