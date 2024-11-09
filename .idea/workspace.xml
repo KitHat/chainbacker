@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8f02abe-1c6a-4854-b971-bcd0ee5660b7" name="Changes" comment="feat: add compiled contracts and profile page">
-      <change afterPath="$PROJECT_DIR$/chainbacker-frontend/src/composables/useSendTransaction.ts" afterDir="false" />
+    <list default="true" id="c8f02abe-1c6a-4854-b971-bcd0ee5660b7" name="Changes" comment="feat: add useSendTransaction composable">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/composables/useWallet.ts" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/composables/useWallet.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/composables/useCreateProject.ts" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/composables/useCreateProject.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/composables/useSendTransaction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/composables/useSendTransaction.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,7 +117,7 @@
       <updated>1731048729537</updated>
       <workItem from="1731048730665" duration="73000" />
       <workItem from="1731048942839" duration="3000" />
-      <workItem from="1731142953139" duration="13743000" />
+      <workItem from="1731142953139" duration="18819000" />
     </task>
     <task id="LOCAL-00001" summary="feat: add composition template">
       <option name="closed" value="true" />
@@ -151,7 +151,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731161130185</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="feat: add useSendTransaction composable">
+      <option name="closed" value="true" />
+      <created>1731162170194</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1731162170194</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -162,6 +170,7 @@
     <MESSAGE value="fix: delete imports" />
     <MESSAGE value="build: add workspace" />
     <MESSAGE value="feat: add compiled contracts and profile page" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: add compiled contracts and profile page" />
+    <MESSAGE value="feat: add useSendTransaction composable" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add useSendTransaction composable" />
   </component>
 </project>

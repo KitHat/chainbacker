@@ -1,8 +1,5 @@
-import { Reputation }  from "@/compiled_contracts/wrappers/Reputation";
-import {ref} from "vue";
+import { ref } from "vue";
 export const useCreateProject = () => {
-    console.warn('Reputation', Reputation)
-
     const isLoading = ref(false)
 
     // const createKick = () => {
