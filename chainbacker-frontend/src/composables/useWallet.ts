@@ -3,7 +3,7 @@ import {TonClient, WalletContractV4} from "@ton/ton";
 import {ref} from "vue";
 import {getHttpEndpoint} from "@orbs-network/ton-access";
 
-const MNEMONIC_MOCK = "fuel indicate deliver sniff version fragile voice glad comfort destroy merge dinner oppose mention random cloth clay fossil dutch jungle cart man august confirm"
+export const MNEMONIC_MOCK = "fuel indicate deliver sniff version fragile voice glad comfort destroy merge dinner oppose mention random cloth clay fossil dutch jungle cart man august confirm"
 
 const wallet = ref<WalletContractV4 | null>()
 const walletAddress = ref<string | null>()
@@ -26,7 +26,7 @@ export function useWallet() {
 
         walletAddress.value = wallet.value.address.toString({ testOnly: true })
 
-        client.value =await getClient()
+        client.value = await getClient()
     }
 
     const getBalance = async () => {
