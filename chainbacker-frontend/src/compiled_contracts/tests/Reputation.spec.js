@@ -1,6 +1,6 @@
 import { Blockchain } from '@ton/sandbox';
 import { toNano } from '@ton/core';
-import { Reputation } from '../wrappers/Reputation.js';
+import { Reputation } from '../wrappers/Reputation';
 import '@ton/test-utils';
 import { compile } from '@ton/blueprint';
 import { randomAddress } from '@ton/test-utils';

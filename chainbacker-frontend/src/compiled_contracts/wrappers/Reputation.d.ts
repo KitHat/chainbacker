@@ -15,7 +15,7 @@ export declare class Reputation implements Contract {
     static createFromConfig(config: ReputationConfig, code: Cell, workchain?: number): Reputation;
     sendDeploy(provider: ContractProvider, via: Sender, value: bigint): Promise<void>;
     sendInit(provider: ContractProvider, via: Sender, value: bigint, queryId: bigint, valid: Address, update: Address): Promise<void>;
-    sendNewKick(provider: ContractProvider, via: Sender, value: bigint, queryId: bigint, target: bigint, kickEnd: bigint, levels: [bigint, bigint][]): Promise<void>;
+    sendNewKick(provider: ContractProvider, via: Sender, value: bigint, queryId: bigint, target: bigint, kickEnd: bigint, title: string, timestamp: number, levels: [bigint, bigint][]): Promise<void>;
     sendIncreaseRep(provider: ContractProvider, via: Sender, value: bigint, queryId: bigint, toIncrease: Address): Promise<void>;
     getRepByAddress(provider: ContractProvider, address: Address): Promise<bigint>;
 }

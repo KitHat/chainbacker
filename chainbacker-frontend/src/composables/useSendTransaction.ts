@@ -1,42 +1,45 @@
-// import { useWallet } from "@/composables/useWallet.ts";
-// import { mnemonicToWalletKey } from "@ton/crypto";
-// import { Reputation }  from "@/compiled_contracts/wrappers/Reputation";
+import { useWallet } from "@/composables/useWallet.ts";
+import { mnemonicToWalletKey } from "@ton/crypto";
+import { Reputation }  from "@/compiled_contracts/wrappers/Reputation";
+import { MNEMONIC_MOCK } from "@/mocks/mocks.ts";
 
 // function sleep(ms: number) {
 //     return new Promise(resolve => setTimeout(resolve, ms));
 // }
 
 // const TRANSACTION_ADDRESS_MOCK = 'EQA4V9tF4lY2S_J-sEQR7aUj9IwW-Ou2vJQlCn--2DLOLR5e'
-// const TRANSACTION_GAS_PRICE = 0.01;
+const TRANSACTION_GAS_PRICE = 0.01;
 
 export const useSendTransaction = () => {
-    // const { wallet, client } = useWallet();
+    const { wallet, client } = useWallet();
     const sendTransaction = async () => {
-        // TODO: uncomment after merge with feature/send-kick
+        if (!wallet.value || !client.value || !await client.value.isContractDeployed(wallet.value.address)) {
 
-        // if (!wallet.value || !client.value || !await client.value.isContractDeployed(wallet.value.address)) {
-        //
-        //     return console.log("wallet is not deployed");
-        // }
-        //
-        // const key = await mnemonicToWalletKey('mnemonic'.split(TRANSACTION_ADDRESS_MOCK));
-        //
-        // const walletContract = client.value.open(wallet.value);
-        // const walletSender = walletContract.sender(key.secretKey);
-        //
-        // const kickExpirationDate = new Date().getTime();
-        //
-        // const kickMoneyTarget = 500
-        //
-        // const tiers = [{title: 'toys', description: 'boys', price: 500}].reduce((acc, curr) => {
-        //     acc.push([curr.price, 0])
-        //
-        //     return acc
-        // }, [] as [number, number][])
+            return console.log("wallet is not deployed");
+        }
 
-        // const result = await Reputation.sendNewKick(walletContract, walletSender, TRANSACTION_GAS_PRICE, 124n, kickMoneyTarget, kickExpirationDate, tiers);
-        //
-        // console.warn('result', result)
+        const key = await mnemonicToWalletKey(MNEMONIC_MOCK.split(' '));
+
+        const walletContract = client.value.open(wallet.value);
+        const walletSender = walletContract.sender(key.secretKey);
+
+        const kickTitle = 'test title';
+
+        const kickExpirationDate = new Date().getTime();
+
+        const kickMoneyTarget = 500
+
+        const tiers = [{title: 'toys', description: 'boys', price: 500}].reduce((acc, curr) => {
+            acc.push([curr.price, 0])
+
+            return acc
+        }, [] as [number, number][])
+
+        const timestamp = new Date().getTime();
+
+        const result = await (Reputation as any).sendNewKick(walletContract, walletSender, TRANSACTION_GAS_PRICE, 124n, kickMoneyTarget, kickExpirationDate, kickTitle, timestamp, tiers);
+
+        console.warn('result', result)
 
         // prepare Counter's initial code and data cells for deployment
         // const counterCode = Cell.fromBoc(fs.readFileSync("build/counter.cell"))[0]; // compilation output from step 6

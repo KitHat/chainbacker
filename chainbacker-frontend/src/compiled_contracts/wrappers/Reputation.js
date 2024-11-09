@@ -1,4 +1,5 @@
 import { beginCell, contractAddress, SendMode } from '@ton/core';
+import crypto from 'crypto';
 export function reputationConfigToCell(config) {
     return beginCell().endCell();
 }
@@ -29,8 +30,10 @@ export class Reputation {
             body: beginCell().storeUint(1, 32).storeUint(queryId, 64).storeAddress(valid).storeAddress(update).endCell()
         });
     }
-    async sendNewKick(provider, via, value, queryId, target, kickEnd, levels) {
-        let cell = beginCell().storeUint(2, 32).storeUint(queryId, 64).storeUint(target, 256).storeUint(kickEnd, 64).storeUint(levels.length, 16);
+    async sendNewKick(provider, via, value, queryId, target, kickEnd, title, timestamp, levels) {
+        let toHash = `${timestamp}${title}`;
+        let marker = crypto.createHash('md5').update(toHash).digest().readBigUint64BE();
+        let cell = beginCell().storeUint(2, 32).storeUint(queryId, 64).storeUint(target, 256).storeUint(marker, 256).storeUint(kickEnd, 64).storeUint(levels.length, 16);
         for (const level of levels) {
             cell = cell.storeUint(level[0], 256).storeUint(level[1], 16);
         }

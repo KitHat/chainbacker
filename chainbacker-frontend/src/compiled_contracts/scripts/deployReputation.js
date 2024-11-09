@@ -1,5 +1,5 @@
 import { toNano } from '@ton/core';
-import { Reputation } from '../wrappers/Reputation.js';
+import { Reputation } from '../wrappers/Reputation';
 import { compile } from '@ton/blueprint';
 export async function run(provider) {
     const reputation = provider.open(Reputation.createFromConfig({}, await compile('Reputation')));
