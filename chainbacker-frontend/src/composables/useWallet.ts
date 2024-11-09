@@ -1,11 +1,10 @@
-import { mnemonicToWalletKey } from "@ton/crypto";
-import {TonClient, WalletContractV4} from "@ton/ton";
+import { TonClient } from "@ton/ton";
 import {ref} from "vue";
 import {getHttpEndpoint} from "@orbs-network/ton-access";
-import {MNEMONIC_MOCK} from "@/mocks/mocks.ts";
+import { useTonAddress, useTonWallet } from '@townsquarelabs/ui-vue';
 
-const wallet = ref<WalletContractV4 | null>()
-const walletAddress = ref<string | null>()
+const wallet = ref<any | null>()
+const walletAddress = ref<any | null>()
 const walletBalance = ref<bigint | null>()
 const client = ref<TonClient | null>()
 export function useWallet() {
@@ -15,15 +14,15 @@ export function useWallet() {
         return new TonClient({ endpoint })
     }
     const initUserWallet = async () => {
-        if (wallet.value) {
-           return
-        }
+        wallet.value = useTonWallet()
 
-        const key = await mnemonicToWalletKey(MNEMONIC_MOCK.split(" "));
+        walletAddress.value = useTonAddress()
 
-        wallet.value = WalletContractV4.create({ publicKey: key.publicKey, workchain: 0 });
-
-        walletAddress.value = wallet.value.address.toString({ testOnly: true })
+        // const key = await mnemonicToWalletKey(MNEMONIC_MOCK.split(" "));
+        //
+        // wallet.value = WalletContractV4.create({ publicKey: key.publicKey, workchain: 0 });
+        //
+        // walletAddress.value = wallet.value.address.toString({ testOnly: true })
 
         client.value = await getClient()
     }

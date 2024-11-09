@@ -17,6 +17,11 @@ import Dialog from 'primevue/dialog';
 import { ref } from "vue";
 import CreateModal from "@/components/modals/CreateModal.vue";
 
+import { useWallet } from "@/composables/useWallet.ts";
+const { initUserWallet } = useWallet()
+
+initUserWallet()
+
 const isCreateModalOpened = ref(false)
 const openCreateModal = () => {
   isCreateModalOpened.value = !isCreateModalOpened.value
