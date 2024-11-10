@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import Carousel from 'primevue/carousel';
 
-const getImage = (src: string) => {
-  const path = new URL('@/assets/Tour/', import.meta.url);
-  return `${path}/${src}`
-}
+// const getImage = (src: string) => {
+//   const path = new URL('@/assets/Tour/', import.meta.url);
+//   return `${path}/${src}`
+// }
 
 const TOUR_SLIDES = [
     { image: 'slide_1.png', description: 'Welcome to deTon8! Join to deTONation and support your favorite projects. Now we will call you DETONER' } ,
