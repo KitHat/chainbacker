@@ -4,9 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8f02abe-1c6a-4854-b971-bcd0ee5660b7" name="Changes" comment="build: add ton manifest">
+    <list default="true" id="c8f02abe-1c6a-4854-b971-bcd0ee5660b7" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/chainbacker-frontend/src/components/DetonateCard.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chainbacker-frontend/src/components/MostActiveKick.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chainbacker-frontend/src/components/icons/ArrowIcon.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/components/Card.vue" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/components/Card.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/mocks/mocks.ts" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/mocks/mocks.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/views/MainPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/views/MainPage.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,8 +23,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Vue Composition API Component" />
         <option value="TypeScript File" />
+        <option value="Vue Composition API Component" />
       </list>
     </option>
   </component>
@@ -43,7 +50,7 @@
     "WebServerToolWindowFactoryState": "false",
     "com.codeium.enabled": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/Users/vitalijlukanov/WebstormProjects/chainbacker/chainbacker-frontend",
+    "last_opened_file_path": "/Users/vitalijlukanov/WebstormProjects/chainbacker/chainbacker-frontend/src/components",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -60,6 +67,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/chainbacker-frontend/src/components" />
       <recent name="$PROJECT_DIR$/chainbacker-frontend/src/compiled_contracts" />
       <recent name="$PROJECT_DIR$/chainbacker-frontend" />
     </key>
