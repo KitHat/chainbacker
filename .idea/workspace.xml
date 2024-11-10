@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8f02abe-1c6a-4854-b971-bcd0ee5660b7" name="Changes" comment="feat: ui fixes">
+    <list default="true" id="c8f02abe-1c6a-4854-b971-bcd0ee5660b7" name="Changes" comment="fix: ui fixes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/mocks/mocks.ts" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/mocks/mocks.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/App.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -212,7 +212,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731235709148</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="fix: ui fixes">
+      <option name="closed" value="true" />
+      <created>1731236362676</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1731236362676</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -253,6 +261,7 @@
     <MESSAGE value="feat: update main page" />
     <MESSAGE value="feat: update project page" />
     <MESSAGE value="feat: ui fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: ui fixes" />
+    <MESSAGE value="fix: ui fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: ui fixes" />
   </component>
 </project>
