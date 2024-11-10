@@ -23,7 +23,7 @@ const TOUR_SLIDES = [
     >
       <template #item="{ data }">
         <div class="flex flex-col gap-6 items-center mb-4">
-          <img class="w-[190px] h-[190px]" :src="getImage(data.image)" alt="">
+          <img class="w-[190px] h-[190px]" :src="data.image" alt="">
           <p v-if="'description' in data" class="text-center text-lg font-bold">{{ data.description }}</p>
         </div>
       </template>

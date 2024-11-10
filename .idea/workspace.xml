@@ -4,10 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8f02abe-1c6a-4854-b971-bcd0ee5660b7" name="Changes" comment="feat: add tour modal">
-      <change afterPath="$PROJECT_DIR$/chainbacker-frontend/src/assets/sbanner.png" afterDir="false" />
+    <list default="true" id="c8f02abe-1c6a-4854-b971-bcd0ee5660b7" name="Changes" comment="feat: add banner girl">
+      <change afterPath="$PROJECT_DIR$/chainbacker-frontend/public/slide_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chainbacker-frontend/public/slide_2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chainbacker-frontend/public/slide_3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chainbacker-frontend/public/slide_4.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/views/MainPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/views/MainPage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/components/modals/TourModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/components/modals/TourModal.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,7 +47,7 @@
     "WebServerToolWindowFactoryState": "false",
     "com.codeium.enabled": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/Users/vitalijlukanov/WebstormProjects/chainbacker/chainbacker-frontend/src/assets",
+    "last_opened_file_path": "/Users/vitalijlukanov/WebstormProjects/chainbacker/chainbacker-frontend/public",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -61,11 +64,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/chainbacker-frontend/public" />
       <recent name="$PROJECT_DIR$/chainbacker-frontend/src/assets" />
       <recent name="$PROJECT_DIR$/chainbacker-frontend/src/assets/Tour" />
       <recent name="$PROJECT_DIR$/chainbacker-frontend/src/components" />
       <recent name="$PROJECT_DIR$/chainbacker-frontend/src/compiled_contracts" />
-      <recent name="$PROJECT_DIR$/chainbacker-frontend" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/chainbacker-frontend/src/assets/Tour" />
@@ -240,7 +243,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731241213867</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="feat: add banner girl">
+      <option name="closed" value="true" />
+      <created>1731243926894</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1731243926894</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -285,6 +296,7 @@
     <MESSAGE value="feat: add anime girl" />
     <MESSAGE value="feat: change text font" />
     <MESSAGE value="feat: add tour modal" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: add tour modal" />
+    <MESSAGE value="feat: add banner girl" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add banner girl" />
   </component>
 </project>
