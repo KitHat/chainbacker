@@ -29,8 +29,9 @@
           </template>
         </Carousel>
       </section>
-      <section class="rounded-2xl w-full bg-success-700 h-[200px] mb-8 flex items-center justify-center bg-gradient-to-l from-success-700 to-success-500">
-        <p class="text-center text-xl font-bold">Join the community and support your favorite projects</p>
+      <section class="relative rounded-2xl w-full bg-success-700 h-[200px] mb-8 flex items-center justify-center bg-gradient-to-l from-success-700 to-success-500">
+        <img class="absolute right-0 h-[190px]" src="../assets/Tour/slide_1.png" alt="">
+        <p class="absolute left-0 ml-3 w-1/2 text-center text-xl font-bold">Join to detonation and support your favorite projects</p>
       </section>
       <h2 class="text-3xl font-bold mb-6">
         Detonate soon
