@@ -8,6 +8,10 @@
       <CreateModal @on-close="isCreateModalOpened = false"
                    :is-visible="isCreateModalOpened" />
     </Dialog>
+    <Dialog v-model:visible="isTourModalOpened" modal :style="{ width: '25rem' }">
+      <TourModal @on-close="isTourModalOpened = false"
+                   :is-visible="isTourModalOpened" />
+    </Dialog>
   </Teleport>
 </template>
 
@@ -18,11 +22,14 @@ import { ref } from "vue";
 import CreateModal from "@/components/modals/CreateModal.vue";
 
 import { useWallet } from "@/composables/useWallet.ts";
+import TourModal from "@/components/modals/TourModal.vue";
 const { initUserWallet } = useWallet()
 
 initUserWallet()
 
 const isCreateModalOpened = ref(false)
+
+const isTourModalOpened = ref(true)
 const openCreateModal = () => {
   isCreateModalOpened.value = !isCreateModalOpened.value
 }
