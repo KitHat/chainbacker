@@ -24,7 +24,6 @@
 import Card from "primevue/card";
 
 import { computed } from "vue";
-import Chip from "primevue/chip";
 import ProgressBar from "primevue/progressbar";
 
 const props = defineProps<{
@@ -37,8 +36,6 @@ const props = defineProps<{
   daysLeft: number
   type: string
 }>()
-
-const subtitle = computed(() => `${props.raisedSum || 0} TON`)
 
 const remainSum = computed(() => props.totalSum - props.raisedSum)
 

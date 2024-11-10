@@ -65,15 +65,16 @@
 import Tag from 'primevue/tag';
 import Card from "@/components/Card.vue";
 import Carousel from 'primevue/carousel';
-import {CARDS_MOCK, DETONATE_CARDS_MOCK} from "@/mocks/mocks.ts";
+import { CARDS_MOCK, DETONATE_CARDS_MOCK } from "@/mocks/mocks.ts";
 import MostActiveKick from "@/components/MostActiveKick.vue";
 import DetonateCard from "@/components/DetonateCard.vue";
 
 const CHIPS_FILTER_MOCK = ['Art & Design',
   'Technology & Gadgets',
   'Games (Board Games, Video Games)',
-'Film & Video',
-'Music & Performance']
+  'Film & Video',
+  'Music & Performance'
+]
 </script>
 
 <style scoped>

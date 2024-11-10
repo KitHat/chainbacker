@@ -4,16 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8f02abe-1c6a-4854-b971-bcd0ee5660b7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/chainbacker-frontend/src/components/DetonateCard.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chainbacker-frontend/src/components/MostActiveKick.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chainbacker-frontend/src/components/icons/ArrowIcon.vue" afterDir="false" />
+    <list default="true" id="c8f02abe-1c6a-4854-b971-bcd0ee5660b7" name="Changes" comment="feat: update main page">
+      <change afterPath="$PROJECT_DIR$/chainbacker-frontend/src/mocks/kicks.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/components/Card.vue" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/components/Card.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/mocks/mocks.ts" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/mocks/mocks.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/components/DetonateCard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/components/DetonateCard.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/views/MainPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/views/MainPage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/views/ProfilePage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/views/ProfilePage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/views/ProjectPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/views/ProjectPage.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,6 +69,7 @@
       <recent name="$PROJECT_DIR$/chainbacker-frontend" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/chainbacker-frontend/src/mocks" />
       <recent name="$PROJECT_DIR$/chainbacker-frontend/public" />
       <recent name="$PROJECT_DIR$/chainbacker-frontend/src" />
       <recent name="$PROJECT_DIR$/chainbacker-frontend/src/composables" />
@@ -194,7 +192,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731187060909</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="feat: update main page">
+      <option name="closed" value="true" />
+      <created>1731225159681</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1731225159681</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -232,6 +238,7 @@
     <MESSAGE value="feat: send kick WIP" />
     <MESSAGE value="build: add ton manifest" />
     <MESSAGE value="feat: add useTonAddress and useTonWallets" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: add useTonAddress and useTonWallets" />
+    <MESSAGE value="feat: update main page" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: update main page" />
   </component>
 </project>

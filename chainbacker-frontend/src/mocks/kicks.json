@@ -1,0 +1,83 @@
+[
+    {
+        "id": 1,
+        "title": "BelaBag. Converts your yoga mat into a stylish bag.",
+        "description": "A unique way to carry your yoga mat, kit & essentials in one bag. With stretch goals for picnic blanket, sleeping bag & airbed versions",
+        "img": "https://i.kickstarter.com/assets/047/017/107/29cb310d476e3f8ff605fad45ab83e99_original.png?fit=scale-down&origin=ugc&width=680&sig=3yX8nBeEi8uqTNSALL4%2F3saUQPvwzMe2kBA5Sej9fbM%3D",
+        "type": "Technology & Gadgets",
+        "totalSum": 500,
+        "raisedSum": 400,
+        "expirationDate": 1731657672,
+        "tiers": [
+            {
+                "title": "1 BelaBag",
+                "description": "- Choose from 3 colours before the campaign ends.",
+                "price": 11
+            },
+            {
+                "title": "2 BelaBagw",
+                "description": "- Choose from 3 colours before the campaign ends.",
+                "price": 20
+            },
+            {
+                "title": "Full Bundle",
+                "description": "BelaBag, Card Holder & Laptop Case",
+                "price": 30
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "title": "Paws and Leaves – A Last Tale",
+        "description": "Join a fox 🦊 finding his memories on his last journey and experience a touching, emotional tale.",
+        "img": "https://i.kickstarter.com/assets/046/813/787/2919509e11a45ea39f196b1eb643ef0d_original.png?fit=scale-down&origin=ugc&width=680&sig=fhj3%2FZoq4WOfborGcPSfGb3MKU%2BPdmWeqshWSrrJqh0%3D",
+        "type": "Games (Board Games, Video Games)",
+        "totalSum": 1000,
+        "raisedSum": 200,
+        "expirationDate": 1734163272,
+        "tiers": [
+            {
+                "title": "Copy of the game",
+                "description": "Support us and receive a copy of the game",
+                "price": 4
+            },
+            {
+                "title": "Full Pack: Game + OST + Art Pack",
+                "description": "Get an OST and arts from the game! You can use the OST and Art like you have a license",
+                "price": 8
+            },
+            {
+                "title": "Big Support!",
+                "description": "Get everything from previous levels, and get mentioned in titles! Thank you!",
+                "price": 20
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "title": "🎄✨ Chibi Santa Senshi Enamel Pin Collection ✨🎄",
+        "description": "Celebrate the Season with Sailor Senshi in Santa Suits!",
+        "img": "https://i.kickstarter.com/assets/046/884/810/04556a878b4f31262b236fd5a8188fa1_original.jpg?origin=ugc&q=80&width=600&sig=TyVkBaJCkZflWkG65h%2FLrYy9lDHj%2BT9Y2J2rOKsfQBs%3D",
+        "type": "Art & Design",
+        "totalSum": 100,
+        "raisedSum": 300,
+        "expirationDate": 1731657672,
+        "tiers": [
+            {
+                "title": "💜Waterproof Sticker Pack💜",
+                "description": "❀ You will receive 7 die-cut 5.5cms Vinyl stickers (one of each design)!",
+                "price": 1.5
+            },
+            {
+                "title": "💜11cm Holo effect Acrylic Standee💜",
+                "description": "🌟You will receive 1, 11cm Holo effect Acrylic Standee🌟 you can choose the style at the end of the campaign.",
+                "price": 2.5
+            },
+            {
+                "title": "💜Acrylic Keychain💜",
+                "description": "🌟You will receive 1, Acrylic Keychain🌟",
+                "price": 2.5
+            }
+        ]
+    }
+]

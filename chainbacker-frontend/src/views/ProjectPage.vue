@@ -7,11 +7,11 @@
     <section class="mb-5 flex justify-between">
       <div>
         <p class="p-card-subtitle">Raised so far</p>
-        <p class="text-2xl font-bold text-success-500">{{  PROJECT_MOCK.raisedSum }} <span class="text-lg">{{ progress }}%</span> </p>
+        <p class="text-2xl font-bold text-success-500">{{  PROJECT_MOCK.raisedSum }} TON <span class="text-lg">{{ progress }}%</span> </p>
       </div>
       <div>
         <p class="p-card-subtitle font-bold">Raised so far</p>
-        <p class="text-2xl font-bold text-success-100">{{  PROJECT_MOCK.totalSum }}</p>
+        <p class="text-2xl font-bold text-success-100">{{  PROJECT_MOCK.totalSum }} TON</p>
       </div>
     </section>
     <ProgressBar class="mb-4" style="height: 10px" :value="progress">
@@ -30,12 +30,29 @@
     <section class="mr-[-28px] ml-[-28px]">
       <Divider></Divider>
     </section>
-    <h2 class="text-2xl font-bold mb-2">
-      Description
-    </h2>
-    <p class="p-card-subtitle">
-      Lorem ipsum dolor sit amet consectetur. Pharetra odio dictumst lacus ipsum. Quis aliquam orci pulvinar eu elementum mauris vivamus... Read more
-    </p>
+    <div class="mb-5">
+      <h2 class="text-2xl font-bold mb-2">
+        Description
+      </h2>
+      <p class="p-card-subtitle">
+        Lorem ipsum dolor sit amet consectetur. Pharetra odio dictumst lacus ipsum. Quis aliquam orci pulvinar eu elementum mauris vivamus... Read more
+      </p>
+    </div>
+    <section class="mr-[-28px] ml-[-28px] mb-8">
+      <Divider></Divider>
+    </section>
+    <section>
+      <h2 class="text-2xl font-bold mb-1">
+        Tiers
+      </h2>
+      <section>
+        <DataTable :value="PROJECT_MOCK.tiers">
+          <Column field="title"></Column>
+          <Column field="description"></Column>
+          <Column field="price"></Column>
+        </DataTable>
+      </section>
+    </section>
   </section>
 </template>
 
@@ -47,6 +64,8 @@ import Button from "primevue/button";
 import Fluid from "primevue/fluid";
 import {Divider} from "primevue";
 import {computed} from "vue";
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
 
 const PROJECT_MOCK = {
   id: 1,
@@ -57,8 +76,15 @@ const PROJECT_MOCK = {
   backersCounter: 450,
   daysLeft: 28,
   type: 'EdTech',
-  description: 'Lorem ipsum dolor sit amet consectetur. Pharetra odio dictumst lacus ipsum. Quis aliquam orci pulvinar eu elementum mauris vivamus... Read more'
+  description: 'Lorem ipsum dolor sit amet consectetur. Pharetra odio dictumst lacus ipsum. Quis aliquam orci pulvinar eu elementum mauris vivamus... Read more',
+  tiers: [
+    { title: 'Tiers 1', description: 'Lorem ipsum dolor sit amet consectetur. Pharetra odio dictumst lacus ipsum. Quis aliquam orci pulvinar', price: 5 },
+    { title: 'Tiers 2', description: 'Lorem ipsum dolor sit amet consectetur. Pharetra odio dictumst lacus ipsum. Quis aliquam orci pulvinar', price: 10 },
+    { title: 'Tiers 3', description: 'Lorem ipsum dolor sit amet consectetur. Pharetra odio dictumst lacus ipsum. Quis aliquam orci pulvinar', price: 15 }
+  ]
 }
+
+
 
 const progress = computed(() => (PROJECT_MOCK.raisedSum / PROJECT_MOCK.totalSum) * 100)
 </script>

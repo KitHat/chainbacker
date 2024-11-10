@@ -1,7 +1,7 @@
 <template>
   <section>
-    <div class="relative mt-[-20px] mr-[-28px] ml-[-28px] mb-20">
-      <img :style="{ width: 'calc(100% + 120px)' }" class="block aspect-[16/9]" src="@/assets/images.jpeg" alt="">
+    <div class="relative mt-[-20px] mr-[-28px] ml-[-28px] mb-20 bg-gradient-to-l from-success-700 to-success-500">
+      <img :style="{ width: 'calc(100% + 120px)' }" class="invisible block aspect-[16/9]" src="@/assets/images.jpeg" alt="">
       <img src="@/assets/images.jpeg" class="w-[120px] h-[120px] rounded-full border-4 absolute bottom-0 translate-y-1/2 right-1/2 translate-x-1/2" alt="" />
     </div>
     <section class="flex flex-col justify-center items-center">
