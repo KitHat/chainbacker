@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8f02abe-1c6a-4854-b971-bcd0ee5660b7" name="Changes" comment="feat: add banner girl">
-      <change afterPath="$PROJECT_DIR$/chainbacker-frontend/public/slide_1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chainbacker-frontend/public/slide_2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chainbacker-frontend/public/slide_3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chainbacker-frontend/public/slide_4.png" afterDir="false" />
+    <list default="true" id="c8f02abe-1c6a-4854-b971-bcd0ee5660b7" name="Changes" comment="fix: lint fix">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/components/modals/TourModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/components/modals/TourModal.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/mocks/kicks.json" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/mocks/kicks.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -251,7 +247,23 @@
       <option name="project" value="LOCAL" />
       <updated>1731243926894</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="feat: add banner girl path">
+      <option name="closed" value="true" />
+      <created>1731244202412</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1731244202412</updated>
+    </task>
+    <task id="LOCAL-00017" summary="fix: lint fix">
+      <option name="closed" value="true" />
+      <created>1731244317413</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1731244317413</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -297,6 +309,8 @@
     <MESSAGE value="feat: change text font" />
     <MESSAGE value="feat: add tour modal" />
     <MESSAGE value="feat: add banner girl" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: add banner girl" />
+    <MESSAGE value="feat: add banner girl path" />
+    <MESSAGE value="fix: lint fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: lint fix" />
   </component>
 </project>
