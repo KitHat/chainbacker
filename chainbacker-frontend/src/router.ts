@@ -12,5 +12,9 @@ const routes = [
 
 export const APP_ROUTER = createRouter({
   history: createMemoryHistory(),
+  scrollBehavior() {
+    // always scroll to top
+    return { top: 0 }
+  },
   routes,
 })

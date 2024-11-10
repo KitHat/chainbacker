@@ -1,31 +1,32 @@
 <template>
   <section>
-    <div class="mt-[-20px] mr-[-28px] ml-[-28px]">
-      <img :style="{ width: 'calc(100% + 120px)' }" class="block aspect-[4/3]  mb-2" src="@/assets/images.jpeg" alt="">
+    <div class="mt-[-20px] mr-[-28px] ml-[-28px] relative">
+      <img :style="{ width: 'calc(100% + 120px)' }" class="block aspect-[4/3]  mb-2 absolute top-0 left-0 invisible" src="@/assets/images.jpeg" alt="">
+      <img :style="{ width: 'calc(100% + 120px)' }" class="block aspect-[4/3]  mb-2" :src="currentProject.img" alt="">
     </div>
-    <p class="mb-5 p-card-title">{{ PROJECT_MOCK.title }}</p>
+    <p class="mb-5 p-card-title">{{ currentProject.title }}</p>
     <section class="mb-5 flex justify-between">
       <div>
         <p class="p-card-subtitle">Raised so far</p>
-        <p class="text-2xl font-bold text-success-500">{{  PROJECT_MOCK.raisedSum }} TON <span class="text-lg">{{ progress }}%</span> </p>
+        <p v-if="'raisedSum' in currentProject" class="text-2xl font-bold text-success-500">{{  currentProject.raisedSum }} TON <span class="text-lg">{{ Math.round(progress) }}%</span> </p>
       </div>
       <div>
-        <p class="p-card-subtitle font-bold">Raised so far</p>
-        <p class="text-2xl font-bold text-success-100">{{  PROJECT_MOCK.totalSum }} TON</p>
+        <p class="p-card-subtitle font-bold">Target</p>
+        <p v-if="'totalSum' in currentProject" class="text-2xl font-bold text-success-100">{{  currentProject.totalSum }} TON</p>
       </div>
     </section>
     <ProgressBar class="mb-4" style="height: 10px" :value="progress">
       <span class="hidden">{{ progress }}</span>
     </ProgressBar>
     <section class="mb-5 flex justify-between">
-      <Chip :label="PROJECT_MOCK.type"></Chip>
-      <div class="flex items-center gap-1">
+      <Chip :label="currentProject.type"></Chip>
+      <div v-if="'daysLeft' in currentProject" class="flex items-center gap-1">
         <ClockIcon class="w-[18px]" />
-        <p><span class="text-success-500">{{ PROJECT_MOCK.daysLeft }}</span> days left</p>
+        <p><span class="text-success-500">{{ currentProject.daysLeft }}</span> days left</p>
       </div>
     </section>
     <Fluid class="mb-1">
-      <Button>Donate Now</Button>
+      <Button @click="onClick">Detonate Now</Button>
     </Fluid>
     <section class="mr-[-28px] ml-[-28px]">
       <Divider></Divider>
@@ -35,7 +36,7 @@
         Description
       </h2>
       <p class="p-card-subtitle">
-        Lorem ipsum dolor sit amet consectetur. Pharetra odio dictumst lacus ipsum. Quis aliquam orci pulvinar eu elementum mauris vivamus... Read more
+        {{ currentProject.description }}
       </p>
     </div>
     <section class="mr-[-28px] ml-[-28px] mb-8">
@@ -46,47 +47,45 @@
         Tiers
       </h2>
       <section>
-        <DataTable :value="PROJECT_MOCK.tiers">
+        <DataTable :value="currentProject.tiers">
           <Column field="title"></Column>
           <Column field="description"></Column>
           <Column field="price"></Column>
         </DataTable>
       </section>
     </section>
+    <Toast />
   </section>
 </template>
 
 <script setup lang="ts">
+import Toast from 'primevue/toast';
 import ProgressBar from 'primevue/progressbar';
 import Chip from "primevue/chip";
 import ClockIcon from "@/components/icons/ClockIcon.vue";
 import Button from "primevue/button";
 import Fluid from "primevue/fluid";
 import {Divider} from "primevue";
-import {computed} from "vue";
+import {computed, ref} from "vue";
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
+import {CARDS_MOCK} from "@/mocks/mocks.ts";
+import {useRoute} from "vue-router";
+import { useToast } from "primevue/usetoast";
 
-const PROJECT_MOCK = {
-  id: 1,
-  image: '',
-  title: 'Light',
-  raisedSum: 40,
-  totalSum: 500,
-  backersCounter: 450,
-  daysLeft: 28,
-  type: 'EdTech',
-  description: 'Lorem ipsum dolor sit amet consectetur. Pharetra odio dictumst lacus ipsum. Quis aliquam orci pulvinar eu elementum mauris vivamus... Read more',
-  tiers: [
-    { title: 'Tiers 1', description: 'Lorem ipsum dolor sit amet consectetur. Pharetra odio dictumst lacus ipsum. Quis aliquam orci pulvinar', price: 5 },
-    { title: 'Tiers 2', description: 'Lorem ipsum dolor sit amet consectetur. Pharetra odio dictumst lacus ipsum. Quis aliquam orci pulvinar', price: 10 },
-    { title: 'Tiers 3', description: 'Lorem ipsum dolor sit amet consectetur. Pharetra odio dictumst lacus ipsum. Quis aliquam orci pulvinar', price: 15 }
-  ]
+const toast = useToast();
+
+const route = useRoute()
+
+const currentProject = ref(CARDS_MOCK.find(item => item.id === Number(route.params.id)) as typeof CARDS_MOCK[0])
+
+const progress = computed(() => (currentProject.value.raisedSum / currentProject.value.totalSum) * 100)
+
+const onClick = () => {
+  currentProject.value.raisedSum += 3
+
+  toast.add({ severity: 'success', summary: 'You successfully detonated!', detail: `Creator of ${currentProject.value.title} is happy 🎉`, life: 3000 })
 }
-
-
-
-const progress = computed(() => (PROJECT_MOCK.raisedSum / PROJECT_MOCK.totalSum) * 100)
 </script>
 
 <style scoped>

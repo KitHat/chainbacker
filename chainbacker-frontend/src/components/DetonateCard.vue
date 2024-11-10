@@ -2,18 +2,22 @@
   <Card class="card-container overflow-hidden">
     <template #header>
       <div class="w-full relative">
-        <img class="w-full object-cover aspect-[3/3]" src="@/assets/images.jpeg" alt="title">
         <div class="card-progress-bar">
-          <ProgressBar class="card-progress-bar__animation absolute -rotate-90 top-0 w-full" style="height: 10px" :value="meterValue">
+          <ProgressBar class="z-20card-progress-bar__animation absolute -rotate-90 top-0 w-full" style="height: 10px" :value="meterValue">
             <span class="hidden">{{ meterValue ?? 0 }}</span>
           </ProgressBar>
         </div>
+        <section class="relative">
+          <img class="w-full object-cover aspect-[3/3] invisible" src="@/assets/images.jpeg" alt="title">
+          <img class="absolute top-0 left-0 z-10 h-full w-full object-cover aspect-[4/3]" :src="img" alt="title">
+        </section>
       </div>
     </template>
     <template #content>
-      <p class="text-lg font-bold mb-2">{{ title }}</p>
+      <p class="text-lg font-bold mb-2 text-ellipsis overflow-hidden max-h-[32px]">{{ title }}</p>
       <p class="text-sm mb-1">
-        Remains <span class="text-success-500">{{ remainSum }} TON </span>
+        <span v-if="props.totalSum - props.raisedSum > 0">Remains <span class="text-success-500">{{ remainSum }} TON </span></span>
+        <span v-else>Over <span class="text-success-500">{{ remainSum }} TON </span></span>
       </p>
       <p><span class="text-success-500">{{ daysLeft }}</span> days left</p>
     </template>
@@ -37,7 +41,7 @@ const props = defineProps<{
   type: string
 }>()
 
-const remainSum = computed(() => props.totalSum - props.raisedSum)
+const remainSum = computed(() => props.totalSum - props.raisedSum > 0 ? props.totalSum - props.raisedSum : props.raisedSum - props.totalSum)
 
 const meterValue = computed(() => props.raisedSum / props.totalSum * 100)
 </script>
@@ -48,6 +52,7 @@ const meterValue = computed(() => props.raisedSum / props.totalSum * 100)
   width: calc(100% - 20px);
   top: 50%;
   left: 50%;
+  z-index: 50;
 }
 
 @keyframes skew-y-shakeng{

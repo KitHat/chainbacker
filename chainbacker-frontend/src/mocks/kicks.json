@@ -7,7 +7,7 @@
         "type": "Technology & Gadgets",
         "totalSum": 500,
         "raisedSum": 400,
-        "expirationDate": 1731657672,
+        "daysLeft": 4,
         "tiers": [
             {
                 "title": "1 BelaBag",
@@ -34,7 +34,7 @@
         "type": "Games (Board Games, Video Games)",
         "totalSum": 1000,
         "raisedSum": 200,
-        "expirationDate": 1734163272,
+        "daysLeft": 6,
         "tiers": [
             {
                 "title": "Copy of the game",
@@ -61,7 +61,7 @@
         "type": "Art & Design",
         "totalSum": 100,
         "raisedSum": 300,
-        "expirationDate": 1731657672,
+        "daysLeft": 10,
         "tiers": [
             {
                 "title": "💜Waterproof Sticker Pack💜",
@@ -77,6 +77,314 @@
                 "title": "💜Acrylic Keychain💜",
                 "description": "🌟You will receive 1, Acrylic Keychain🌟",
                 "price": 2.5
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "title": "Smart Pet Feeder",
+        "description": "A smart pet feeder that allows you to feed your pet from anywhere via a mobile app.",
+        "img": "https://cdn.pixabay.com/photo/2023/12/05/19/05/mulled-claret-8432310_1280.jpg",
+        "type": "Technology & Gadgets",
+        "totalSum": 1200,
+        "raisedSum": 600,
+        "daysLeft": 15,
+        "tiers": [
+            {
+                "title": "Basic Feeder",
+                "description": "Includes one Smart Pet Feeder",
+                "price": 50
+            },
+            {
+                "title": "Premium Feeder",
+                "description": "Smart Pet Feeder + Camera",
+                "price": 80
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "title": "Eco-Friendly Water Bottle",
+        "description": "A sustainable, reusable water bottle made from 100% recyclable materials.",
+        "img": "https://cdn.pixabay.com/photo/2021/10/12/22/24/mulled-wine-6704928_1280.jpg",
+        "type": "Environment & Sustainability",
+        "totalSum": 800,
+        "raisedSum": 400,
+        "daysLeft": 30,
+        "tiers": [
+            {
+                "title": "Single Bottle",
+                "description": "Receive one eco-friendly water bottle.",
+                "price": 10
+            },
+            {
+                "title": "Family Pack",
+                "description": "Receive four eco-friendly water bottles.",
+                "price": 35
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "title": "Vintage Leather Notebook",
+        "description": "Handmade leather notebook for journaling or sketching.",
+        "img": "https://cdn.pixabay.com/photo/2022/02/02/13/51/drink-6988494_1280.jpg",
+        "type": "Art & Design",
+        "totalSum": 500,
+        "raisedSum": 450,
+        "daysLeft": 8,
+        "tiers": [
+            {
+                "title": "Single Notebook",
+                "description": "One vintage leather notebook.",
+                "price": 15
+            },
+            {
+                "title": "Collector's Edition",
+                "description": "Notebook + Leather Bookmark",
+                "price": 25
+            }
+        ]
+    },
+    {
+        "id": 7,
+        "title": "3D-Printed Miniatures",
+        "description": "Fantasy miniatures for tabletop gaming, made with high-quality 3D printing.",
+        "img": "https://cdn.pixabay.com/photo/2021/10/12/22/14/mulled-wine-6704906_1280.jpg",
+        "type": "Games (Board Games, Video Games)",
+        "totalSum": 900,
+        "raisedSum": 300,
+        "daysLeft": 7,
+        "tiers": [
+            {
+                "title": "Basic Set",
+                "description": "Set of 5 miniatures",
+                "price": 10
+            },
+            {
+                "title": "Advanced Set",
+                "description": "Set of 10 miniatures + Exclusive character",
+                "price": 20
+            }
+        ]
+    },
+    {
+        "id": 8,
+        "title": "Plant-Based Vegan Cookbook",
+        "description": "A cookbook with over 100 plant-based recipes.",
+        "img": "https://cdn.pixabay.com/photo/2019/12/12/17/58/new-years-eve-4691320_1280.jpg",
+        "type": "Food & Drink",
+        "totalSum": 1000,
+        "raisedSum": 700,
+        "daysLeft": 16,
+        "tiers": [
+            {
+                "title": "E-Book Version",
+                "description": "Receive a digital copy of the cookbook.",
+                "price": 8
+            },
+            {
+                "title": "Printed Version",
+                "description": "Receive a physical copy of the cookbook.",
+                "price": 20
+            }
+        ]
+    },
+    {
+        "id": 9,
+        "title": "Portable Solar Charger",
+        "description": "A lightweight, portable solar charger for all your devices.",
+        "img": "https://cdn.pixabay.com/photo/2021/11/11/13/07/sparkling-wine-6786251_1280.jpg",
+        "type": "Technology & Gadgets",
+        "totalSum": 1500,
+        "raisedSum": 750,
+        "daysLeft": 21,
+        "tiers": [
+            {
+                "title": "Single Charger",
+                "description": "One portable solar charger.",
+                "price": 25
+            },
+            {
+                "title": "Family Pack",
+                "description": "Receive three portable solar chargers.",
+                "price": 70
+            }
+        ]
+    },
+    {
+        "id": 10,
+        "title": "Ocean Cleanup Bracelet",
+        "description": "A bracelet made from ocean plastic, symbolizing your support for cleaner oceans.",
+        "img": "https://cdn.pixabay.com/photo/2020/01/01/18/51/champagne-4734176_1280.jpg",
+        "type": "Environment & Sustainability",
+        "totalSum": 600,
+        "raisedSum": 300,
+        "daysLeft": 29,
+        "tiers": [
+            {
+                "title": "Single Bracelet",
+                "description": "Receive one ocean cleanup bracelet.",
+                "price": 5
+            },
+            {
+                "title": "Collector's Pack",
+                "description": "Receive five different color bracelets.",
+                "price": 20
+            }
+        ]
+    },
+    {
+        "id": 11,
+        "title": "Smart Garden Kit",
+        "description": "A kit to grow fresh herbs and vegetables indoors with minimal effort.",
+        "img": "https://cdn.pixabay.com/photo/2015/03/17/16/32/cork-678017_1280.jpg",
+        "type": "Home & Living",
+        "totalSum": 2000,
+        "raisedSum": 1200,
+        "daysLeft": 1,
+        "tiers": [
+            {
+                "title": "Basic Kit",
+                "description": "Includes herbs seeds and soil.",
+                "price": 30
+            },
+            {
+                "title": "Advanced Kit",
+                "description": "Herbs + vegetable seeds + additional accessories",
+                "price": 50
+            }
+        ]
+    },
+    {
+        "id": 12,
+        "title": "Personalized Pet Portraits",
+        "description": "Commission a custom portrait of your pet, hand-drawn by professional artists.",
+        "img": "https://cdn.pixabay.com/photo/2015/02/18/06/32/corks-640362_1280.jpg",
+        "type": "Art & Design",
+        "totalSum": 700,
+        "raisedSum": 500,
+        "daysLeft": 5,
+        "tiers": [
+            {
+                "title": "Single Portrait",
+                "description": "One pet portrait (digital format)",
+                "price": 30
+            },
+            {
+                "title": "Framed Portrait",
+                "description": "Receive a printed, framed version.",
+                "price": 50
+            }
+        ]
+    },
+    {
+        "id": 13,
+        "title": "The Storyteller's Dice",
+        "description": "A set of unique dice designed to inspire creativity and storytelling.",
+        "img": "https://cdn.pixabay.com/photo/2020/01/06/19/01/corkscrew-4746000_1280.jpg",
+        "type": "Games (Board Games, Video Games)",
+        "totalSum": 500,
+        "raisedSum": 450,
+        "daysLeft": 3,
+        "tiers": [
+            {
+                "title": "Basic Set",
+                "description": "One set of Storyteller's Dice",
+                "price": 15
+            },
+            {
+                "title": "Collector's Edition",
+                "description": "Storyteller's Dice + Collectible Box",
+                "price": 25
+            }
+        ]
+    },
+    {
+        "id": 14,
+        "title": "Eco-Friendly Travel Utensil Set",
+        "description": "A reusable utensil set designed for eco-conscious travelers.",
+        "img": "https://cdn.pixabay.com/photo/2021/10/12/22/14/mulled-wine-6704906_1280.jpg",
+        "type": "Environment & Sustainability",
+        "totalSum": 800,
+        "raisedSum": 400,
+        "daysLeft": 4,
+        "tiers": [
+            {
+                "title": "Single Set",
+                "description": "Receive one utensil set.",
+                "price": 10
+            },
+            {
+                "title": "Travel Bundle",
+                "description": "Two utensil sets + Travel pouch",
+                "price": 18
+            }
+        ]
+    },
+    {
+        "id": 15,
+        "title": "Wireless Earbuds with AI Noise Cancellation",
+        "description": "High-quality earbuds with advanced AI noise-cancellation technology.",
+        "img": "https://cdn.pixabay.com/photo/2020/01/06/19/03/corkscrew-4746008_1280.jpg",
+        "type": "Technology & Gadgets",
+        "totalSum": 3000,
+        "raisedSum": 2500,
+        "daysLeft": 8,
+        "tiers": [
+            {
+                "title": "Basic Pack",
+                "description": "One pair of wireless earbuds.",
+                "price": 70
+            },
+            {
+                "title": "Family Pack",
+                "description": "Three pairs of wireless earbuds.",
+                "price": 180
+            }
+        ]
+    },
+    {
+        "id": 16,
+        "title": "Artist's Sketchbook",
+        "description": "A high-quality sketchbook for artists, with acid-free paper and a durable cover.",
+        "img": "https://cdn.pixabay.com/photo/2024/10/24/15/55/giraffe-9146077_1280.jpg",
+        "type": "Art & Design",
+        "totalSum": 600,
+        "raisedSum": 350,
+        "daysLeft": 19,
+        "tiers": [
+            {
+                "title": "Single Sketchbook",
+                "description": "Receive one artist's sketchbook.",
+                "price": 15
+            },
+            {
+                "title": "Deluxe Edition",
+                "description": "Sketchbook + Limited edition cover",
+                "price": 25
+            }
+        ]
+    },
+    {
+        "id": 17,
+        "title": "Compact Travel Pillow",
+        "description": "A memory foam travel pillow that fits into any bag for easy transport.",
+        "img": "https://cdn.pixabay.com/photo/2020/12/03/08/05/giraffe-5799824_1280.jpg",
+        "type": "Home & Living",
+        "totalSum": 700,
+        "raisedSum": 550,
+        "daysLeft": 6,
+        "tiers": [
+            {
+                "title": "Basic Pillow",
+                "description": "One compact travel pillow.",
+                "price": 10
+            },
+            {
+                "title": "Travel Pack",
+                "description": "Two compact travel pillows.",
+                "price": 18
             }
         ]
     }

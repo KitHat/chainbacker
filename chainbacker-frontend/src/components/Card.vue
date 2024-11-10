@@ -1,7 +1,10 @@
 <template>
   <Card class="card-container overflow-hidden">
     <template #header>
-      <img class="w-full object-cover aspect-[4/3]" src="@/assets/images.jpeg" alt="title">
+      <section class="relative">
+        <img class="w-full object-cover aspect-[4/3] invisible" src="@/assets/images.jpeg" alt="title">
+        <img class="absolute top-0 left-0 z-10 h-full w-full object-cover aspect-[4/3]" :src="img" alt="title">
+      </section>
     </template>
     <template #title>
       {{ title }}

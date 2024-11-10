@@ -28,6 +28,7 @@
 }
 
 body {
+  user-select: none;
   margin: 0 auto;
   max-width: 768px;
   min-width: 320px;

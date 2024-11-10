@@ -30,13 +30,13 @@
         </Carousel>
       </section>
       <section class="rounded-2xl w-full bg-success-700 h-[200px] mb-8 flex items-center justify-center bg-gradient-to-l from-success-700 to-success-500">
-        <p class="text-center">Join the community and support your favorite projects (girls on banner)</p>
+        <p class="text-center text-xl font-bold">Join the community and support your favorite projects</p>
       </section>
       <h2 class="text-3xl font-bold mb-6">
         Detonate soon
       </h2>
       <section class="mb-8">
-        <Carousel :value="DETONATE_CARDS_MOCK" :num-visible="2"
+        <Carousel :value="CARDS_MOCK.slice(Math.max(CARDS_MOCK.length - 5, 1))" :num-visible="2"
                   :indicators-content-class="null"
                   :show-indicators="false"
                   :show-navigators="false"
@@ -65,9 +65,9 @@
 import Tag from 'primevue/tag';
 import Card from "@/components/Card.vue";
 import Carousel from 'primevue/carousel';
-import { CARDS_MOCK, DETONATE_CARDS_MOCK } from "@/mocks/mocks.ts";
 import MostActiveKick from "@/components/MostActiveKick.vue";
 import DetonateCard from "@/components/DetonateCard.vue";
+import {CARDS_MOCK} from "@/mocks/mocks.ts";
 
 const CHIPS_FILTER_MOCK = ['Art & Design',
   'Technology & Gadgets',

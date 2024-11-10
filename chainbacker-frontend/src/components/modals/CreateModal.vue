@@ -17,14 +17,14 @@
       </StepPanel>
     </StepItem>
     <StepItem value="2">
-      <Step>Add date and sum</Step>
+      <Step>Add target sum and end date</Step>
       <StepPanel v-slot="{ activateCallback }">
         <div class="flex flex-col">
           <Fluid>
             <DatePicker placeholder="End fundraising date" v-model="form.expirationDate" class="mb-4" />
           </Fluid>
           <Fluid>
-            <InputNumber placeholder="Sum" v-model="form.sum" inputId="withoutgrouping" :useGrouping="false" fluid />
+            <InputNumber placeholder="Sum" v-model="form.totalSum" inputId="withoutgrouping" :useGrouping="false" fluid />
           </Fluid>
         </div>
         <div class="py-6">
@@ -45,7 +45,7 @@
               <section>
                 <InputText fluid class="mb-4" v-model="tier.title" placeholder="Tier title" />
                 <Textarea fluid class="mb-4" v-model="tier.description" rows="3" placeholder="Describe the reward for this tier" />
-                <InputNumber fluid v-model="tier.price" mode="currency" currency="USD" placeholder="Tier price" />
+                <InputNumber fluid v-model="tier.price" placeholder="Tier price" />
               </section>
             </div>
           </div>
@@ -88,18 +88,37 @@ import StepPanel from 'primevue/steppanel';
 import InputText from "primevue/inputtext";
 import Fluid from "primevue/fluid";
 import Button from "primevue/button";
-import {reactive, ref} from "vue";
+import { reactive, ref } from "vue";
 import { DatePicker, InputNumber, Textarea, FileUpload } from "primevue";
-// import {useCreateProject} from "@/composables/useCreateProject.ts";
+// import {CARDS_MOCK} from "@/mocks/mocks.ts";
+
+// const index = CARDS_MOCK.length
 
 const emit = defineEmits(['onClose'])
 
-// const { createKickInBlockchain } = useCreateProject()
+// {
+//     "id": 14,
+//     "title": "Eco-Friendly Travel Utensil Set",
+//     "description": "A reusable utensil set designed for eco-conscious travelers.",
+//     "img": "https://cdn.pixabay.com/photo/2021/10/12/22/14/mulled-wine-6704906_1280.jpg",
+//     "type": "Environment & Sustainability",
+//     "totalSum": 800,
+//     "raisedSum": 400,
+//     "daysLeft": 4,
+//     "tiers": [
+//   {
+//     "title": "Single Set",
+//     "description": "Receive one utensil set.",
+//     "price": 10
+//   },
+//   {
+//     "title": "Travel Bundle",
+//     "description": "Two utensil sets + Travel pouch",
+//     "price": 18
+//   }
+// ]
+// },
 const onSubmit = () => {
- //blockchain tiers, date, sum
-
-  // createKickInBlockchain(rewardTiers.value, form.expirationDate, sum)
-
   emit('onClose')
 }
 
@@ -107,16 +126,17 @@ const form = reactive({
   title: '',
   description: '',
   expirationDate: new Date,
-  sum: 0,
+  totalSum: 0,
+  raisedSum: 0,
   file: null
 })
 
 const rewardTiers = ref([
-  { title: '', description: '', price: null }
+  { title: '', description: '', price: 0 }
 ]);
 
 const addTier = () => {
-  rewardTiers.value.push({ title: '', description: '', price: null });
+  rewardTiers.value.push({ title: '', description: '', price: 0 });
 };
 
 const removeTier = (index: number) => {

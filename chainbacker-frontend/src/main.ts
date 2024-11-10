@@ -4,6 +4,7 @@ import App from './App.vue'
 import '@twa-dev/sdk';
 import PrimeVue from 'primevue/config';
 import Lara from '@primevue/themes/lara';
+import ToastService from 'primevue/toastservice';
 
 import { APP_ROUTER } from "./router.ts";
 import { TonConnectUIPlugin } from '@townsquarelabs/ui-vue'
@@ -17,7 +18,7 @@ createApp(App).use(PrimeVue,  {
              cssLayer: false
          }
      }
- }).use(TonConnectUIPlugin,{ manifestUrl: MANIFEST_URL_MOCK }).use(APP_ROUTER).mount('#app')
+ }).use(TonConnectUIPlugin,{ manifestUrl: MANIFEST_URL_MOCK }).use(ToastService).use(APP_ROUTER).mount('#app')
 
 
 
