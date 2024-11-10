@@ -6,17 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="c8f02abe-1c6a-4854-b971-bcd0ee5660b7" name="Changes" comment="feat: ui fixes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/components/Card.vue" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/components/Card.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/components/DetonateCard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/components/DetonateCard.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/components/modals/CreateModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/components/modals/CreateModal.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/main.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/mocks/kicks.json" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/mocks/kicks.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/mocks/mocks.ts" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/mocks/mocks.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/router.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/views/MainPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/views/MainPage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/views/ProfilePage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/views/ProfilePage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chainbacker-frontend/src/views/ProjectPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/chainbacker-frontend/src/views/ProjectPage.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -214,7 +204,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731227199743</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="feat: ui fixes">
+      <option name="closed" value="true" />
+      <created>1731235709148</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1731235709148</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
