@@ -18,38 +18,88 @@
 
     if (local_storage.slice_bits() == 0) {
         if (op == 1) {
-            ;; init
+            cell dict = new_dict();
+            dict = dict.udict_set(256, 0, in_msg_body);
+            set_data(dict);
         }
     } else {
         cell dict = local_storage~load_dict();
         if (op == 2) {
-            ;; data struct for a gig 
-            ;; <goal_uint256><collected_uint256><creator_addr><enddate_uint64><level_number_uint8>[<level_price_uint256><level_limit_uint16><level_limit_bought_uint16>]*
+            ;; TODO: check sender!
             builder kick_builder = begin_cell();
-            int target = in_msg_body~load_uint(256);
-            kick_builder = kick_builder.store_uint(target, 256).store_uint(0, 256);
+            ;; load kick target
+            int target = in_msg_body~load_uint(128);
+            kick_builder = kick_builder.store_uint(target, 128).store_uint(0, 128);
+            ;; load kick creator
             int creator = in_msg_body~load_msg_addr();
             kick_builder = kick_builder.store_slice(creator);
+            ;; load kick key
             int key = in_msg_body.load_uint(256);
+            ;; load kick expiration date
             int valid_until = in_msg_body~load_uint(64);
             throw_if(111, valid_until < now());
-            kick_builder = kick_builder.store_uint(valid_until, 256);
-            int level_number = in_msg_body~load_uint(8);
-            throw_unless(112, level_number > 0);
-            kick_builder = kick_builder.store_uint(level_number, 8);
-            repeat (level_number) {
-                int level_price = in_msg_body~load_uint(256);
-                int level_limit = in_msg_body~load_uint(16);
-                kick_builder = kick_builder.store_uint(level_price, 256).store_uint(level_limit, 16).store_uint(0, 16);
+            kick_builder = kick_builder.store_uint(valid_until, 64);
+            ;; load kick levels
+            slice levels = in_msg_body;
+            cell levels_dict = new_dict();
+            int key = 0;
+            while (levels~slice_refs_empty?() != 1) {
+                int level_price = levels~load_uint(128);
+                int level_limit = levels~load_uint(16);
+                cell data = begin_cell().store_uint(level_price, 128).store_uint(0, 16).store_uint(level_limit, 16).end_cell();
+                levels~udict_set(8, key, data.begin_parse());
+                key = key + 1;
+                (slice _a, levels) = levels~load_ref();
             }
-            cell kick = kick_builder.end_cell();
-            dict = dict~udict_set(256, key, kick.begin_parse());
-            set_data(dict);
-        } elseif (op == 3) {
-            ;; back a kick
 
+            kick_builder = kick_builder.store_ref(levels_dict);
+            cell kick = kick_builder.end_cell();
+            ;; save kick
+            dict = dict~udict_set(256, key, kick.begin_parse());
+        } elseif (op == 3) {
+            int kick_id = in_msg_body~load_uint(256);
+            int level_id = in_msg_body~load_uint(8);
+
+            (cell kick, int success) = dict~udict_get?(256,kick_id);
+            throw_if(114, success != -1);
+
+            slice kick_data = kick.begin_parse();
+            int target = kick_data~load_uint(128);
+            int collected = kick_data~load_uint(128);
+            slice creator = kick_data~load_msg_addr();
+            int valid_until = kick_data~load_uint(64);
+            (slice _a, cell levels) = kick_data~load_ref();
+
+            cell levels_dict = levels.begin_parse()~load_dict();
+            (cell level, int success) = levels_dict~udict_get(8, level_id);
+
+            throw_if(115, success != -1);
+
+            slice level_data = level.begin_parse();
+            int level_price = level_data~load_uint(256);
+            int level_bought = level_data~load_uint(16);
+            int level_limit = level_data~load_uint(16);
+
+            throw_if(116, ~ (level_limit == 0) & (level_bought == level_limit));
+            
+            throw_if(117, msg_value < level_price);
+
+            collected += msg_value;
+
+            level_bought = level_bought + 1;
+            cell new_level_data = begin_cell().store_uint(level_price, 128).store_uint(level_bought, 16).store_uint(level_limit, 16).end_cell();
+
+            levels_dict = levels_dict~udict_set(8, level_id, new_level_data.begin_parse());
+
+            cell new_kick_data = begin_cell().store_uint(target, 128).store_uint(collected, 128).store_slice(creator).store_uint(valid_until, 64).store_ref(new_level_data).end_cell();
+
+            dict = dict~udict_set(256,kick_id,new_kick_data.begin_parse());
+
+            ;; send message to store backer
         } elseif (op == 4) {
             ;; resolve kicks
         }
+
+        set_data(dict);
     }
 }
