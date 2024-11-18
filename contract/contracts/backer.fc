@@ -1,0 +1,137 @@
+#include "imports/stdlib.fc";
+
+{-
+    Errors:
+    101 -- no ref with voting & bought items
+    102 -- unauthorized mint
+    103 -- already voted
+    104 -- unauthorized vote
+    105 -- unauthorized refund
+-}
+
+(int, int, slice, slice, cell) load_data() inline {
+    slice ds = get_data().begin_parse();
+    return (
+        ds~load_uint(8),
+        ds~load_uint(64),
+        ds~load_msg_addr(),
+        ds~load_msg_addr(),
+        ds~load_ref()
+    );
+}
+
+int mint_empty() inline {
+    slice ds = get_data().begin_parse();
+    return ds.slice_refs_empty?();
+}
+
+() save_data(int last_voted, int voting_power, slice kick_address, slice owner_address, cell back_data) impure inline {
+    cell data = begin_cell()
+        .store_uint(last_voted, 8)
+        .store_uint(voting_power, 64)
+        .store_slice(kick_address)
+        .store_slice(owner_address)
+        .store_ref(back_data)
+        .end_cell();
+    set_data(data);
+}
+
+slice parse_sender_address (cell in_msg_full) inline {
+    var ds = in_msg_full.begin_parse();
+    var flags = ds~load_uint(4);
+    slice sender_address = ds~load_msg_addr();
+    return sender_address;
+}
+
+() recv_internal(int my_balance, int msg_value, cell in_msg_full, slice in_msg_body) impure {
+    if (in_msg_body.slice_bits() == 0) {
+        return ();
+    }
+    ;; check correct sender -- we accept only calls from kick
+    slice sender = parse_sender_address(in_msg_full);
+    (int last_voted, int voting_power, slice kick_address, slice owner_address, cell back_data) = load_data();
+
+    int op = in_msg_body~load_uint(32);
+    int query_id = in_msg_body~load_uint(64);
+
+    if (op == 1) {
+        ;; mint
+        throw_if(102, ~ equal_slices_bits(sender, kick_address));
+        int level_id = in_msg_body~load_uint(8);
+        int amount = in_msg_body~load_uint(16);
+        int price = in_msg_body~load_uint(64);
+        
+        builder mint_builder = begin_cell();
+
+        if (mint_empty() == -1) {
+            ;; store all empty levels
+            repeat (level_id) {
+                mint_builder = mint_builder.store_uint(0, 16);
+            }
+            ;; store bought level
+            mint_builder = mint_builder.store_uint(amount, 16);
+        } else {
+            slice levels = back_data.begin_parse();
+            ;; go through all levels before acquired one
+            repeat (level_id) {
+                int level_already_have = 0;
+                if (levels.slice_data_empty?() != -1) {
+                    level_already_have = levels~load_uint(16);
+                } 
+                mint_builder = mint_builder.store_uint(level_already_have, 16);
+            }
+            ;; update acquired level
+            int level_before_mint = 0;
+            if (levels.slice_data_empty?() != -1) {
+                level_before_mint = levels~load_uint(16);
+            }
+            mint_builder = mint_builder.store_uint(level_before_mint + amount, 16);
+            ;; save all remaining levels
+            if (levels.slice_data_empty?() != -1) {
+                mint_builder = mint_builder.store_slice(levels);
+            }
+        }
+        voting_power = voting_power + price;
+        back_data = mint_builder.end_cell();
+    } elseif (op == 2) {
+        ;; vote
+        throw_if(104, ~ equal_slices_bits(sender,owner_address));
+        int vote_number = in_msg_body~load_uint(8);
+        ;; already voted
+        throw_if(103, last_voted >= vote_number);
+        last_voted = vote_number;
+        cell msg = begin_cell()
+            .store_uint(0x18, 6)
+            .store_slice(kick_address)
+            .store_coins(0)
+            .store_uint(0, 1 + 4 + 4 + 64 + 32 + 1 + 1)
+            .store_uint(3, 32)
+            .store_uint(query_id, 64)
+            .store_slice(owner_address)
+            .store_uint(voting_power, 64)
+            .end_cell();
+
+        send_raw_message(msg, 17);
+    } elseif (op == 3) {
+        ;; get back money
+        throw_if(105, ~ equal_slices_bits(sender,owner_address));
+        cell msg = begin_cell()
+            .store_uint(0x18, 6)
+            .store_slice(kick_address)
+            .store_coins(0)
+            .store_uint(0, 1 + 4 + 4 + 64 + 32 + 1 + 1)
+            .store_uint(4, 32)
+            .store_uint(query_id, 64)
+            .store_slice(owner_address)
+            .store_uint(voting_power, 64)
+        .end_cell();
+        voting_power = 0;
+        send_raw_message(msg, 17);
+    }
+    save_data(last_voted, voting_power, kick_address, owner_address, back_data);
+}
+
+(int, int, cell) backer_data() method_id {
+    (int last, int power, slice k, slice o, cell back_data) = load_data();
+    return (last, power, back_data);
+}
