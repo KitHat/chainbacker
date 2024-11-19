@@ -5,7 +5,8 @@
         "start": "blueprint run",
         "build": "blueprint build",
         "build:wrappers": "tsc",
-        "test": "jest --verbose"
+        "test": "jest --verbose",
+        "test-one": "jest -t 'Kick Contract Tests'"
     },
     "devDependencies": {
         "@ton/blueprint": "^0.25.0",

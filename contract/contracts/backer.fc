@@ -11,12 +11,18 @@
 
 (int, int, slice, slice, cell) load_data() inline {
     slice ds = get_data().begin_parse();
+    int last_voted = ds~load_uint(8);
+    int power = ds~load_uint(64);
+    slice kick_address = ds~load_msg_addr();
+    slice owner_address = ds~load_msg_addr();
+    cell back_data = ds~load_ref();
+
     return (
-        ds~load_uint(8),
-        ds~load_uint(64),
-        ds~load_msg_addr(),
-        ds~load_msg_addr(),
-        ds~load_ref()
+        last_voted,
+        power,
+        kick_address,
+        owner_address,
+        back_data
     );
 }
 

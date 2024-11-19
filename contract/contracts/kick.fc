@@ -16,22 +16,20 @@
         213: trying to distribute uncollected kick
         214: trying to start vote when kick is not collected
         215: USDT address not set
+        216: trying to set USDT from non creator address
 -}
 int op::transfer_notification() asm "0x7362d09c PUSHINT";
+int op::transfer() asm "0xf8a7ea5 PUSHINT";
+int workchain() asm "0 PUSHINT";
 
-(int, int, int, int, int, int, slice, slice, cell, cell, cell) load_data(int skip_usdt) inline {
+(int, int, int, int, int, int, int, slice, slice, cell, cell, cell) load_data() inline {
     slice ds = get_data().begin_parse();
     cell milestones = ds~load_ref();
     cell tiers = ds~load_ref();
     cell wallet_code = ds~load_ref();
-    slice usdt_wallet;
-    if (skip_usdt == -1) {
-        usdt_wallet = begin_cell().end_cell().begin_parse();
-    } else {
-        throw_if(215, ds~slice_refs_empty?() == -1);
-        cell usdt_wallet_cell = ds~load_ref().begin_parse();
-        usdt_wallet = usdt_wallet_cell~load_msg_addr();
-    }
+    throw_if(215, ds.slice_refs_empty?() == -1);
+    slice usdt_wallet_cell = ds~load_ref().begin_parse();
+    slice usdt_wallet = usdt_wallet_cell~load_msg_addr();
     return (
         ds~load_uint(64),  ;; collected
         ds~load_uint(64),  ;; target
@@ -93,10 +91,11 @@ cell pack_backer_data(slice owner) inline {
         .store_uint(0, 64)         ;; voting_power
         .store_slice(my_address()) ;; kick address
         .store_slice(owner)        ;; owner address
+        .store_ref(begin_cell().end_cell())
         .end_cell();
 }
 
-slice calculate_backer_state_init(slice owner, cell backer_code) inline {
+cell calculate_backer_state_init(slice owner, cell backer_code) inline {
     return begin_cell()
         .store_uint(0, 2) ;; TODO: learn what TickTock and split_depth is
         .store_dict(backer_code)
@@ -105,11 +104,11 @@ slice calculate_backer_state_init(slice owner, cell backer_code) inline {
         .end_cell();
 }
 
-slice calculate_backer_address(slice state_init) inline {
+slice calculate_backer_address(cell state_init) inline {
     return begin_cell()
         .store_uint(4, 3)
         .store_int(workchain(), 8)
-        .store_uint(cell_hash(state_init), 256)
+        .store_uint(state_init.cell_hash(), 256)
         .end_cell()
         .begin_parse();
 }
@@ -128,17 +127,22 @@ slice calculate_user_backer_address(slice owner, cell backer_code) inline {
 
 cell update_limits(cell tiers, int level_id, int amount, int received) inline {
     slice ds = tiers.begin_parse();
-    slice first = ds~first_bits(96*level_id);
+    var res = begin_cell();
+    repeat (level_id - 1) {
+        ~dump(112);
+        (int limit, int bought, int price) = load_level(ds);
+        res = res.store_uint(limit, 16)
+        .store_uint(bought, 16)
+        .store_uint(price, 64);
+    }
     (int limit, int bought, int price) = load_level(ds);
     throw_if(203, bought + amount > limit);
     throw_if(204, price * amount > received);
     bought = bought + amount;
-    return begin_cell()
-        .store_slice(first)
-        .store_uint(limit)
-        .store_uint(bought)
-        .store_uint(price)
-        .store_slice(ds)
+    return res
+        .store_uint(limit, 16)
+        .store_uint(bought, 16)
+        .store_uint(price, 64)
         .end_cell();
 }
 
@@ -147,20 +151,20 @@ cell update_limits(cell tiers, int level_id, int amount, int received) inline {
     int part = ds~load_uint(8);
     int next = muldiv(collected, part, 100);
     return (
-        next,
-        begin_cell().store_slice(ds).end_cell()
+        begin_cell().store_slice(ds).end_cell(),
+        next
     );
 }
 
 () send_usdt(slice receiver, int amount, slice wallet, int query_id) inline {
-    let msg = begin_cell()
+    cell msg = begin_cell()
         .store_uint(0x18, 6)
         .store_slice(wallet)
         .store_coins(0)
         .store_uint(0, 1 + 4 + 4 + 64 + 32 + 1 + 1)
         .store_uint(op::transfer(), 32)
         .store_uint(query_id, 64)
-        .store_coins(amount, 128)
+        .store_coins(amount)
         .store_slice(receiver)
         .end_cell();
     send_raw_message(msg,1);
@@ -170,27 +174,26 @@ cell update_limits(cell tiers, int level_id, int amount, int received) inline {
     if (in_msg_body.slice_bits() == 0) {
         return ();
     }
-    int op = in_msg_body~load_uint(16);
+    int op = in_msg_body~load_uint(32);
     int query_id = in_msg_body~load_uint(64);
     slice sender = parse_sender_address(in_msg_full);
 
-    if (op == 5) {
-        (
-            int collected, 
-            int target, 
-            int expiration, 
-            int voted, 
-            int distributed,
-            int vote_in_progress,
-            int current_vote, 
-            slice creator,
-            slice usdt_wallet,
-            cell milestones, 
-            cell tiers, 
-            cell backer_code
-        ) = load_data(-1);
-
-        usdt_wallet = in_msg_body~load_msg_addr();
+    if (op == 6) {
+        slice ds = get_data().begin_parse();
+        int collected = ds~load_uint(64);
+        int target = ds~load_uint(64);
+        int expiration = ds~load_uint(64);
+        int voted = ds~load_uint(64);
+        int distributed = ds~load_uint(64);
+        int vote_in_progress = ds~load_uint(1);
+        int current_vote = ds~load_uint(8);
+        slice creator = ds~load_msg_addr();
+        cell milestones = ds~load_ref();
+        cell tiers = ds~load_ref();
+        cell wallet_code = ds~load_ref();
+        throw_if(216, ~ equal_slices_bits(sender, creator));
+        slice usdt_wallet = in_msg_body~load_msg_addr();
+        
         save_data(collected,target,expiration,voted,distributed,vote_in_progress,current_vote,creator,usdt_wallet,milestones,tiers,wallet_code);
 
         return ();
@@ -209,11 +212,11 @@ cell update_limits(cell tiers, int level_id, int amount, int received) inline {
         cell milestones, 
         cell tiers, 
         cell backer_code
-    ) = load_data(0);
+    ) = load_data();
 
     if (op == op::transfer_notification()) {
         ;; back a kick
-        throw_if(201, ~equal_slices_bits(sender, usdt_wallet));
+        throw_if(201, ~ equal_slices_bits(sender, usdt_wallet));
         throw_if(208, expiration < now());
 
         int received = in_msg_body~load_coins();
@@ -228,11 +231,11 @@ cell update_limits(cell tiers, int level_id, int amount, int received) inline {
             .store_uint(query_id, 64)
             .store_uint(level_id, 8)
             .store_uint(amount, 16)
-            .store_uint(received, 128)
+            .store_uint(received, 64)
             .end_cell();
 
         var state_init = calculate_backer_state_init(backer_address,backer_code);
-        slice backer_wallet_address = calculate_backer_address(state_init); 
+        slice backer_wallet_address = calculate_backer_address(state_init);
 
         var msg = begin_cell()
             .store_uint(0x18, 6)
@@ -243,20 +246,26 @@ cell update_limits(cell tiers, int level_id, int amount, int received) inline {
             .store_ref(msg_body)
             .end_cell();
         
-        send_raw_message(msg,1);
+        send_raw_message(msg,64);
 
         collected = collected + received;
         tiers = update_limits(tiers,level_id,amount,received);
     } elseif (op == 1) {
         ;; resolve a kick
+        ~dump(122);
         throw_if(202, expiration > now());
         throw_if(213, target > collected);
-        (int next, milestones) = next_milestone(milestones,collected);
-        send_usdt(creator, next, usdt_wallet);
+        ~dump(123);
+        (milestones, int next) = next_milestone(milestones,collected);
+
+        ~dump(124);
+        send_usdt(creator, next, usdt_wallet, query_id);
+
+        ~dump(125);
         distributed = next;
     } elseif (op == 2) {
         ;; start voting
-        throw_if(205, ~equal_slices_bits(sender, creator));
+        throw_if(205, ~ equal_slices_bits(sender, creator));
         throw_if(206, vote_in_progress == 1);
         throw_if(214, collected < target);
         
@@ -267,15 +276,15 @@ cell update_limits(cell tiers, int level_id, int amount, int received) inline {
         ;; receive vote
         throw_if(209, vote_in_progress == 0);
         slice voter = in_msg_body~load_msg_addr();
-        slice power = in_msg_body~load_uint(64);
+        int power = in_msg_body~load_uint(64);
         slice backer = calculate_user_backer_address(voter,backer_code);
-        throw_if(207, ~equal_slices_bits(backer, sender));
+        throw_if(207, ~ equal_slices_bits(backer, sender));
 
         voted = voted + power;
 
         if (voted > collected) {
-            (int next, milestones) = next_milestone(milestones,collected);
-            send_usdt(creator, next, usdt_wallet);
+            (milestones, int next) = next_milestone(milestones,collected);
+            send_usdt(creator, next, usdt_wallet, query_id);
             distributed = distributed + next;
             vote_in_progress = 0;
         }
@@ -286,13 +295,13 @@ cell update_limits(cell tiers, int level_id, int amount, int received) inline {
         slice caller = in_msg_body~load_msg_addr();
         int refund = in_msg_body~load_uint(64);
         slice backer = calculate_user_backer_address(caller,backer_code);
-        throw_if(210, ~equal_slices_bits(backer,sender));
-        send_usdt(caller, amount, usdt_wallet);
+        throw_if(210, ~ equal_slices_bits(backer,sender));
+        send_usdt(caller, refund, usdt_wallet, query_id);
     } elseif (op == 5) {
         ;; TODO: resolve a kick refund if failed to deliver
     }
 
-    save_data(collected,target,expiration,voted,distributed,vote_in_progress,current_vote,creator,usdt_wallet,milestones,tiers,wallet_code);
+    save_data(collected,target,expiration,voted,distributed,vote_in_progress,current_vote,creator,usdt_wallet,milestones,tiers,backer_code);
 }
 
 (int, int) get_collect_state() method_id {
@@ -384,4 +393,23 @@ slice get_backer_contract(slice backer_address) method_id {
         cell wallet_code
     ) = load_data();
     return calculate_user_backer_address(backer_address,wallet_code);
+}
+
+slice get_tier_data() method_id {
+    (
+        int collected, 
+        int target, 
+        int expiration, 
+        int voted, 
+        int distributed,
+        int vote_in_progress,
+        int current_vote,
+        slice creator,
+        slice usdt_wallet,
+        cell milestones, 
+        cell tiers, 
+        cell wallet_code
+    ) = load_data();
+    ~dump(2345);
+    return tiers.begin_parse();
 }
