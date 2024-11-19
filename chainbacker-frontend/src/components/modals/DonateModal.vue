@@ -22,14 +22,11 @@
 <script setup lang="ts">
 import RadioButton from 'primevue/radiobutton'
 import {computed, ref} from "vue";
-import {useToast} from "primevue/usetoast";
 import Toast from "primevue/toast";
 import Button from "primevue/button";
 import {KickTier} from "@/types/types.ts";
 
 defineProps<{ tiers: KickTier[] }>()
-
-const toast = useToast();
 
 const currentTier = ref<KickTier | null >(null)
 
