@@ -9,7 +9,8 @@ export type Milestone = {
 
 export type Tier = {
     price: bigint,
-    amount: bigint
+    amount: bigint,
+    bought?: bigint
 }
 
 export type CollectState = {

@@ -6,6 +6,12 @@ export type BackerConfig = {
     kick: Address
 };
 
+export type BackerData = {
+    lastVoted: bigint,
+    power: bigint,
+    backed: LevelBackingData[]
+}
+
 export function backerConfigToCell(config: BackerConfig): Cell {
     return beginCell().storeUint(0, 8).storeUint(0, 64).storeAddress(config.kick).storeAddress(config.owner).storeRef(Cell.EMPTY).endCell();
 }
@@ -33,7 +39,7 @@ export class Backer implements Contract {
 
     // Getters
 
-    async getBackerData(provider: ContractProvider): Promise<[bigint, bigint, LevelBackingData[]]> {
+    async getBackerData(provider: ContractProvider): Promise<BackerData> {
         const result = (await provider.get('backer_data', [])).stack;
         const last = result.readBigNumber();
         const power = result.readBigNumber();
@@ -45,7 +51,11 @@ export class Backer implements Contract {
             backs.push({ id: i, amount: backed });
             i += 1n;
         }
-        return [last, power, backs];
+        return {
+            lastVoted: last,
+            power,
+            backed: backs
+        };
     }
 
     // Setters. 

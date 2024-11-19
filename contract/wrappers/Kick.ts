@@ -5,7 +5,6 @@ export type KickConfig = {
     target: bigint,
     expiration: bigint,
     creator: Address,
-    wallet: Address,
     milestones: Milestone[],
     tiers: Tier[]
     code: Cell
@@ -26,10 +25,9 @@ export function kickConfigToCell(config: KickConfig): Cell {
         .storeUint(config.expiration, 64)
         .storeUint(0, 64)
         .storeUint(0, 64)
-        .storeUint(0, 64)
-        .storeUint(0, 64)
+        .storeUint(0, 1)
+        .storeUint(0, 8)
         .storeAddress(config.creator)
-        .storeAddress(config.wallet)
         .storeRef(milestones.endCell())
         .storeRef(tiers.endCell())
         .storeRef(config.code)
@@ -83,10 +81,22 @@ export class Kick implements Contract {
         return new Date(expirationTimestamp.toString());
     }
 
-    async getBackerContract(provider: ContractProvider, owner: Address): Promise<Date> {
+    async getBackerContract(provider: ContractProvider, owner: Address): Promise<Address> {
         const result = (await provider.get('get_backer_contract', [{ type: "slice", cell: beginCell().storeAddress(owner).endCell() }])).stack;
-        const expirationTimestamp = result.readBigNumber();
-        return new Date(expirationTimestamp.toString());
+        return result.readAddress();
+    }
+
+    async getTierData(provider: ContractProvider): Promise<Tier[]> {
+        const result = (await provider.get('get_tier_data', [])).stack.readCell().beginParse();
+        const data = [];
+        while (result.remainingBits != 0) {
+            data.push({
+                amount: BigInt(result.loadUint(16)),
+                bought: BigInt(result.loadUint(16)),
+                price: BigInt(result.loadUint(64))
+            })
+        }
+        return data;
     }
 
     // Setters. 
@@ -106,11 +116,27 @@ export class Kick implements Contract {
         })
     }
 
-    async sendUsdtWallet(provider: ContractProvider, via: Sender, value: bigint, queryId: bigint, creator: Address) {
+    async sendUsdtWallet(provider: ContractProvider, via: Sender, value: bigint, queryId: bigint, usdt: Address) {
         await provider.internal(via, {
             value,
             sendMode: SendMode.PAY_GAS_SEPARATELY,
-            body: beginCell().storeUint(5, 32).storeUint(queryId, 64).storeAddress(creator).endCell()
+            body: beginCell().storeUint(6, 32).storeUint(queryId, 64).storeAddress(usdt).endCell()
+        })
+    }
+
+    // Setters. ONLY FOR TESTING
+    async sendTransfer(provider: ContractProvider, via: Sender, value: bigint, backer: Address, levelId: bigint, amount: bigint, jettonAmount: bigint) {
+        await provider.internal(via, {
+            value,
+            sendMode: SendMode.PAY_GAS_SEPARATELY,
+            body: beginCell()
+                .storeUint(0x7362d09c, 32)
+                .storeUint(0n, 64)
+                .storeCoins(jettonAmount)
+                .storeAddress(backer)
+                .storeUint(levelId, 8)
+                .storeUint(amount, 16)
+                .endCell()
         })
     }
 
