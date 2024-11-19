@@ -36,7 +36,7 @@
       <Step>Add tiers</Step>
       <StepPanel v-slot="{ activateCallback }">
         <div class="flex flex-col">
-          <div v-for="(tier, index) in rewardTiers" :key="index" class="reward-tier">
+          <div v-for="(tier, index) in form.tiers" :key="index" class="reward-tier">
             <div class="tier-card">
               <div class="flex justify-between items-center mb-4">
                 <span class="text-xl">Tier {{ index + 1 }}</span>
@@ -57,6 +57,29 @@
       </StepPanel>
     </StepItem>
     <StepItem value="4">
+      <Step>Add milestones</Step>
+      <StepPanel v-slot="{ activateCallback }">
+        <div class="flex flex-col">
+          <div v-for="(milestone, index) in form.milestones" :key="index" class="reward-tier">
+            <div class="tier-card">
+              <div class="flex justify-between items-center mb-4">
+                <span class="text-xl">milestone {{ index + 1 }}</span>
+                <Button rounded @click="removeMilestone(index)">X</Button>
+              </div>
+              <section>
+                <DatePicker fluid placeholder="Milestone date" v-model="milestone.date" class="mb-4" />
+                <Textarea fluid class="mb-4" v-model="milestone.description" rows="3" placeholder="milestone title" />
+              </section>
+            </div>
+          </div>
+        </div>
+        <div class="py-6 flex gap-2">
+          <Button fluid label="Next" @click="activateCallback('5')" />
+          <Button fluid severity="contrast" label="Add milestone"  @click="addMilestone" />
+        </div>
+      </StepPanel>
+    </StepItem>
+    <StepItem value="5">
       <Step>Add image</Step>
       <StepPanel>
         <div class="flex flex-col">
@@ -76,7 +99,6 @@
         </div>
       </StepPanel>
     </StepItem>
-
   </Stepper>
 </template>
 
@@ -90,34 +112,8 @@ import Fluid from "primevue/fluid";
 import Button from "primevue/button";
 import { reactive, ref } from "vue";
 import { DatePicker, InputNumber, Textarea, FileUpload } from "primevue";
-// import {CARDS_MOCK} from "@/mocks/mocks.ts";
-
-// const index = CARDS_MOCK.length
 
 const emit = defineEmits(['onClose'])
-
-// {
-//     "id": 14,
-//     "title": "Eco-Friendly Travel Utensil Set",
-//     "description": "A reusable utensil set designed for eco-conscious travelers.",
-//     "img": "https://cdn.pixabay.com/photo/2021/10/12/22/14/mulled-wine-6704906_1280.jpg",
-//     "type": "Environment & Sustainability",
-//     "totalSum": 800,
-//     "raisedSum": 400,
-//     "daysLeft": 4,
-//     "tiers": [
-//   {
-//     "title": "Single Set",
-//     "description": "Receive one utensil set.",
-//     "price": 10
-//   },
-//   {
-//     "title": "Travel Bundle",
-//     "description": "Two utensil sets + Travel pouch",
-//     "price": 18
-//   }
-// ]
-// },
 const onSubmit = () => {
   emit('onClose')
 }
@@ -128,19 +124,33 @@ const form = reactive({
   expirationDate: new Date,
   totalSum: 0,
   raisedSum: 0,
-  file: null
+  file: null,
+  tiers: [
+    { title: '', description: '', price: 0 }
+  ],
+  milestones: [{
+    date: new Date,
+    description: ''
+  }]
 })
 
-const rewardTiers = ref([
-  { title: '', description: '', price: 0 }
-]);
-
 const addTier = () => {
-  rewardTiers.value.push({ title: '', description: '', price: 0 });
+  form.tiers.push({ title: '', description: '', price: 0 });
 };
 
 const removeTier = (index: number) => {
-  rewardTiers.value.splice(index, 1);
+  form.tiers.splice(index, 1);
+};
+
+const addMilestone = () => {
+  form.milestones.push({
+    date: new Date,
+    description: ''
+  });
+};
+
+const removeMilestone = (index: number) => {
+  form.milestones.splice(index, 1);
 };
 
 const imageData = ref<string | null>(null);
@@ -159,8 +169,6 @@ const onFileSelect = (event: { files: File[] }) => {
     reader.readAsDataURL(file);
   }
 };
-
-// api
 </script>
 
 <style scoped>

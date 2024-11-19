@@ -8,7 +8,7 @@
     pr-[24px]
     overflow-scroll
     gap-1
-    flex flex-nowrap grow whitespace-nowrap no-scrollbar sticky top-0 z-10">
+    flex flex-nowrap grow whitespace-nowrap no-scrollbar sticky top-0 z-50">
         <Tag v-for="chip in CHIPS_FILTER_MOCK"  :value="chip" :severity="'success'" />
       </div>
       <section class="mb-5 -mx-2">

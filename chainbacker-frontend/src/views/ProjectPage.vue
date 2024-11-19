@@ -25,9 +25,9 @@
         <p><span class="text-success-500">{{ currentProject.daysLeft }}</span> days left</p>
       </div>
     </section>
-    <Fluid class="mb-1">
-      <Button @click="onClick">Detonate Now</Button>
-    </Fluid>
+    <KickStageBlock class="mb-1"
+                    :currentProject="currentProject"
+    />
     <section class="mr-[-28px] ml-[-28px]">
       <Divider></Divider>
     </section>
@@ -54,38 +54,26 @@
         </DataTable>
       </section>
     </section>
-    <Toast />
   </section>
 </template>
 
 <script setup lang="ts">
-import Toast from 'primevue/toast';
 import ProgressBar from 'primevue/progressbar';
 import Chip from "primevue/chip";
 import ClockIcon from "@/components/icons/ClockIcon.vue";
-import Button from "primevue/button";
-import Fluid from "primevue/fluid";
 import {Divider} from "primevue";
 import {computed, ref} from "vue";
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
-import {CARDS_MOCK} from "@/mocks/mocks.ts";
-import {useRoute} from "vue-router";
-import { useToast } from "primevue/usetoast";
-
-const toast = useToast();
+import { CARDS_MOCK } from "@/mocks/mocks.ts";
+import { useRoute } from "vue-router";
+import KickStageBlock from "@/components/KickStageBlock.vue";
 
 const route = useRoute()
 
 const currentProject = ref(CARDS_MOCK.find(item => item.id === Number(route.params.id)) as typeof CARDS_MOCK[0])
 
 const progress = computed(() => (currentProject.value.raisedSum / currentProject.value.totalSum) * 100)
-
-const onClick = () => {
-  currentProject.value.raisedSum += 3
-
-  toast.add({ severity: 'success', summary: 'You successfully detonated!', detail: `Creator of ${currentProject.value.title} is happy 🎉`, life: 3000 })
-}
 </script>
 
 <style scoped>

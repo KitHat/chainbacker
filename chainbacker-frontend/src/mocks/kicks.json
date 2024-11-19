@@ -8,6 +8,7 @@
         "totalSum": 500,
         "raisedSum": 400,
         "daysLeft": 4,
+        "stage": "active",
         "tiers": [
             {
                 "title": "1 BelaBag",
