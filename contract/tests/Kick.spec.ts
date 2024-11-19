@@ -224,7 +224,7 @@ describe('Crowdfunding System Tests', () => {
             toNano('0.05'),
             forwardPayload
         );
-        console.log("222");
-        console.log(res.transactions);
+        // console.log("222");
+        // console.log(res.transactions);
     }
 });
