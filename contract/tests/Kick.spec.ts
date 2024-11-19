@@ -84,109 +84,109 @@ describe('Crowdfunding System Tests', () => {
     });
 
     describe('Kick Contract Tests', () => {
-        // describe('Back a kick', () => {
-        //     it('should create new Back contract on first backing', async () => {
-        //         const amount = 1n;
-        //         const price = 100n;
-        //         const levelId = 0n;
+        describe('Back a kick', () => {
+            it('should create new Back contract on first backing', async () => {
+                const amount = 1n;
+                const price = 100n;
+                const levelId = 0n;
 
-        //         // Verify Jetton balance
-        //         const backBalancePre = await usdtWallet.getJettonBalance();
-        //         expect(backBalancePre).not.toEqual(0);
+                // Verify Jetton balance
+                const backBalancePre = await usdtWallet.getJettonBalance();
+                expect(backBalancePre).not.toEqual(0);
 
-        //         // Create transfer_notification message
-        //         const forwardPayload = beginCell()
-        //             .storeUint(levelId, 8)
-        //             .storeUint(amount, 16)
-        //             .endCell();
-        //         const tierDataPre = await kick.getTierData();
+                // Create transfer_notification message
+                const forwardPayload = beginCell()
+                    .storeUint(levelId, 8)
+                    .storeUint(amount, 16)
+                    .endCell();
+                const tierDataPre = await kick.getTierData();
 
-        //         console.log("cccc");
-        //         console.log(tierDataPre);
+                console.log("cccc");
+                console.log(tierDataPre);
 
-        //         // Send tokens from backer's USDT wallet to kick's USDT wallet
-        //         let res = await usdtWallet.sendTransfer(backer.getSender(),
-        //             toNano("0.1"),
-        //             amount * price,
-        //             kick.address,
-        //             backer.address,
-        //             Cell.EMPTY,
-        //             toNano('0.05'),
-        //             forwardPayload
-        //         );
+                // Send tokens from backer's USDT wallet to kick's USDT wallet
+                let res = await usdtWallet.sendTransfer(backer.getSender(),
+                    toNano("0.1"),
+                    amount * price,
+                    kick.address,
+                    backer.address,
+                    Cell.EMPTY,
+                    toNano('0.05'),
+                    forwardPayload
+                );
 
-        //         // console.log(res);
+                // console.log(res);
 
-        //         // Verify Jetton balance
-        //         const backBalancePost = await usdtWallet.getJettonBalance();
-        //         expect(backBalancePost).toEqual(backBalancePre - 100n);
+                // Verify Jetton balance
+                const backBalancePost = await usdtWallet.getJettonBalance();
+                expect(backBalancePost).toEqual(backBalancePre - 100n);
 
-        //         // Verify Back contract creation
-        //         const backAddress = await kick.getBackerContract(backer.address);
-        //         expect(backAddress).not.toBeNull();
+                // Verify Back contract creation
+                const backAddress = await kick.getBackerContract(backer.address);
+                expect(backAddress).not.toBeNull();
 
-        //         // Verify Jetton balance
-        //         const kickBalance = await kickUsdtWallet.getJettonBalance();
-        //         expect(kickBalance).toEqual(amount * price);
+                // Verify Jetton balance
+                const kickBalance = await kickUsdtWallet.getJettonBalance();
+                expect(kickBalance).toEqual(amount * price);
 
-        //         // Verify collected amount
-        //         const state = await kick.getCollectState();
-        //         expect(state.collected).toEqual(amount * price);
+                // Verify collected amount
+                const state = await kick.getCollectState();
+                expect(state.collected).toEqual(amount * price);
 
-        //         const backerAddress = await kick.getBackerContract(backer.address);
-        //         const backerContract = blockchain.openContract(Backer.createFromAddress(backerAddress));
-        //         const data = await backerContract.getBackerData();
-        //         console.log("dddd");
-        //         console.log(data);
+                const backerAddress = await kick.getBackerContract(backer.address);
+                const backerContract = blockchain.openContract(Backer.createFromAddress(backerAddress));
+                const data = await backerContract.getBackerData();
+                console.log("dddd");
+                console.log(data);
 
-        //         const tierData = await kick.getTierData();
+                const tierData = await kick.getTierData();
 
-        //         console.log("cccc");
-        //         console.log(tierData);
-        //     });
+                console.log("cccc");
+                console.log(tierData);
+            });
 
-        //     it('should fail if sent not from USDT wallet', async () => {
-        //         const amount = toNano('100');
-        //         const levelId = 1n;
-        //         let res = await kick.sendTransfer(backer.getSender(), toNano('0.05'), backer.address, 0n, 1n, 100n);
+            it('should fail if sent not from USDT wallet', async () => {
+                const amount = toNano('100');
+                const levelId = 1n;
+                let res = await kick.sendTransfer(backer.getSender(), toNano('0.05'), backer.address, 0n, 1n, 100n);
 
-        //         // Try to send directly to kick contract
-        //         await expect(
-        //             res.transactions
-        //         ).toHaveTransaction(
-        //             {
-        //                 from: backer.address,
-        //                 to: kick.address,
-        //                 success: false
-        //             }
-        //         );
-        //     });
-        // });
-
-        describe('Resolve kick with Jettons', () => {
-            it('should distribute Jettons when milestone is reached', async () => {
-
-                const creatorUsdtWalletAddress = await usdtMaster.getWalletAddress(creator.address);
-                const creatorUsdtWallet = await deployJettonWallet(creatorUsdtWalletAddress);
-                // Back the kick with full amount
-                await backKickWithAmount(COLLECTION_TARGET);
-
-                // Fast forward time
-                let snapshot = blockchain.snapshot();
-                let time = blockchain.now ?? Date.now();
-                snapshot.time = time + KICK_DURATION + 1;
-                await blockchain.loadFrom(snapshot);
-                const initialBalance = await creatorUsdtWallet.getJettonBalance();
-
-                // Resolve kick
-                let res = await kick.sendResolve(creator.getSender(), toNano("0.05"), 111n);
-                console.log(res.transactions);
-
-                // Verify Jetton distribution
-                const finalBalance = await creatorUsdtWallet.getJettonBalance();
-                expect(finalBalance).toBeGreaterThan(initialBalance);
+                // Try to send directly to kick contract
+                await expect(
+                    res.transactions
+                ).toHaveTransaction(
+                    {
+                        from: backer.address,
+                        to: kick.address,
+                        success: false
+                    }
+                );
             });
         });
+
+        // describe('Resolve kick with Jettons', () => {
+        //     it('should distribute Jettons when milestone is reached', async () => {
+
+        //         const creatorUsdtWalletAddress = await usdtMaster.getWalletAddress(creator.address);
+        //         const creatorUsdtWallet = await deployJettonWallet(creatorUsdtWalletAddress);
+        //         // Back the kick with full amount
+        //         await backKickWithAmount(COLLECTION_TARGET);
+
+        //         // Fast forward time
+        //         let snapshot = blockchain.snapshot();
+        //         let time = blockchain.now ?? Date.now();
+        //         snapshot.time = time + KICK_DURATION + 1;
+        //         await blockchain.loadFrom(snapshot);
+        //         const initialBalance = await creatorUsdtWallet.getJettonBalance();
+
+        //         // Resolve kick
+        //         let res = await kick.sendResolve(creator.getSender(), toNano("0.05"), 1n);
+        //         console.log(res.transactions);
+
+        //         // Verify Jetton distribution
+        //         const finalBalance = await creatorUsdtWallet.getJettonBalance();
+        //         expect(finalBalance).toBeGreaterThan(initialBalance);
+        //     });
+        // });
     });
 
     // Helper functions
