@@ -7,17 +7,23 @@ import { JettonWallet } from '../wrappers/JettonWallet';
 import { compile } from '@ton/blueprint';
 
 import '@ton/test-utils';
+import exp from 'constants';
 
 describe('Crowdfunding System Tests', () => {
     let blockchain: Blockchain;
     let kick: SandboxContract<Kick>;
+    let collectedKick: SandboxContract<Kick>;
     let back: SandboxContract<Backer>;
+    let backer_1: SandboxContract<Backer>;
+    let backer_2: SandboxContract<Backer>;
     let usdtMaster: SandboxContract<JettonMinter>;
     let usdtWallet: SandboxContract<JettonWallet>;
+    let usdtWallet2: SandboxContract<JettonWallet>;
     let kickUsdtWallet: SandboxContract<JettonWallet>;
     let deployer: SandboxContract<TreasuryContract>;
     let creator: SandboxContract<TreasuryContract>;
     let backer: SandboxContract<TreasuryContract>;
+    let backer2: SandboxContract<TreasuryContract>;
 
     let jettonWalletCode: Cell;
     let jettonMasterCode: Cell;
@@ -40,6 +46,7 @@ describe('Crowdfunding System Tests', () => {
         deployer = await blockchain.treasury('deployer');
         creator = await blockchain.treasury('creator');
         backer = await blockchain.treasury('backer');
+        backer2 = await blockchain.treasury('backer2');
 
         // Deploy Jetton Master (USDT)
         usdtMaster = blockchain.openContract(
@@ -57,7 +64,7 @@ describe('Crowdfunding System Tests', () => {
             await Kick.createFromConfig({
                 creator: creator.address,
                 target: COLLECTION_TARGET,
-                expiration: BigInt(Date.now() + KICK_DURATION),
+                expiration: BigInt(Math.floor(Date.now() / 1000) + KICK_DURATION),
                 tiers: [
                     {
                         price: 100n,
@@ -72,11 +79,14 @@ describe('Crowdfunding System Tests', () => {
         await kick.sendDeploy(deployer.getSender(), toNano("0.1"));
 
         let backUsdtAddress = await usdtMaster.getWalletAddress(backer.address);
+        let backUsdtAddress2 = await usdtMaster.getWalletAddress(backer2.address);
         // Mint some USDT to backer's wallet
         await mintJettons(backer.address, toNano('2000'));
+        await mintJettons(backer2.address, toNano('2000'));
 
         // Deploy Jetton wallets
         usdtWallet = await deployJettonWallet(backUsdtAddress);
+        usdtWallet2 = await deployJettonWallet(backUsdtAddress2);
 
         let kickUsdtWalletAddress = await usdtMaster.getWalletAddress(kick.address);
         kickUsdtWallet = await deployJettonWallet(kickUsdtWalletAddress);
@@ -101,9 +111,6 @@ describe('Crowdfunding System Tests', () => {
                     .endCell();
                 const tierDataPre = await kick.getTierData();
 
-                console.log("cccc");
-                console.log(tierDataPre);
-
                 // Send tokens from backer's USDT wallet to kick's USDT wallet
                 let res = await usdtWallet.sendTransfer(backer.getSender(),
                     toNano("0.1"),
@@ -114,8 +121,6 @@ describe('Crowdfunding System Tests', () => {
                     toNano('0.05'),
                     forwardPayload
                 );
-
-                // console.log(res);
 
                 // Verify Jetton balance
                 const backBalancePost = await usdtWallet.getJettonBalance();
@@ -136,13 +141,8 @@ describe('Crowdfunding System Tests', () => {
                 const backerAddress = await kick.getBackerContract(backer.address);
                 const backerContract = blockchain.openContract(Backer.createFromAddress(backerAddress));
                 const data = await backerContract.getBackerData();
-                console.log("dddd");
-                console.log(data);
 
                 const tierData = await kick.getTierData();
-
-                console.log("cccc");
-                console.log(tierData);
             });
 
             it('should fail if sent not from USDT wallet', async () => {
@@ -161,32 +161,212 @@ describe('Crowdfunding System Tests', () => {
                     }
                 );
             });
+
+            describe('Resolve kick with Jettons', () => {
+                it('should distribute Jettons when milestone is reached', async () => {
+                    let collectedKick = blockchain.openContract(
+                        await Kick.createFromConfigFull({
+                            creator: creator.address,
+                            target: COLLECTION_TARGET,
+                            collected: COLLECTION_TARGET + 100n,
+                            expiration: BigInt(Math.floor(Date.now() / 1000) - 1000),
+                            tiers: [
+                                {
+                                    price: 100n,
+                                    amount: 1000n
+                                }
+                            ],
+                            milestones: [{ part: 40n }, { part: 40n }, { part: 20n }],
+                            code: backerCode,
+                        }, kickCode)
+                    );
+
+                    await collectedKick.sendDeploy(creator.getSender(), toNano('0.05'));
+
+                    const kickUsdtAddress = await usdtMaster.getWalletAddress(collectedKick.address);
+                    await mintJettons(collectedKick.address, COLLECTION_TARGET + 100n);
+                    await collectedKick.sendUsdtWallet(creator.getSender(), toNano('0.01'), 1n, kickUsdtAddress);
+
+                    const creatorUsdtWalletAddress = await usdtMaster.getWalletAddress(creator.address);
+                    const creatorUsdtWallet = await deployJettonWallet(creatorUsdtWalletAddress);
+
+                    const initialBalance = await creatorUsdtWallet.getJettonBalance();
+
+                    // Resolve kick
+                    await collectedKick.sendResolve(creator.getSender(), toNano("0.05"), 2n);
+
+                    // Verify Jetton distribution
+                    const finalBalance = await creatorUsdtWallet.getJettonBalance();
+                    expect(finalBalance).toBeGreaterThan(initialBalance);
+                });
+            });
         });
 
-        // describe('Resolve kick with Jettons', () => {
-        //     it('should distribute Jettons when milestone is reached', async () => {
+        describe('Vote for kick with Jettons', () => {
+            it('should distribute Jettons when votes are passed', async () => {
+                let collected = 1000n;
+                let expiration = Math.floor(Date.now() / 1000) + 1000;
+                collectedKick = blockchain.openContract(
+                    await Kick.createFromConfig({
+                        creator: creator.address,
+                        target: collected,
+                        expiration: BigInt(expiration),
+                        tiers: [
+                            {
+                                price: 100n,
+                                amount: 1000n
+                            }
+                        ],
+                        milestones: [{ part: 40n }, { part: 40n }, { part: 20n }],
+                        code: backerCode,
+                    }, kickCode)
+                );
+                await collectedKick.sendDeploy(creator.getSender(), toNano('0.05'));
+                const kickUsdtAddress = await usdtMaster.getWalletAddress(collectedKick.address);
+                await collectedKick.sendUsdtWallet(creator.getSender(), toNano('0.01'), 1n, kickUsdtAddress);
+                let power1 = 700n;
+                let levelId = 0;
+                let forwardPayload = beginCell()
+                    .storeUint(levelId, 8)
+                    .storeUint(7, 16)
+                    .endCell();
+                await usdtWallet.sendTransfer(
+                    backer.getSender(),
+                    toNano("0.1"),
+                    power1,
+                    collectedKick.address,
+                    backer.address,
+                    Cell.EMPTY,
+                    toNano('0.05'),
+                    forwardPayload
+                );
 
-        //         const creatorUsdtWalletAddress = await usdtMaster.getWalletAddress(creator.address);
-        //         const creatorUsdtWallet = await deployJettonWallet(creatorUsdtWalletAddress);
-        //         // Back the kick with full amount
-        //         await backKickWithAmount(COLLECTION_TARGET);
+                let power2 = 400n;
+                forwardPayload = beginCell()
+                    .storeUint(levelId, 8)
+                    .storeUint(4, 16)
+                    .endCell();
+                await usdtWallet2.sendTransfer(
+                    backer2.getSender(),
+                    toNano("0.1"),
+                    power2,
+                    collectedKick.address,
+                    backer.address,
+                    Cell.EMPTY,
+                    toNano('0.05'),
+                    forwardPayload
+                );
 
-        //         // Fast forward time
-        //         let snapshot = blockchain.snapshot();
-        //         let time = blockchain.now ?? Date.now();
-        //         snapshot.time = time + KICK_DURATION + 1;
-        //         await blockchain.loadFrom(snapshot);
-        //         const initialBalance = await creatorUsdtWallet.getJettonBalance();
+                let state = await collectedKick.getCollectState();
+                expect(state.collected).toBe(power1 + power2);
 
-        //         // Resolve kick
-        //         let res = await kick.sendResolve(creator.getSender(), toNano("0.05"), 1n);
-        //         console.log(res.transactions);
+                blockchain.now = expiration + 100;
 
-        //         // Verify Jetton distribution
-        //         const finalBalance = await creatorUsdtWallet.getJettonBalance();
-        //         expect(finalBalance).toBeGreaterThan(initialBalance);
-        //     });
-        // });
+                const creatorUsdtWalletAddress = await usdtMaster.getWalletAddress(creator.address);
+                const creatorUsdtWallet = await deployJettonWallet(creatorUsdtWalletAddress);
+
+                const initialBalance = await creatorUsdtWallet.getJettonBalance();
+
+                // Resolve kick
+                let res = await collectedKick.sendResolve(creator.getSender(), toNano("0.05"), 2n);
+
+                // Verify Jetton distribution
+                const finalBalance = await creatorUsdtWallet.getJettonBalance();
+                expect(finalBalance).toBeGreaterThan(initialBalance);
+
+                await collectedKick.sendStartVote(creator.getSender(), toNano('0.05'), 3n);
+
+                let voteState = await collectedKick.getVoteState();
+                expect(voteState.inProgress).toBe(true);
+                expect(voteState.voteNumber).toBe(1n);
+                expect(voteState.voted).toBe(0n);
+
+                let backer1ContractAddress = await collectedKick.getBackerContract(backer.address);
+                backer_1 = blockchain.openContract(Backer.createFromAddress(backer1ContractAddress));
+                res = await backer_1.sendVote(backer.getSender(), toNano('0.01'), 4n, 1n);
+
+                voteState = await collectedKick.getVoteState();
+                expect(voteState.inProgress).toBe(true);
+                expect(voteState.voteNumber).toBe(1n);
+                expect(voteState.voted).toBe(power1);
+
+
+                let backer2ContractAddress = await collectedKick.getBackerContract(backer2.address);
+                backer_2 = blockchain.openContract(Backer.createFromAddress(backer2ContractAddress));
+                res = await backer_2.sendVote(backer2.getSender(), toNano('0.01'), 5n, 1n);
+
+                voteState = await collectedKick.getVoteState();
+                expect(voteState.inProgress).toBe(false);
+                expect(voteState.voteNumber).toBe(1n);
+                expect(voteState.voted).toBe(1100n);
+
+                const nextMilestoneBalance = await creatorUsdtWallet.getJettonBalance();
+                expect(nextMilestoneBalance).toBeGreaterThan(finalBalance);
+            });
+        });
+
+        describe('Refund for kick with Jettons', () => {
+            it('should distribute Jettons when kick failed to collect', async () => {
+                let collected = 1000n;
+                let expiration = Math.floor(Date.now() / 1000) + 1000;
+                collectedKick = blockchain.openContract(
+                    await Kick.createFromConfig({
+                        creator: creator.address,
+                        target: collected,
+                        expiration: BigInt(expiration),
+                        tiers: [
+                            {
+                                price: 100n,
+                                amount: 1000n
+                            }
+                        ],
+                        milestones: [{ part: 40n }, { part: 40n }, { part: 20n }],
+                        code: backerCode,
+                    }, kickCode)
+                );
+                await collectedKick.sendDeploy(creator.getSender(), toNano('0.05'));
+                const kickUsdtAddress = await usdtMaster.getWalletAddress(collectedKick.address);
+                await collectedKick.sendUsdtWallet(creator.getSender(), toNano('0.01'), 1n, kickUsdtAddress);
+                let power1 = 700n;
+                let levelId = 0;
+                const preBalance = await usdtWallet.getJettonBalance();
+                let forwardPayload = beginCell()
+                    .storeUint(levelId, 8)
+                    .storeUint(7, 16)
+                    .endCell();
+                await usdtWallet.sendTransfer(
+                    backer.getSender(),
+                    toNano("0.1"),
+                    power1,
+                    collectedKick.address,
+                    backer.address,
+                    Cell.EMPTY,
+                    toNano('0.05'),
+                    forwardPayload
+                );
+
+                let state = await collectedKick.getCollectState();
+                expect(state.collected).toBe(power1);
+
+                blockchain.now = expiration + 100;
+
+                const creatorUsdtWalletAddress = await usdtMaster.getWalletAddress(creator.address);
+                const creatorUsdtWallet = await deployJettonWallet(creatorUsdtWalletAddress);
+
+                const initialBalance = await usdtWallet.getJettonBalance();
+                expect(preBalance).toBeGreaterThan(initialBalance);
+
+                let backer1ContractAddress = await collectedKick.getBackerContract(backer.address);
+                backer_1 = blockchain.openContract(Backer.createFromAddress(backer1ContractAddress));
+                let res = await backer_1.sendRefund(backer.getSender(), toNano('0.05'), 4n);
+
+                const resultBalance = await usdtWallet.getJettonBalance();
+
+                expect(initialBalance).toBeLessThan(resultBalance);
+                expect(preBalance).toBe(resultBalance);
+
+            });
+        });
     });
 
     // Helper functions
@@ -195,12 +375,12 @@ describe('Crowdfunding System Tests', () => {
             await JettonWallet.createFromAddress(wallet)
         );
         let res = await walletContract.sendDeploy(deployer.getSender(), toNano("0.05"));
-        // console.log(rxes);
+
         return walletContract;
     }
 
     async function mintJettons(to: Address, amount: bigint) {
-        let res = await usdtMaster.sendMint(creator.getSender(),
+        await usdtMaster.sendMint(creator.getSender(),
             to,
             amount,
             toNano('0.05'),
@@ -224,7 +404,5 @@ describe('Crowdfunding System Tests', () => {
             toNano('0.05'),
             forwardPayload
         );
-        // console.log("222");
-        // console.log(res.transactions);
     }
 });

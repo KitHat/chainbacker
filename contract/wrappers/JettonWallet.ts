@@ -30,7 +30,6 @@ export class JettonWallet implements Contract {
     async getJettonBalance(provider: ContractProvider) {
         let state = await provider.getState();
         if (state.state.type !== 'active') {
-            console.log("no init");
             return 0n;
         }
         let res = await provider.get('get_wallet_data', []);

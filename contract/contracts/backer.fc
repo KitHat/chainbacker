@@ -117,7 +117,7 @@ slice parse_sender_address (cell in_msg_full) inline {
             .store_uint(voting_power, 64)
             .end_cell();
 
-        send_raw_message(msg, 17);
+        send_raw_message(msg, 64);
     } elseif (op == 3) {
         ;; get back money
         throw_if(105, ~ equal_slices_bits(sender,owner_address));
@@ -132,7 +132,7 @@ slice parse_sender_address (cell in_msg_full) inline {
             .store_uint(voting_power, 64)
         .end_cell();
         voting_power = 0;
-        send_raw_message(msg, 17);
+        send_raw_message(msg, 64);
     }
     save_data(last_voted, voting_power, kick_address, owner_address, back_data);
 }

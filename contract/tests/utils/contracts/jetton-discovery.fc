@@ -66,6 +66,5 @@ int provide_address_gas_consumption() asm "10000000 PUSHINT";
         send_raw_message(msg.store_maybe_ref(included_address).end_cell(), 64);
         return ();
     }
-    ~dump(12);
     throw(0xffff);
 }

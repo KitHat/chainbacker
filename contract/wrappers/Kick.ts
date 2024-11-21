@@ -6,7 +6,7 @@ export type KickConfig = {
     expiration: bigint,
     creator: Address,
     milestones: Milestone[],
-    tiers: Tier[]
+    tiers: Tier[],
     code: Cell
 };
 
@@ -34,6 +34,42 @@ export function kickConfigToCell(config: KickConfig): Cell {
         .endCell();
 }
 
+// TEST-ONLY CONFIGS
+export type KickConfigFull = {
+    target: bigint,
+    expiration: bigint,
+    creator: Address,
+    milestones: Milestone[],
+    tiers: Tier[],
+    code: Cell,
+    collected: bigint
+};
+
+// TEST-ONLY CONFIGS
+export function kickConfigToCellFull(config: KickConfigFull): Cell {
+    let tiers = beginCell();
+    for (const tier of config.tiers) {
+        tiers = tiers.storeUint(tier.amount, 16).storeUint(0, 16).storeUint(tier.price, 64);
+    }
+    let milestones = beginCell();
+    for (const milestone of config.milestones) {
+        milestones = milestones.storeUint(milestone.part, 8);
+    }
+    return beginCell()
+        .storeUint(config.collected, 64)
+        .storeUint(config.target, 64)
+        .storeUint(config.expiration, 64)
+        .storeUint(0, 64)
+        .storeUint(0, 64)
+        .storeUint(0, 1)
+        .storeUint(0, 8)
+        .storeAddress(config.creator)
+        .storeRef(milestones.endCell())
+        .storeRef(tiers.endCell())
+        .storeRef(config.code)
+        .endCell();
+}
+
 export class Kick implements Contract {
     constructor(readonly address: Address, readonly init?: { code: Cell; data: Cell }) { }
 
@@ -43,6 +79,13 @@ export class Kick implements Contract {
 
     static createFromConfig(config: KickConfig, code: Cell, workchain = 0) {
         const data = kickConfigToCell(config);
+        const init = { code, data };
+        return new Kick(contractAddress(workchain, init), init);
+    }
+
+    // TEST ONLY CONFIG
+    static createFromConfigFull(config: KickConfigFull, code: Cell, workchain = 0) {
+        const data = kickConfigToCellFull(config);
         const init = { code, data };
         return new Kick(contractAddress(workchain, init), init);
     }
