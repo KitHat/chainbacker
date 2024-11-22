@@ -1,25 +1,23 @@
 import { Request, Response } from "express";
 import { KickRepository } from "../repositories/kick.repository";
-import { KickType, isKickType } from "../models/kick";
-import { Level } from "../models/level";
-import crypto from 'crypto';
+import { isKickType } from "../models/kick";
 
-interface KickDto {
-    title: string;
-    description: string;
-    image: string;
-    type: KickType;
-    levels: Level[];
-    timestamp: number;
-}
 
 export async function createKick(req: Request, res: Response, repository: KickRepository) {
-    let { title, description, image, type, levels, timestamp } = req.body;
+    let { title, description, file, type, tiers, expirationDate, milestones, address, totalSum, creator } = req.body;
 
     if (typeof title !== "string") {
         res.status(400).json({
             success: false,
             error: "malformed title"
+        });
+        return;
+    }
+
+    if (typeof creator !== "string") {
+        res.status(400).json({
+            success: false,
+            error: "malformed creator"
         });
         return;
     }
@@ -32,7 +30,7 @@ export async function createKick(req: Request, res: Response, repository: KickRe
         return;
     }
 
-    if (typeof image !== "string") {
+    if (typeof file !== "string") {
         res.status(400).json({
             success: false,
             error: "malformed image"
@@ -48,23 +46,34 @@ export async function createKick(req: Request, res: Response, repository: KickRe
         return;
     }
 
-    if (typeof timestamp !== "number") {
+    if (typeof expirationDate !== "number") {
         res.status(400).json({
             success: false,
             error: "malformed timestamp"
         });
         return;
     }
+    if (typeof address !== "string") {
+        res.status(400).json({
+            success: false,
+            error: "malformed address"
+        });
+        return;
+    }
 
-    let toHash = `${timestamp}${title}`;
-    let marker = crypto.createHash('md5').update(toHash).digest().readBigUint64BE();
-
-    await repository.upsertKickByMarker(marker, {
+    await repository.insertKick({
         title,
+        creator,
         description,
-        image,
+        file,
         type,
-        levels,
-        marker
+        tiers,
+        address,
+        expirationDate,
+        milestones,
+        totalSum,
+        raisedSum: 0,
+        status: "active",
+        lastVoteNumber: 0
     })
 }
