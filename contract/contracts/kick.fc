@@ -17,13 +17,14 @@
         214: trying to start vote when kick is not collected
         215: USDT address not set
         216: trying to set USDT from non creator address
+        217: level id out of bounds
 -}
 int op::transfer_notification() asm "0x7362d09c PUSHINT";
 int op::transfer() asm "0xf8a7ea5 PUSHINT";
 int workchain() asm "0 PUSHINT";
 int transfer_fee() asm "40000000 PUSHINT"; ;; 0.01 TON
 
-(int, int, int, int, int, int, int, slice, slice, cell, cell, cell) load_data() inline {
+(int, int, int, int, int, int, int, int, slice, slice, cell, cell, cell) load_data() inline {
     slice ds = get_data().begin_parse();
     cell milestones = ds~load_ref();
     cell tiers = ds~load_ref();
@@ -39,6 +40,7 @@ int transfer_fee() asm "40000000 PUSHINT"; ;; 0.01 TON
         ds~load_uint(64),  ;; distributed
         ds~load_uint(1),   ;; vote in progress
         ds~load_uint(8),   ;; current vote number
+        ds~load_uint(8),   ;; level id
         ds~load_msg_addr(), ;; creator addr
         usdt_wallet, ;; usdt wallet addr
         milestones,
@@ -55,6 +57,7 @@ int transfer_fee() asm "40000000 PUSHINT"; ;; 0.01 TON
     int distributed,
     int vote_in_progress,
     int current_vote,
+    int level_number,
     slice creator,
     slice usdt_wallet,
     cell milestones, 
@@ -70,6 +73,7 @@ int transfer_fee() asm "40000000 PUSHINT"; ;; 0.01 TON
             .store_uint(distributed, 64)
             .store_uint(vote_in_progress, 1)
             .store_uint(current_vote, 8)
+            .store_uint(level_number, 8)
             .store_slice(creator)
             .store_ref(milestones)
             .store_ref(tiers)
@@ -195,6 +199,7 @@ cell update_limits(cell tiers, int level_id, int amount, int received) inline {
         int distributed = ds~load_uint(64);
         int vote_in_progress = ds~load_uint(1);
         int current_vote = ds~load_uint(8);
+        int level_number = ds~load_uint(8);
         slice creator = ds~load_msg_addr();
         cell milestones = ds~load_ref();
         cell tiers = ds~load_ref();
@@ -202,7 +207,7 @@ cell update_limits(cell tiers, int level_id, int amount, int received) inline {
         throw_if(216, ~ equal_slices_bits(sender, creator));
         slice usdt_wallet = in_msg_body~load_msg_addr();
         
-        save_data(collected,target,expiration,voted,distributed,vote_in_progress,current_vote,creator,usdt_wallet,milestones,tiers,wallet_code);
+        save_data(collected,target,expiration,voted,distributed,vote_in_progress,current_vote,level_number,creator,usdt_wallet,milestones,tiers,wallet_code);
 
         return ();
     } 
@@ -214,7 +219,8 @@ cell update_limits(cell tiers, int level_id, int amount, int received) inline {
         int voted, 
         int distributed,
         int vote_in_progress,
-        int current_vote, 
+        int current_vote,
+        int level_number,
         slice creator,
         slice usdt_wallet,
         cell milestones, 
@@ -231,6 +237,11 @@ cell update_limits(cell tiers, int level_id, int amount, int received) inline {
         slice backer_address = in_msg_body~load_msg_addr();
         int level_id = in_msg_body~load_uint(8);
         int amount = in_msg_body~load_uint(16);
+        
+        throw_unless(217, level_id < level_number);
+
+        tiers = update_limits(tiers,level_id,amount,received);
+        collected = collected + received;
 
         ;; mint message
         var msg_body = begin_cell()
@@ -254,9 +265,6 @@ cell update_limits(cell tiers, int level_id, int amount, int received) inline {
             .end_cell();
         
         send_raw_message(msg,64);
-
-        collected = collected + received;
-        tiers = update_limits(tiers,level_id,amount,received);
     } elseif (op == 1) {
         ;; resolve a kick
         throw_if(202, expiration > now());
@@ -304,7 +312,7 @@ cell update_limits(cell tiers, int level_id, int amount, int received) inline {
         ;; TODO: resolve a kick refund if failed to deliver
     }
 
-    save_data(collected,target,expiration,voted,distributed,vote_in_progress,current_vote,creator,usdt_wallet,milestones,tiers,backer_code);
+    save_data(collected,target,expiration,voted,distributed,vote_in_progress,current_vote, level_number,creator,usdt_wallet,milestones,tiers,backer_code);
 }
 
 (int, int) get_collect_state() method_id {

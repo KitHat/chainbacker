@@ -1,9 +1,16 @@
 import { MongoClient, ObjectId } from "mongodb";
-import { Kick, KickType } from "../models/kick";
+import { Kick, KickStatus, KickType } from "../models/kick";
 import { Pagination } from "../models/common";
 
 export interface KickFilter {
-    kickType?: KickType
+    kickType?: KickType,
+    creator: string
+}
+
+export interface KickUpdateDto {
+    status?: KickStatus,
+    voted?: number,
+    lastVoteNumber?: number
 }
 
 export class KickRepository {
@@ -23,12 +30,16 @@ export class KickRepository {
 
     async getKicks(filterBy: KickFilter, pagination: Pagination): Promise<Kick[]> {
         let { limit = 10, offset = 0 } = pagination;
-        let { kickType } = filterBy;
+        let { kickType, creator } = filterBy;
 
-        let filter: { type?: KickType } = {};
+        let filter: { type?: KickType, creator?: string } = {};
 
         if (kickType) {
             filter.type = kickType;
+        }
+
+        if (creator) {
+            filter.creator = creator;
         }
 
         let kicks = await this.client
@@ -42,14 +53,18 @@ export class KickRepository {
         return kicks;
     }
 
-    async getKickById(id: number): Promise<Kick | null> {
+    async updateByAddress(address: string, update: KickUpdateDto) {
+        await this.client.db(this.dbName).collection<Kick>(KickRepository.COLLECTION).updateOne({ address: address }, update);
+    }
+
+    async getKickByAddress(address: string): Promise<Kick | null> {
         return await this.client
             .db(this.dbName)
             .collection<Kick>(KickRepository.COLLECTION)
-            .findOne({ id: id });
+            .findOne({ address: address });
     }
 
-    async upsertKickByMarker(marker: number, kick: Kick) {
-        await this.client.db(this.dbName).collection<Kick>(KickRepository.COLLECTION).updateOne({ marker: marker }, kick, { upsert: true });
+    async insertKick(kick: Kick) {
+        await this.client.db(this.dbName).collection<Kick>(KickRepository.COLLECTION).insertOne(kick);
     }
 }

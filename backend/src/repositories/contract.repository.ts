@@ -20,6 +20,6 @@ export class ContractRepository {
     }
 
     async updateContractData(address: string, data: ContractData) {
-        this.client.db(this.dbName).collection<ContractData>(ContractRepository.COLLECTION).updateOne({ address: address }, data, { upsert: true });
+        await this.client.db(this.dbName).collection<ContractData>(ContractRepository.COLLECTION).updateOne({ address: address }, data, { upsert: true });
     }
 }
