@@ -4,13 +4,17 @@ import { Pagination } from "../models/common";
 
 export interface KickFilter {
     kickType?: KickType,
-    creator: string
+    creator?: string,
+    status?: KickStatus[],
 }
 
 export interface KickUpdateDto {
     status?: KickStatus,
     voted?: number,
-    lastVoteNumber?: number
+    raisedSum?: number,
+    lastVoteNumber?: number,
+    lastParsedHash?: string;
+    lastLt?: number;
 }
 
 export class KickRepository {
@@ -30,9 +34,9 @@ export class KickRepository {
 
     async getKicks(filterBy: KickFilter, pagination: Pagination): Promise<Kick[]> {
         let { limit = 10, offset = 0 } = pagination;
-        let { kickType, creator } = filterBy;
+        let { kickType, creator, status } = filterBy;
 
-        let filter: { type?: KickType, creator?: string } = {};
+        let filter: { type?: KickType, creator?: string, status?: any } = {};
 
         if (kickType) {
             filter.type = kickType;
@@ -40,6 +44,12 @@ export class KickRepository {
 
         if (creator) {
             filter.creator = creator;
+        }
+
+        if (status && status.length != 0) {
+            filter.status = {
+                $in: status
+            };
         }
 
         let kicks = await this.client
@@ -54,7 +64,7 @@ export class KickRepository {
     }
 
     async updateByAddress(address: string, update: KickUpdateDto) {
-        await this.client.db(this.dbName).collection<Kick>(KickRepository.COLLECTION).updateOne({ address: address }, update);
+        await this.client.db(this.dbName).collection<Kick>(KickRepository.COLLECTION).updateOne({ address: address }, { $set: update });
     }
 
     async getKickByAddress(address: string): Promise<Kick | null> {

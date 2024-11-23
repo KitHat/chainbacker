@@ -1,5 +1,5 @@
 export interface Milestone {
-    date: Date,
+    date: number,
     description: string,
     part: number
 }

@@ -74,6 +74,6 @@ export async function createKick(req: Request, res: Response, repository: KickRe
         totalSum,
         raisedSum: 0,
         status: "active",
-        lastVoteNumber: 0
+        lastVoteNumber: 0,
     })
 }

@@ -2,10 +2,11 @@ import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import { KickRepository } from "./repositories/kick.repository";
 import { getKicks } from "./controllers/kicks.controller";
-import { getKickById } from "./controllers/kick_by_id.controller";
+import { getKickByAddress } from "./controllers/kick_by_id.controller";
 import { createKick } from "./controllers/create_kick.controller";
 import { KickProcessor } from "./processors/kick.processor";
-import { ContractRepository } from "./repositories/contract.repository";
+import { BackRepository } from "./repositories/back.repository";
+import { getBacks } from "./controllers/backs.controller";
 
 dotenv.config();
 
@@ -13,16 +14,16 @@ const app: Express = express();
 const port = process.env.PORT || 3000;
 const connString = process.env.DB_CONN_STRING || "";
 const dbName = process.env.DB_NAME || "";
-const kickContract = process.env.KICK_CONTRACT_ADDRESS || "";
 const tonConnString = process.env.TON_CONNECTION_STRING || "";
+const apiKey = process.env.TON_API_KEY || "";
 
 const kickRepository = new KickRepository(connString, dbName);
-const contractRepository = new ContractRepository(dbName, connString);
-const kickProcessor = new KickProcessor(kickRepository, contractRepository, kickContract, tonConnString);
+const backRepository = new BackRepository(connString, dbName);
+const kickProcessor = new KickProcessor(kickRepository, backRepository, tonConnString, apiKey);
 
 setInterval(async () => {
     await kickProcessor.run();
-}, 3000);
+}, 10000);
 
 app.use(express.json());
 
@@ -34,12 +35,16 @@ app.get("/kicks", async (req: Request, res: Response) => {
     await getKicks(req, res, kickRepository);
 });
 
-app.get("/kicks/:id", async (req: Request, res: Response) => {
-    await getKickById(req, res, kickRepository);
+app.get("/kicks/:address", async (req: Request, res: Response) => {
+    await getKickByAddress(req, res, kickRepository);
 });
 
 app.post("/kick", async (req: Request, res: Response) => {
     await createKick(req, res, kickRepository);
+});
+
+app.get("/backs", async (req: Request, res: Response) => {
+    await getBacks(req, res, backRepository)
 });
 
 app.listen(port, () => {

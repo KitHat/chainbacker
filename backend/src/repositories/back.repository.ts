@@ -53,6 +53,6 @@ export class BackRepository {
     async updateBackByAddress(back: string, update: BackUpdateDto) {
         await this.client.db(this.dbName).collection<Back>(BackRepository.COLLECTION).updateOne({
             back: back
-        }, update);
+        }, { $set: update });
     }
 }
