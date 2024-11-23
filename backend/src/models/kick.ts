@@ -23,5 +23,7 @@ export interface Kick {
     status: KickStatus,
     address: string,
     voted?: number,
-    lastVoteNumber: number
+    lastVoteNumber: number,
+    lastParsedHash?: string;
+    lastLt?: number;
 }

@@ -18,7 +18,7 @@ export async function run(provider: NetworkProvider) {
     const kickAddress = kick.address;
     const reputation = provider.open(Kick.createFromAddress(kickAddress));
 
-    const usdtMaster = provider.open(JettonMinter.createFromAddress(Address.parse("kQD0GKBM8ZbryVk2aESmzfU6b9b_8era_IkvBSELujFZPsyy")));
+    const usdtMaster = provider.open(JettonMinter.createFromAddress(Address.parse("kQAMGZKPIODMJq4UV3glLkLA60D1qEHfCuCbkKhwYX2DKLBa")));
 
     const kickUsdtAddr = await usdtMaster.getWalletAddress(kickAddress);
 
