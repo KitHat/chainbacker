@@ -63,7 +63,7 @@
 </template>
 
 <script setup lang="ts">
-import {onMounted, reactive} from "vue";
+import {onMounted} from "vue";
 import Tag from 'primevue/tag';
 import Card from "@/components/Card.vue";
 import Carousel from 'primevue/carousel';

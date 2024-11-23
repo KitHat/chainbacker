@@ -15,7 +15,7 @@ import { useWallet } from "@/composables/useWallet.ts";
 // const DONATION_VALUE = 0.1
 
 export const useSendTransaction = () => {
-    const { wallet, client } = useWallet();
+    // const { wallet, client } = useWallet();
 
     // const sendTransaction = async () => {
     //     if (!wallet.value || !client.value || !await client.value.isContractDeployed(wallet.value.address)) {
@@ -111,6 +111,6 @@ export const useSendTransaction = () => {
 
     return {
         sendBack,
-        sendTransaction
+        // sendTransaction
     }
 }
