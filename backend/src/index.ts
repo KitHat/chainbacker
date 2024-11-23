@@ -6,6 +6,7 @@ import { getKickByAddress } from "./controllers/kick_by_id.controller";
 import { createKick } from "./controllers/create_kick.controller";
 import { KickProcessor } from "./processors/kick.processor";
 import { BackRepository } from "./repositories/back.repository";
+import { getBacks } from "./controllers/backs.controller";
 
 dotenv.config();
 
@@ -39,6 +40,10 @@ app.get("/kicks/:address", async (req: Request, res: Response) => {
 
 app.post("/kick", async (req: Request, res: Response) => {
     await createKick(req, res, kickRepository);
+});
+
+app.get("/backs", async (req: Request, res: Response) => {
+    await getBacks(req, res, backRepository)
 });
 
 app.listen(port, () => {
