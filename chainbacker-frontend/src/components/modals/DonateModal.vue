@@ -25,15 +25,20 @@ import {computed, ref} from "vue";
 import Toast from "primevue/toast";
 import Button from "primevue/button";
 import {KickTier} from "@/types/types.ts";
+import {useSendTransaction} from "@/composables/useSendTransaction.ts";
 
 defineProps<{ tiers: KickTier[] }>()
+
+const { sendBack } = useSendTransaction()
 
 const currentTier = ref<KickTier | null >(null)
 
 const sendButtonTitle = computed(() => currentTier.value ? `You send ${currentTier.value.price} USDT` : 'Choose tier')
 
 const emit = defineEmits(['on-close'])
-const onSubmit = () => {
+const onSubmit = async () => {
+  sendBack()
+
   emit('on-close')
 }
 </script>
