@@ -1,4 +1,4 @@
-import { useWallet } from "@/composables/useWallet.ts";
+// import { useWallet } from "@/composables/useWallet.ts";
 // import { mnemonicToWalletKey } from "@ton/crypto";
 // import { Reputation }  from "@/compiled_contracts/wrappers/Reputation";
 // import { MNEMONIC_MOCK } from "@/mocks/mocks.ts";
