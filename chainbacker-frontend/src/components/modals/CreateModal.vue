@@ -112,9 +112,66 @@ import Fluid from "primevue/fluid";
 import Button from "primevue/button";
 import { reactive, ref } from "vue";
 import { DatePicker, InputNumber, Textarea, FileUpload } from "primevue";
+import {useCustomFetch} from "@/composables/useCustomFetch.ts";
+import {Endpoints} from "@/constants/endpoints.ts";
+import {KickStage, KickType} from "@/constants/kick.ts";
 
 const emit = defineEmits(['onClose'])
 const onSubmit = () => {
+  // title: string,
+  // creator: string,
+  // description: string
+  // type: KickType,
+  // expirationDate: number
+  // totalSum: number,
+  // raisedSum: number,
+  // file: string,
+  // tiers: Tier[],
+  // milestones: Milestone[],
+  // status: KickStatus,
+  // address: string,
+  // voted?: number,
+  // lastVoteNumber: number,
+  // lastParsedHash?: string;
+  // lastLt?: number;
+  // export interface Tier {
+  //   id: number;
+  //   title: string;
+  //   description: string;
+  //   price: number;
+  //   limit: number;
+  //   bought: number;
+  // }
+
+  const res = useCustomFetch(Endpoints.KICKS).post({
+    title: '1',
+    creator: 'string',
+    description: '1',
+    type: KickType.Tech,
+    expirationDate: new Date().getTime(),
+    totalSum: 1000,
+    raisedSum: 100,
+    file: 'string',
+    tiers: [{
+      title: 'tier 1',
+      description: 'description 1',
+      price: 1,
+      limit: 1,
+      bought: 1
+    }],
+    milestones: [
+      {
+        date: new Date().getTime(),
+        description: 'string',
+        part: 1
+      }
+    ],
+    status: KickStage.Active,
+    address: 'deployed address kick',
+  }).json()
+
+  console.warn('res', res)
+
   emit('onClose')
 }
 

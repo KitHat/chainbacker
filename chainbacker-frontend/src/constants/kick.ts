@@ -7,3 +7,11 @@ export const enum KickStage {
     Milestone = 'milestone',
     Archived = 'archived'
 }
+
+export const enum KickType {
+    ART = "art",
+    Tech = "tech",
+    Games = "games",
+    Film = "film",
+    Music = "music"
+}

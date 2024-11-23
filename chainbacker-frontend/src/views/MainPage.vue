@@ -63,12 +63,15 @@
 </template>
 
 <script setup lang="ts">
+import {onMounted, reactive} from "vue";
 import Tag from 'primevue/tag';
 import Card from "@/components/Card.vue";
 import Carousel from 'primevue/carousel';
 import MostActiveKick from "@/components/MostActiveKick.vue";
 import DetonateCard from "@/components/DetonateCard.vue";
-import {CARDS_MOCK} from "@/mocks/mocks.ts";
+import { CARDS_MOCK } from "@/mocks/mocks.ts";
+import { useCustomFetch } from "@/composables/useCustomFetch.ts";
+import { Endpoints } from "@/constants/endpoints.ts";
 
 const CHIPS_FILTER_MOCK = ['Art & Design',
   'Technology & Gadgets',
@@ -76,6 +79,19 @@ const CHIPS_FILTER_MOCK = ['Art & Design',
   'Film & Video',
   'Music & Performance'
 ]
+
+const kicks = reactive([])
+
+onMounted(async () => {
+  const { data } = await useCustomFetch(Endpoints.KICKS).get().json()
+
+  console.warn('data', data)
+
+  // if (data) {
+    // kicks.push()
+  // }
+})
+
 </script>
 
 <style scoped>

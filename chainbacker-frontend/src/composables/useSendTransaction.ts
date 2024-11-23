@@ -2,17 +2,17 @@ import { useWallet } from "@/composables/useWallet.ts";
 import { mnemonicToWalletKey } from "@ton/crypto";
 import { Reputation }  from "@/compiled_contracts/wrappers/Reputation";
 import { MNEMONIC_MOCK } from "@/mocks/mocks.ts";
-import { JettonMinter } from "@/compiled_contracts/wrappers/JettonMinter";
-import core_1, {address, Cell} from "@ton/core";
-import { CONTRACT_ADDRESS_MOCK, SENDER_WALLET_MOCK, USDT_MASTER } from "@/constants/blockchainMoks.ts";
-import KickContract from "@/composables/useInteractionContract.ts";
-import {JettonWallet} from "@ton/ton";
+// import { JettonMinter } from "@/compiled_contracts/wrappers/JettonMinter";
+// import core_1, {address, Cell} from "@ton/core";
+// import { CONTRACT_ADDRESS_MOCK, SENDER_WALLET_MOCK, USDT_MASTER } from "@/constants/blockchainMoks.ts";
+// import KickContract from "@/composables/useInteractionContract.ts";
+// import {JettonWallet} from "@ton/ton";
 
-const MAGIC_VALUE_MOCK = 0.05
-
-const FORWARD_TON_AMONT_MOCK = 0.01
-
-const DONATION_VALUE = 0.1
+// const MAGIC_VALUE_MOCK = 0.05
+//
+// const FORWARD_TON_AMONT_MOCK = 0.01
+//
+// const DONATION_VALUE = 0.1
 
 export const useSendTransaction = () => {
     const { wallet, client } = useWallet();
@@ -82,30 +82,30 @@ export const useSendTransaction = () => {
     }
 
     const sendBack = async () => {
-        const usdtMasterAddress = address(USDT_MASTER)
-
-        const senderWalletAddress = address(SENDER_WALLET_MOCK)
-
-        const kickContractAddress = address(CONTRACT_ADDRESS_MOCK)
-
-        const jettonMinter = JettonMinter.createFromAddress(usdtMasterAddress)
-
-        if (!client.value) {
-            throw new Error('client is not initialized')
-        }
-
-        const kickContractProvider = client.value.provider(kickContractAddress)
-
-        const walletAddress = await jettonMinter.getWalletAddress(kickContractProvider, senderWalletAddress)
-
-        const walletSender = new KickContract(senderWalletAddress)
-
-        const forwardPayload = (0, core_1.beginCell)()
-            .storeUint(0n, 8) // levelId
-            .storeUint(10n, 16)
-            .endCell();
-
-        await JettonWallet.sendTransfer(kickContractProvider, walletSender, MAGIC_VALUE_MOCK, DONATION_VALUE, kickContractAddress, walletAddress, new Cell(), FORWARD_TON_AMONT_MOCK, forwardPayload)
+        // const usdtMasterAddress = address(USDT_MASTER)
+        //
+        // const senderWalletAddress = address(SENDER_WALLET_MOCK)
+        //
+        // const kickContractAddress = address(CONTRACT_ADDRESS_MOCK)
+        //
+        // const jettonMinter = JettonMinter.createFromAddress(usdtMasterAddress)
+        //
+        // if (!client.value) {
+        //     throw new Error('client is not initialized')
+        // }
+        //
+        // const kickContractProvider = client.value.provider(kickContractAddress)
+        //
+        // const walletAddress = await jettonMinter.getWalletAddress(kickContractProvider, senderWalletAddress)
+        //
+        // const walletSender = new KickContract(senderWalletAddress)
+        //
+        // const forwardPayload = (0, core_1.beginCell)()
+        //     .storeUint(0n, 8) // levelId
+        //     .storeUint(10n, 16)
+        //     .endCell();
+        //
+        // await JettonWallet.sendTransfer(kickContractProvider, walletSender, MAGIC_VALUE_MOCK, DONATION_VALUE, kickContractAddress, walletAddress, new Cell(), FORWARD_TON_AMONT_MOCK, forwardPayload)
     }
 
     return {
