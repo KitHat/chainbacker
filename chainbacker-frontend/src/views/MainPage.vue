@@ -80,7 +80,7 @@ const CHIPS_FILTER_MOCK = ['Art & Design',
   'Music & Performance'
 ]
 
-const kicks = reactive([])
+// const kicks = reactive([])
 
 onMounted(async () => {
   const { data } = await useCustomFetch(Endpoints.KICKS).get().json()
