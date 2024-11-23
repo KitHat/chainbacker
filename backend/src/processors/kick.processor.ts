@@ -15,11 +15,11 @@ export class KickProcessor {
     private client: TonWeb;
     private kickRepository: KickRepository;
     private backRepository: BackRepository;
-    constructor(kickRepository: KickRepository, backRepository: BackRepository, tonConnString: string) {
+    constructor(kickRepository: KickRepository, backRepository: BackRepository, tonConnString: string, apiKey: string) {
         this.client = new TonWeb(
             new TonWeb.HttpProvider(
                 tonConnString,
-                { apiKey: "afb54708ff14cc756ad0b114298c9863b9cecc8d05a65e25911322afe76e7a99" }
+                { apiKey }
             )
         );
         this.kickRepository = kickRepository;

@@ -15,10 +15,11 @@ const port = process.env.PORT || 3000;
 const connString = process.env.DB_CONN_STRING || "";
 const dbName = process.env.DB_NAME || "";
 const tonConnString = process.env.TON_CONNECTION_STRING || "";
+const apiKey = process.env.TON_API_KEY || "";
 
 const kickRepository = new KickRepository(connString, dbName);
 const backRepository = new BackRepository(connString, dbName);
-const kickProcessor = new KickProcessor(kickRepository, backRepository, tonConnString);
+const kickProcessor = new KickProcessor(kickRepository, backRepository, tonConnString, apiKey);
 
 setInterval(async () => {
     await kickProcessor.run();
