@@ -7,8 +7,17 @@ import { createKick } from "./controllers/create_kick.controller";
 import { KickProcessor } from "./processors/kick.processor";
 import { BackRepository } from "./repositories/back.repository";
 import { getBacks } from "./controllers/backs.controller";
+import cors, { CorsOptions } from "cors";
 
 dotenv.config();
+
+const corsOptions: CorsOptions = {
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+    optionsSuccessStatus: 200
+};
 
 const app: Express = express();
 const port = process.env.PORT || 3000;
@@ -26,6 +35,8 @@ setInterval(async () => {
 }, 10000);
 
 app.use(express.json());
+
+app.use(cors(corsOptions));
 
 app.get("/", (req: Request, res: Response) => {
     res.send("Express + TypeScript Server");

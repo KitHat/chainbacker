@@ -13,12 +13,14 @@
   "license": "ISC",
   "dependencies": {
     "@ton/ton": "^15.1.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "mongodb": "^6.10.0",
     "tonweb": "^0.0.66"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/node": "^22.9.0",
     "concurrently": "^9.1.0",
