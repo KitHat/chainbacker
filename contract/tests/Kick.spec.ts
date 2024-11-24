@@ -8,6 +8,7 @@ import { compile } from '@ton/blueprint';
 
 import '@ton/test-utils';
 import exp from 'constants';
+import { KickFactory } from '../wrappers/KickFactory';
 
 describe('Crowdfunding System Tests', () => {
     let blockchain: Blockchain;
@@ -25,16 +26,20 @@ describe('Crowdfunding System Tests', () => {
     let backer: SandboxContract<TreasuryContract>;
     let backer2: SandboxContract<TreasuryContract>;
 
+    let kickFactory: SandboxContract<KickFactory>;
+
     let jettonWalletCode: Cell;
     let jettonMasterCode: Cell;
     let backerCode: Cell;
     let kickCode: Cell;
+    let kickFactoryCode: Cell;
 
     beforeAll(async () => {
         backerCode = await compile("Backer");
         kickCode = await compile("Kick");
         jettonWalletCode = await compile("JettonWallet");
         jettonMasterCode = await compile("JettonMinter");
+        kickFactoryCode = await compile("KickFactory");
     });
 
     const COLLECTION_TARGET = toNano('1000');
@@ -59,24 +64,49 @@ describe('Crowdfunding System Tests', () => {
 
         await usdtMaster.sendDeploy(deployer.getSender(), toNano("0.1"));
 
-        // Deploy Kick contract
-        kick = blockchain.openContract(
-            await Kick.createFromConfig({
-                creator: creator.address,
-                target: COLLECTION_TARGET,
-                expiration: BigInt(Math.floor(Date.now() / 1000) + KICK_DURATION),
-                tiers: [
-                    {
-                        price: 100n,
-                        amount: 1000n
-                    }
-                ],
-                milestones: [{ part: 40n }, { part: 40n }, { part: 20n }],
-                code: backerCode,
-            }, kickCode)
+        kickFactory = blockchain.openContract(
+            await KickFactory.createFromConfig({
+                kickCode,
+                backCode: backerCode
+            }, kickFactoryCode)
         );
 
-        await kick.sendDeploy(deployer.getSender(), toNano("0.1"));
+        await kickFactory.sendDeploy(deployer.getSender(), toNano('0.1'));
+        let expiration = BigInt(Math.floor(Date.now() / 1000) + KICK_DURATION);
+
+        await kickFactory.sendKick(
+            creator.getSender(),
+            toNano('0.1'),
+            999n,
+            COLLECTION_TARGET,
+            expiration,
+            1n,
+            [{ part: 40n }, { part: 40n }, { part: 20n }],
+            [
+                {
+                    price: 100n,
+                    amount: 1000n
+                }
+            ]
+        );
+
+        let kickAddress = await kickFactory.getKickContract(COLLECTION_TARGET,
+            expiration,
+            1n,
+            creator.address,
+            [{ part: 40n }, { part: 40n }, { part: 20n }],
+            [
+                {
+                    price: 100n,
+                    amount: 1000n
+                }
+            ]
+        );
+
+        // Deploy Kick contract
+        kick = blockchain.openContract(
+            Kick.createFromAddress(kickAddress)
+        );
 
         let backUsdtAddress = await usdtMaster.getWalletAddress(backer.address);
         let backUsdtAddress2 = await usdtMaster.getWalletAddress(backer2.address);

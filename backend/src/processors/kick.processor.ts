@@ -41,16 +41,23 @@ export class KickProcessor {
         let hash = undefined;
 
         let finish = false;
-
-        let txs = await this.client.getTransactions(kick.address, 1, lt, hash);
+        let txs
+        try {
+            txs = await this.client.getTransactions(kick.address, 1, lt, hash);
+        } catch (e) {
+            console.error(e);
+            return;
+        }
         let first_lt = txs[0].transaction_id.lt;
         let first_hash = txs[0].transaction_id.hash;
-        await this.kickRepository.updateByAddress(kick.address, {
-            lastLt: first_lt,
-            lastParsedHash: first_hash
-        });
         while (!finish) {
-            let txs = await this.client.getTransactions(kick.address, 100, lt, hash);
+            let txs;
+            try {
+                txs = await this.client.getTransactions(kick.address, 100, lt, hash);
+            } catch (e) {
+                console.error(e);
+                return;
+            }
             lt = txs[txs.length - 1].transaction_id.lt;
             hash = txs[txs.length - 1].transaction_id.hash;
             console.log(`Processing ${txs.length} transactions`);
@@ -212,5 +219,10 @@ export class KickProcessor {
                 }
             }
         }
+
+        await this.kickRepository.updateByAddress(kick.address, {
+            lastLt: first_lt,
+            lastParsedHash: first_hash
+        });
     }
 }
