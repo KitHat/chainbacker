@@ -1,5 +1,8 @@
 <template>
   <section class="w-full pl-4 pr-4">
+    <section class="mb-1 flex w-full justify-center items-center">
+      <Badge severity="warn" value="TESTNET"></Badge>
+    </section>
     <Toolbar style="border-radius: 3rem; padding: 1rem 1.5rem 1rem 1.5rem" class="border-2 border-blue-900">
       <template #start>
         <router-link :to="{ name: 'MainPage' }">
@@ -23,6 +26,8 @@ import Toolbar from "primevue/toolbar"
 import HomeIcon from "@/components/icons/HomeIcon.vue";
 import ProfileIcon from "@/components/icons/ProfileIcon.vue";
 import CreateButton from "@/components/icons/CreateButton.vue";
+import Badge from 'primevue/badge';
+import OverlayBadge from 'primevue/overlaybadge';
 </script>
 
 <style scoped>
