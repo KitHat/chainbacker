@@ -2,22 +2,26 @@ import { Address, toNano } from '@ton/core';
 import { Kick } from '../wrappers/Kick';
 import { compile, NetworkProvider } from '@ton/blueprint';
 import { JettonMinter } from '../wrappers/JettonMinter';
+import { KickFactory } from '../wrappers/KickFactory';
 
 export async function run(provider: NetworkProvider) {
     let addr = provider.sender().address;
     if (!addr) {
         throw (123);
     }
-    let code = await compile("Backer");
-    const kick = provider.open(Kick.createFromConfig({ target: 100000000n, expiration: BigInt(Date.now() + 60 * 60 * 24 * 3), creator: addr, milestones: [{ part: 100n }], tiers: [{ amount: 1000n, price: 100000n }], code }, await compile('Kick')));
 
-    await kick.sendDeploy(provider.sender(), toNano('0.1'));
+    let target = 100000000n;
+    let expiration = BigInt(Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 3);
 
-    await provider.waitForDeploy(kick.address);
+    const kickFactory = provider.open(KickFactory.createFromAddress(Address.parse("EQBk2uXgGwdFWCZQ1j5WvuEVTIUSbD6vEtc9suHKpBZzhOji")));
 
-    const kickAddress = kick.address;
+    await kickFactory.sendKick(provider.sender(), toNano('0.1'), 999n, target, expiration, 1n, [{ part: 100n }], [{ amount: 1000n, price: 100000n }]);
+
+    let kickAddress = await kickFactory.getKickContract(target, expiration, 1n, addr, [{ part: 100n }], [{ amount: 1000n, price: 100000n }]);
+
     const reputation = provider.open(Kick.createFromAddress(kickAddress));
 
+    // that's our jetton for testing
     const usdtMaster = provider.open(JettonMinter.createFromAddress(Address.parse("kQAMGZKPIODMJq4UV3glLkLA60D1qEHfCuCbkKhwYX2DKLBa")));
 
     const kickUsdtAddr = await usdtMaster.getWalletAddress(kickAddress);

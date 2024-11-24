@@ -13,7 +13,7 @@ export async function run(provider: NetworkProvider) {
     // const kick = provider.open(Kick.createFromConfig({ target: 100000000n, expiration: BigInt(Date.now() + 60 * 60 * 24 * 3), creator: addr, milestones: [{ part: 100n }], tiers: [{ amount: 1000n, price: 100000n }], code }, await compile('Kick')));
 
     const usdtMaster = provider.open(JettonMinter.createFromAddress(Address.parse("kQAMGZKPIODMJq4UV3glLkLA60D1qEHfCuCbkKhwYX2DKLBa")));
-    const kickAddress = Address.parse("EQDSCh4XG3oFYiJ-ACg8HpDm_TEDjPIdHGilGLcJYBr2nYX_");
+    const kickAddress = Address.parse("EQCLlnXz4uk1gts4ty7PP6Teh04JaprRDixwsK4lnSvjxr2C");
 
     // const kickUsdtAddr = await usdtMaster.getWalletAddress(kickAddress);
     const myUsdtAddr = await usdtMaster.getWalletAddress(addr);

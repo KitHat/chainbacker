@@ -1,6 +1,4 @@
 import { Request, Response } from "express";
-import { isKickType } from "../models/kick";
-import { KickFilter, KickRepository } from "../repositories/kick.repository";
 import { Pagination } from "../models/common";
 import { BackRepository } from "../repositories/back.repository";
 
