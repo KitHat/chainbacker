@@ -27,7 +27,6 @@ import HomeIcon from "@/components/icons/HomeIcon.vue";
 import ProfileIcon from "@/components/icons/ProfileIcon.vue";
 import CreateButton from "@/components/icons/CreateButton.vue";
 import Badge from 'primevue/badge';
-import OverlayBadge from 'primevue/overlaybadge';
 </script>
 
 <style scoped>
