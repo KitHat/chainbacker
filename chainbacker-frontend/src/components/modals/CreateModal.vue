@@ -117,63 +117,6 @@ import {Endpoints} from "@/constants/endpoints.ts";
 import {KickStage, KickType} from "@/constants/kick.ts";
 
 const emit = defineEmits(['onClose'])
-const onSubmit = () => {
-  // title: string,
-  // creator: string,
-  // description: string
-  // type: KickType,
-  // expirationDate: number
-  // totalSum: number,
-  // raisedSum: number,
-  // file: string,
-  // tiers: Tier[],
-  // milestones: Milestone[],
-  // status: KickStatus,
-  // address: string,
-  // voted?: number,
-  // lastVoteNumber: number,
-  // lastParsedHash?: string;
-  // lastLt?: number;
-  // export interface Tier {
-  //   id: number;
-  //   title: string;
-  //   description: string;
-  //   price: number;
-  //   limit: number;
-  //   bought: number;
-  // }
-
-  const res = useCustomFetch(Endpoints.KICKS).post({
-    title: '1',
-    creator: 'string',
-    description: '1',
-    type: KickType.Tech,
-    expirationDate: new Date().getTime(),
-    totalSum: 1000,
-    raisedSum: 100,
-    file: 'string',
-    tiers: [{
-      title: 'tier 1',
-      description: 'description 1',
-      price: 1,
-      limit: 1,
-      bought: 1
-    }],
-    milestones: [
-      {
-        date: new Date().getTime(),
-        description: 'string',
-        part: 1
-      }
-    ],
-    status: KickStage.Active,
-    address: 'deployed address kick',
-  }).json()
-
-  console.warn('res', res)
-
-  emit('onClose')
-}
 
 const form = reactive({
   title: '',
@@ -190,6 +133,28 @@ const form = reactive({
     description: ''
   }]
 })
+
+const onSubmit = () => {
+  const res = useCustomFetch(Endpoints.KICKS).post({
+    title: form.title,
+    creator: 'detoner',
+    description: form.description,
+    type: KickType.Tech,
+    expirationDate: form.expirationDate.getTime(),
+    totalSum: form.totalSum,
+    raisedSum: 0,
+    file: '',
+    tiers: form.tiers.map(item => ({...item, limit: 1,
+      bought: 1})),
+    milestones: form.milestones.map((item, index) => ({ date: item.date.getTime(), description: item.description, part: index + 1 })),
+    status: KickStage.Active,
+    address: 'deployed address kick',
+  }).json()
+
+  console.warn('res', res)
+
+  emit('onClose')
+}
 
 const addTier = () => {
   form.tiers.push({ title: '', description: '', price: 0 });
