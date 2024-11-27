@@ -36,7 +36,7 @@ const props = defineProps<{
   title: string
   raisedSum: number
   totalSum: number
-  backersCounter: number
+  backersCounter?: number
   daysLeft: number
   type: string
 }>()

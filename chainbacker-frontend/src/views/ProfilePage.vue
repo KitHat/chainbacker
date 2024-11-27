@@ -6,10 +6,10 @@
     </div>
     <section class="flex flex-col justify-center items-center">
       <h1 class="text-4xl font-bold mb-4">Generous Detoner</h1>
-      <div v-if="walletBalance"
-           class="text-2xl font-semibold"
+      <div v-if="walletAddress"
+           class="text-2xl font-semibold mb-3 break-all"
       >
-        Balance: {{ walletBalance }}
+        Address: {{ walletAddress }}
       </div>
       <div v-else class="mb-8">
         <TonConnectButton />
@@ -165,7 +165,7 @@ const projects = reactive({
   ]
 })
 
-const { walletBalance, getBalance } = useWallet()
+const { walletAddress, getBalance } = useWallet()
 
 onBeforeMount(() => {
   getBalance()

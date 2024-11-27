@@ -1,9 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Errors = exports.Op = void 0;
-class Op {
+export class Op {
 }
-exports.Op = Op;
 Op.transfer = 0xf8a7ea5;
 Op.transfer_notification = 0x7362d09c;
 Op.internal_transfer = 0x178d4519;
@@ -15,9 +11,8 @@ Op.take_wallet_address = 0xd1735400;
 Op.mint = 21;
 Op.change_admin = 3;
 Op.change_content = 4;
-class Errors {
+export class Errors {
 }
-exports.Errors = Errors;
 Errors.invalid_op = 709;
 Errors.not_admin = 73;
 Errors.unouthorized_burn = 74;

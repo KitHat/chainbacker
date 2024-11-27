@@ -115,6 +115,8 @@ import { DatePicker, InputNumber, Textarea, FileUpload } from "primevue";
 import {useCustomFetch} from "@/composables/useCustomFetch.ts";
 import {Endpoints} from "@/constants/endpoints.ts";
 import {KickStage, KickType} from "@/constants/kick.ts";
+import { useSendTransaction } from "@/composables/useSendTransaction.ts";
+import {useWallet} from "@/composables/useWallet.ts";
 
 const emit = defineEmits(['onClose'])
 
@@ -124,7 +126,7 @@ const form = reactive({
   expirationDate: new Date,
   totalSum: 0,
   raisedSum: 0,
-  file: null,
+  file: '',
   tiers: [
     { title: '', description: '', price: 0 }
   ],
@@ -134,24 +136,10 @@ const form = reactive({
   }]
 })
 
-const onSubmit = () => {
-  const res = useCustomFetch(Endpoints.KICKS).post({
-    title: form.title,
-    creator: 'detoner',
-    description: form.description,
-    type: KickType.Tech,
-    expirationDate: form.expirationDate.getTime(),
-    totalSum: form.totalSum,
-    raisedSum: 0,
-    file: '',
-    tiers: form.tiers.map(item => ({...item, limit: 1,
-      bought: 1})),
-    milestones: form.milestones.map((item, index) => ({ date: item.date.getTime(), description: item.description, part: index + 1 })),
-    status: KickStage.Active,
-    address: 'deployed address kick',
-  }).json()
+const { sendKick } = useSendTransaction()
 
-  console.warn('res', res)
+const onSubmit = async () => {
+  await sendKick(form)
 
   emit('onClose')
 }

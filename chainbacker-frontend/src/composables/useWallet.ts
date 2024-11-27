@@ -1,10 +1,11 @@
 import { TonClient } from "@ton/ton";
-import {ref} from "vue";
-import {getHttpEndpoint} from "@orbs-network/ton-access";
+import {computed, ref, unref} from "vue";
+import { getHttpEndpoint } from "@orbs-network/ton-access";
 import { useTonAddress, useTonWallet } from '@townsquarelabs/ui-vue';
+import {address} from "@ton/core";
 
 const wallet = ref<any | null>()
-const walletAddress = ref<any | null>()
+const walletAddress = computed(() => useTonAddress().value)
 const walletBalance = ref<bigint | null>()
 const client = ref<TonClient | null>()
 export function useWallet() {
@@ -14,16 +15,14 @@ export function useWallet() {
         return new TonClient({ endpoint })
     }
     const initUserWallet = async () => {
-        wallet.value = useTonWallet()
-
-        walletAddress.value = useTonAddress()
+        wallet.value = unref(useTonWallet())
 
         client.value = await getClient()
     }
 
     const getBalance = async () => {
         if (client.value && wallet.value) {
-            walletBalance.value = await client.value.getBalance(walletAddress.value)
+            walletBalance.value = await client.value.getBalance(address(walletAddress.value))
         }
     }
 
@@ -34,6 +33,7 @@ export function useWallet() {
         wallet,
         initUserWallet,
         getBalance,
-        walletBalance
+        walletBalance,
+        walletAddress
     }
 }

@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.compile = void 0;
-exports.compile = {
+export const compile = {
     lang: 'func',
     targets: ['contracts/backer.fc'],
 };

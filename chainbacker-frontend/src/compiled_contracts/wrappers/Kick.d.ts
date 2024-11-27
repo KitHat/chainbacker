@@ -9,6 +9,16 @@ export type KickConfig = {
     code: Cell;
 };
 export declare function kickConfigToCell(config: KickConfig): Cell;
+export type KickConfigFull = {
+    target: bigint;
+    expiration: bigint;
+    creator: Address;
+    milestones: Milestone[];
+    tiers: Tier[];
+    code: Cell;
+    collected: bigint;
+};
+export declare function kickConfigToCellFull(config: KickConfigFull): Cell;
 export declare class Kick implements Contract {
     readonly address: Address;
     readonly init?: {
@@ -21,6 +31,7 @@ export declare class Kick implements Contract {
     } | undefined);
     static createFromAddress(address: Address): Kick;
     static createFromConfig(config: KickConfig, code: Cell, workchain?: number): Kick;
+    static createFromConfigFull(config: KickConfigFull, code: Cell, workchain?: number): Kick;
     sendDeploy(provider: ContractProvider, via: Sender, value: bigint): Promise<void>;
     getCollectState(provider: ContractProvider): Promise<CollectState>;
     getVoteState(provider: ContractProvider): Promise<VoteState>;
