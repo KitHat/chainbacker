@@ -7,9 +7,16 @@ import {address, Address, toNano} from "@ton/core";
 import {useCustomFetch} from "@/composables/useCustomFetch.ts";
 import {Endpoints} from "@/constants/endpoints.ts";
 import {KickStage, KickType} from "@/constants/kick.ts";
+import { useKickFactoryContract } from "./useKickFactoryContract";
+import { useTonConnect } from "./useTonConnectUI";
 
 export const useSendTransaction = () => {
     const { walletAddress, client, wallet } = useWallet();
+
+    const { sender } = useTonConnect();
+
+    const { kickFactoryContract } = useKickFactoryContract();
+
     const sendKick = async (form: {
         title: string;
         description: string;
@@ -23,35 +30,25 @@ export const useSendTransaction = () => {
           throw new Error('client is undefined')
         }
 
-        console.warn('sendKick', walletAddress.value, client.value)
-
-        const senderAddress = address(walletAddress.value)
-
-        const provider = client.value.provider(senderAddress)
-
-        const sender = client.value.open(wallet.value).sender;
-
         const target = 100000000n;
 
         const expiration = BigInt(Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 3);
 
-        const kickFactory = provider.open(KickFactory.createFromAddress(Address.parse("EQBk2uXgGwdFWCZQ1j5WvuEVTIUSbD6vEtc9suHKpBZzhOji")));
+        await kickFactoryContract.value.sendKick(sender, toNano('0.1'), 999n, target, expiration, 1n, [{ part: 100n }], [{ amount: 1000n, price: 100000n }]);
 
-        await kickFactory.sendKick(sender, toNano('0.1'), 999n, target, expiration, 1n, [{ part: 100n }], [{ amount: 1000n, price: 100000n }]);
+        let kickAddress = await kickFactoryContract.value.getKickContract(target, expiration, 1n, sender.address, [{ part: 100n }], [{ amount: 1000n, price: 100000n }]);
 
-        let kickAddress = await kickFactory.getKickContract(target, expiration, 1n, senderAddress, [{ part: 100n }], [{ amount: 1000n, price: 100000n }]);
+        const kick = client.value.open(Kick.createFromAddress(kickAddress));
 
-        const reputation = provider.open(Kick.createFromAddress(kickAddress));
-
-        const usdtMaster = provider.open(JettonMinter.createFromAddress(Address.parse("kQAMGZKPIODMJq4UV3glLkLA60D1qEHfCuCbkKhwYX2DKLBa")));
+        const usdtMaster = client.value.open(JettonMinter.createFromAddress(Address.parse("kQAMGZKPIODMJq4UV3glLkLA60D1qEHfCuCbkKhwYX2DKLBa")));
 
         const kickUsdtAddr = await usdtMaster.getWalletAddress(kickAddress);
 
-        await reputation.sendUsdtWallet(sender, toNano('0.05'), 2n, kickUsdtAddr);
+        await kick.sendUsdtWallet(sender, toNano('0.05'), 2n, kickUsdtAddr);
 
         const res = await useCustomFetch(Endpoints.KICKS).post({
             title: form.title,
-            creator: 'detoner',
+            creator: sender.address,
             description: form.description,
             type: KickType.Tech,
             expirationDate: form.expirationDate.getTime(),
@@ -62,7 +59,7 @@ export const useSendTransaction = () => {
                 bought: 1})),
             milestones: form.milestones.map((item, index) => ({ date: item.date.getTime(), description: item.description, part: index + 1 })),
             status: KickStage.Active,
-            address: 'deployed address kick',
+            address: kickAddress,
         }).json()
 
         console.warn('send kick response', res)
