@@ -7,6 +7,8 @@ export type KickConfig = {
     milestones: Milestone[];
     tiers: Tier[];
     code: Cell;
+    usdtWallet: Address;
+    comissionWallet: Address;
 };
 export declare function kickConfigToCell(config: KickConfig): Cell;
 export type KickConfigFull = {
@@ -17,6 +19,8 @@ export type KickConfigFull = {
     tiers: Tier[];
     code: Cell;
     collected: bigint;
+    usdtWallet: Address;
+    comissionWallet: Address;
 };
 export declare function kickConfigToCellFull(config: KickConfigFull): Cell;
 export declare class Kick implements Contract {
@@ -40,6 +44,5 @@ export declare class Kick implements Contract {
     getTierData(provider: ContractProvider): Promise<Tier[]>;
     sendResolve(provider: ContractProvider, via: Sender, value: bigint, queryId: bigint): Promise<void>;
     sendStartVote(provider: ContractProvider, via: Sender, value: bigint, queryId: bigint): Promise<void>;
-    sendUsdtWallet(provider: ContractProvider, via: Sender, value: bigint, queryId: bigint, usdt: Address): Promise<void>;
     sendTransfer(provider: ContractProvider, via: Sender, value: bigint, backer: Address, levelId: bigint, amount: bigint, jettonAmount: bigint): Promise<void>;
 }

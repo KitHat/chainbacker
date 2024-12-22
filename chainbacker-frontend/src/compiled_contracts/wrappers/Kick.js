@@ -1,14 +1,19 @@
-import { beginCell, contractAddress, SendMode } from '@ton/core';
-export function kickConfigToCell(config) {
-    let tiers = beginCell();
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Kick = void 0;
+exports.kickConfigToCell = kickConfigToCell;
+exports.kickConfigToCellFull = kickConfigToCellFull;
+const core_1 = require("@ton/core");
+function kickConfigToCell(config) {
+    let tiers = (0, core_1.beginCell)();
     for (const tier of config.tiers) {
         tiers = tiers.storeUint(tier.amount, 16).storeUint(0, 16).storeUint(tier.price, 64);
     }
-    let milestones = beginCell();
+    let milestones = (0, core_1.beginCell)();
     for (const milestone of config.milestones) {
         milestones = milestones.storeUint(milestone.part, 8);
     }
-    return beginCell()
+    return (0, core_1.beginCell)()
         .storeUint(0, 64)
         .storeUint(config.target, 64)
         .storeUint(config.expiration, 64)
@@ -17,23 +22,28 @@ export function kickConfigToCell(config) {
         .storeUint(0, 1)
         .storeUint(0, 8)
         .storeUint(config.tiers.length, 8)
+        .storeUint(1, 1)
         .storeAddress(config.creator)
         .storeRef(milestones.endCell())
         .storeRef(tiers.endCell())
         .storeRef(config.code)
+        .storeRef((0, core_1.beginCell)()
+        .storeAddress(config.usdtWallet)
+        .storeAddress(config.comissionWallet)
+        .endCell())
         .endCell();
 }
 // TEST-ONLY CONFIGS
-export function kickConfigToCellFull(config) {
-    let tiers = beginCell();
+function kickConfigToCellFull(config) {
+    let tiers = (0, core_1.beginCell)();
     for (const tier of config.tiers) {
         tiers = tiers.storeUint(tier.amount, 16).storeUint(0, 16).storeUint(tier.price, 64);
     }
-    let milestones = beginCell();
+    let milestones = (0, core_1.beginCell)();
     for (const milestone of config.milestones) {
         milestones = milestones.storeUint(milestone.part, 8);
     }
-    return beginCell()
+    return (0, core_1.beginCell)()
         .storeUint(config.collected, 64)
         .storeUint(config.target, 64)
         .storeUint(config.expiration, 64)
@@ -42,13 +52,18 @@ export function kickConfigToCellFull(config) {
         .storeUint(0, 1)
         .storeUint(0, 8)
         .storeUint(config.tiers.length, 8)
+        .storeUint(1, 1)
         .storeAddress(config.creator)
         .storeRef(milestones.endCell())
         .storeRef(tiers.endCell())
         .storeRef(config.code)
+        .storeRef((0, core_1.beginCell)()
+        .storeAddress(config.usdtWallet)
+        .storeAddress(config.comissionWallet)
+        .endCell())
         .endCell();
 }
-export class Kick {
+class Kick {
     constructor(address, init) {
         this.address = address;
         this.init = init;
@@ -59,19 +74,19 @@ export class Kick {
     static createFromConfig(config, code, workchain = 0) {
         const data = kickConfigToCell(config);
         const init = { code, data };
-        return new Kick(contractAddress(workchain, init), init);
+        return new Kick((0, core_1.contractAddress)(workchain, init), init);
     }
     // TEST ONLY CONFIG
     static createFromConfigFull(config, code, workchain = 0) {
         const data = kickConfigToCellFull(config);
         const init = { code, data };
-        return new Kick(contractAddress(workchain, init), init);
+        return new Kick((0, core_1.contractAddress)(workchain, init), init);
     }
     async sendDeploy(provider, via, value) {
         await provider.internal(via, {
             value,
-            sendMode: SendMode.PAY_GAS_SEPARATELY,
-            body: beginCell().endCell(),
+            sendMode: core_1.SendMode.PAY_GAS_SEPARATELY,
+            body: (0, core_1.beginCell)().endCell(),
         });
     }
     // Getters
@@ -97,7 +112,7 @@ export class Kick {
         return new Date(expirationTimestamp.toString());
     }
     async getBackerContract(provider, owner) {
-        const result = (await provider.get('get_backer_contract', [{ type: "slice", cell: beginCell().storeAddress(owner).endCell() }])).stack;
+        const result = (await provider.get('get_backer_contract', [{ type: "slice", cell: (0, core_1.beginCell)().storeAddress(owner).endCell() }])).stack;
         return result.readAddress();
     }
     async getTierData(provider) {
@@ -116,30 +131,23 @@ export class Kick {
     async sendResolve(provider, via, value, queryId) {
         await provider.internal(via, {
             value,
-            sendMode: SendMode.PAY_GAS_SEPARATELY,
-            body: beginCell().storeUint(1, 32).storeUint(queryId, 64).endCell()
+            sendMode: core_1.SendMode.PAY_GAS_SEPARATELY,
+            body: (0, core_1.beginCell)().storeUint(1, 32).storeUint(queryId, 64).endCell()
         });
     }
     async sendStartVote(provider, via, value, queryId) {
         await provider.internal(via, {
             value,
-            sendMode: SendMode.PAY_GAS_SEPARATELY,
-            body: beginCell().storeUint(2, 32).storeUint(queryId, 64).endCell()
-        });
-    }
-    async sendUsdtWallet(provider, via, value, queryId, usdt) {
-        await provider.internal(via, {
-            value,
-            sendMode: SendMode.PAY_GAS_SEPARATELY,
-            body: beginCell().storeUint(6, 32).storeUint(queryId, 64).storeAddress(usdt).endCell()
+            sendMode: core_1.SendMode.PAY_GAS_SEPARATELY,
+            body: (0, core_1.beginCell)().storeUint(2, 32).storeUint(queryId, 64).endCell()
         });
     }
     // Setters. ONLY FOR TESTING
     async sendTransfer(provider, via, value, backer, levelId, amount, jettonAmount) {
         await provider.internal(via, {
             value,
-            sendMode: SendMode.PAY_GAS_SEPARATELY,
-            body: beginCell()
+            sendMode: core_1.SendMode.PAY_GAS_SEPARATELY,
+            body: (0, core_1.beginCell)()
                 .storeUint(0x7362d09c, 32)
                 .storeUint(0n, 64)
                 .storeCoins(jettonAmount)
@@ -150,3 +158,4 @@ export class Kick {
         });
     }
 }
+exports.Kick = Kick;

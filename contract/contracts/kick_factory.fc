@@ -10,15 +10,16 @@
 
 int workchain() asm "0 PUSHINT";
 
-(cell, cell) load_data() inline {
+(cell, cell, slice) load_data() inline {
     slice ds = get_data().begin_parse();
     return (
-        ds~load_ref(), ;; kick code,
-        ds~load_ref()  ;; back code
+        ds~load_ref(),      ;; kick code,
+        ds~load_ref(),      ;; back code
+        ds~load_msg_addr()  ;; comission wallet
     );
 }
 
-cell pack_kick_data(int target, int expiration, int tier_number, slice creator, cell milestones, cell tiers, cell backer_code) inline {
+cell pack_kick_data(int target, int expiration, int tier_number, slice creator, slice comission_wallet, cell milestones, cell tiers, cell backer_code) inline {
     return begin_cell()
         .store_uint(0, 64)                  ;; collected
         .store_uint(target, 64)             ;; target
@@ -28,19 +29,22 @@ cell pack_kick_data(int target, int expiration, int tier_number, slice creator, 
         .store_uint(0, 1)                   ;; vote in progress
         .store_uint(0, 8)                   ;; vote number
         .store_uint(tier_number, 8)         ;; tier number
+        .store_uint(0, 1)                   ;; flag that usdt wallet address is not set
         .store_slice(creator)               ;; kick creator
         .store_ref(milestones)              ;; milestones
         .store_ref(tiers)                   ;; tiers
         .store_ref(backer_code)             ;; backer contract code
-        .store_ref(begin_cell().end_cell()) ;; usdt wallet, will be set later by creator
+        .store_ref(
+            begin_cell().store_slice(my_address()).store_slice(comission_wallet).end_cell()
+        )                                   ;; usdt wallet, will be set in a message as it is unknown at the moment of contract address calculation
         .end_cell();
 }
 
-cell calculate_kick_state_init(int target, int expiration, int tier_number, slice creator, cell milestones, cell tiers, cell backer_code, cell kick_code) inline {
+cell calculate_kick_state_init(int target, int expiration, int tier_number, slice creator, slice comission_wallet, cell milestones, cell tiers, cell backer_code, cell kick_code) inline {
     return begin_cell()
         .store_uint(0, 2) ;; TODO: learn what TickTock and split_depth is
         .store_dict(kick_code)
-        .store_dict(pack_kick_data(target, expiration, tier_number, creator, milestones, tiers, backer_code))
+        .store_dict(pack_kick_data(target, expiration, tier_number, creator, comission_wallet, milestones, tiers, backer_code))
         .store_uint(0, 1)
         .end_cell();
 }
@@ -54,8 +58,8 @@ slice calculate_kick_address(cell state_init) inline {
         .begin_parse();
 }
 
-slice calculate_user_kick_address(int target, int expiration, int tier_number, slice creator, cell milestones, cell tiers, cell backer_code, cell kick_code) inline {
-    return calculate_kick_address(calculate_kick_state_init(target, expiration, tier_number, creator, milestones, tiers, backer_code, kick_code));
+slice calculate_user_kick_address(int target, int expiration, int tier_number, slice creator, slice comission_wallet, cell milestones, cell tiers, cell backer_code, cell kick_code) inline {
+    return calculate_kick_address(calculate_kick_state_init(target, expiration, tier_number, creator, comission_wallet, milestones, tiers, backer_code, kick_code));
 }
 
 slice parse_sender_address (cell in_msg_full) inline {
@@ -72,6 +76,7 @@ slice parse_sender_address (cell in_msg_full) inline {
     int target = in_msg_body~load_uint(64);
     int expiration = in_msg_body~load_uint(64);
     int tier_number = in_msg_body~load_uint(8);
+    slice usdt_addr = in_msg_body~load_msg_addr();
     
     throw_if(301, in_msg_body.slice_refs_empty?() == -1);
     cell milestones = in_msg_body~load_ref();
@@ -88,12 +93,12 @@ slice parse_sender_address (cell in_msg_full) inline {
         part_sum = part_sum + next_part;
     }
 
-    (cell kick_code, cell backer_code) = load_data();
+    (cell kick_code, cell backer_code, slice comission_wallet) = load_data();
 
     throw_if(303, part_sum != 100);
     throw_if(304, expiration < now());
 
-    var state_init = calculate_kick_state_init(target,expiration,tier_number,creator,milestones,tiers,backer_code,kick_code);
+    var state_init = calculate_kick_state_init(target,expiration,tier_number,creator, comission_wallet,milestones,tiers,backer_code,kick_code);
     slice kick_wallet_address = calculate_kick_address(state_init);
 
     var msg = begin_cell()
@@ -102,13 +107,13 @@ slice parse_sender_address (cell in_msg_full) inline {
         .store_coins(0)
         .store_uint(4 + 2 + 1, 1 + 4 + 4 + 64 + 32 + 1 + 1 + 1)
         .store_ref(state_init)
-        .store_ref(begin_cell().end_cell())
+        .store_ref(begin_cell().store_uint(6, 32).store_uint(query_id, 64).store_slice(usdt_addr).end_cell())
         .end_cell();
 
     send_raw_message(msg,64);
 }
 
 slice get_kick_address(int target, int expiration, int tier_number, slice creator, cell milestones, cell tiers) method_id {
-    (cell kick_code, cell backer_code) = load_data();
-    return calculate_user_kick_address(target,expiration,tier_number,creator,milestones,tiers,backer_code,kick_code);
+    (cell kick_code, cell backer_code, slice comission) = load_data();
+    return calculate_user_kick_address(target,expiration,tier_number,creator,comission,milestones,tiers,backer_code,kick_code);
 }

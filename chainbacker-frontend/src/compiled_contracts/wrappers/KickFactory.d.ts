@@ -3,6 +3,7 @@ import { Milestone, Tier } from './models';
 export type KickFactoryConfig = {
     kickCode: Cell;
     backCode: Cell;
+    comissionWallet: Address;
 };
 export declare function kickFactoryConfigToCell(config: KickFactoryConfig): Cell;
 export declare class KickFactory implements Contract {
@@ -18,6 +19,6 @@ export declare class KickFactory implements Contract {
     static createFromAddress(address: Address): KickFactory;
     static createFromConfig(config: KickFactoryConfig, code: Cell, workchain?: number): KickFactory;
     sendDeploy(provider: ContractProvider, via: Sender, value: bigint): Promise<void>;
-    getKickContract(provider: ContractProvider, target: bigint, expiration: bigint, tier_number: bigint, creator: Address, milestones: Milestone[], tiers: Tier[]): Promise<Address>;
-    sendKick(provider: ContractProvider, via: Sender, value: bigint, queryId: bigint, target: bigint, expiration: bigint, tier_number: bigint, milestones: Milestone[], tiers: Tier[]): Promise<void>;
+    getKickContract(provider: ContractProvider, target: bigint, expiration: bigint, creator: Address, milestones: Milestone[], tiers: Tier[]): Promise<Address>;
+    sendKick(provider: ContractProvider, via: Sender, value: bigint, queryId: bigint, target: bigint, expiration: bigint, usdtWallet: Address, milestones: Milestone[], tiers: Tier[]): Promise<void>;
 }

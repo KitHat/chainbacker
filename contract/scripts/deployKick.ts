@@ -15,18 +15,16 @@ export async function run(provider: NetworkProvider) {
 
     const kickFactory = provider.open(KickFactory.createFromAddress(Address.parse("EQBk2uXgGwdFWCZQ1j5WvuEVTIUSbD6vEtc9suHKpBZzhOji")));
 
-    await kickFactory.sendKick(provider.sender(), toNano('0.1'), 999n, target, expiration, 1n, [{ part: 100n }], [{ amount: 1000n, price: 100000n }]);
-
-    let kickAddress = await kickFactory.getKickContract(target, expiration, 1n, addr, [{ part: 100n }], [{ amount: 1000n, price: 100000n }]);
-
-    const reputation = provider.open(Kick.createFromAddress(kickAddress));
+    let kickAddress = await kickFactory.getKickContract(target, expiration, addr, [{ part: 100n }], [{ amount: 1000n, price: 100000n }]);
 
     // that's our jetton for testing
     const usdtMaster = provider.open(JettonMinter.createFromAddress(Address.parse("kQAMGZKPIODMJq4UV3glLkLA60D1qEHfCuCbkKhwYX2DKLBa")));
 
     const kickUsdtAddr = await usdtMaster.getWalletAddress(kickAddress);
 
-    let res = await reputation.sendUsdtWallet(provider.sender(), toNano('0.05'), 2n, kickUsdtAddr);
+    await kickFactory.sendKick(provider.sender(), toNano('0.1'), 999n, target, expiration, kickUsdtAddr, [{ part: 100n }], [{ amount: 1000n, price: 100000n }]);
+
+    const reputation = provider.open(Kick.createFromAddress(kickAddress));
 
     // TODO: send method
 }

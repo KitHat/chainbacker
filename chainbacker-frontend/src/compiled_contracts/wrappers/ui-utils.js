@@ -2,6 +2,7 @@
 // import { sleep, NetworkProvider, UIProvider } from '@ton/blueprint';
 // import { Address, beginCell, Builder, Cell, Dictionary, DictionaryValue, Slice } from "@ton/core";
 // import { sha256 } from 'ton-crypto';
+Object.defineProperty(exports, "__esModule", { value: true });
 // export const defaultJettonKeys = ["uri", "name", "description", "image", "image_data", "symbol", "decimals", "amount_style"];
 // export const defaultNftKeys = ["uri", "name", "description", "image", "image_data"];
 // export const promptBool = async (prompt: string, options: [string, string], ui: UIProvider, choice: boolean = false) => {
