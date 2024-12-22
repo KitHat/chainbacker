@@ -1,15 +1,17 @@
-import { Address, beginCell, Cell, Contract, contractAddress, ContractProvider, Sender, SendMode, TupleItemCell, TupleItemSlice } from '@ton/core';
+import { Address, beginCell, Cell, Contract, contractAddress, ContractProvider, Sender, SendMode, Slice, TupleItemCell, TupleItemSlice } from '@ton/core';
 import { CollectState, Milestone, Tier, VoteState } from './models';
 
 export type KickFactoryConfig = {
     kickCode: Cell,
-    backCode: Cell
+    backCode: Cell,
+    comissionWallet: Address
 };
 
 export function kickFactoryConfigToCell(config: KickFactoryConfig): Cell {
     return beginCell()
         .storeRef(config.kickCode)
         .storeRef(config.backCode)
+        .storeAddress(config.comissionWallet)
         .endCell();
 }
 
@@ -35,7 +37,7 @@ export class KickFactory implements Contract {
     }
 
     // Getters
-    async getKickContract(provider: ContractProvider, target: bigint, expiration: bigint, tier_number: bigint, creator: Address, milestones: Milestone[], tiers: Tier[]): Promise<Address> {
+    async getKickContract(provider: ContractProvider, target: bigint, expiration: bigint, creator: Address, milestones: Milestone[], tiers: Tier[]): Promise<Address> {
         let milestoneCell = beginCell();
         for (const m of milestones) {
             milestoneCell = milestoneCell.storeUint(m.part, 8);
@@ -47,7 +49,7 @@ export class KickFactory implements Contract {
         const result = (await provider.get('get_kick_address', [
             { type: "int", value: target },
             { type: "int", value: expiration },
-            { type: "int", value: tier_number },
+            { type: "int", value: BigInt(tiers.length) },
             { type: "slice", cell: beginCell().storeAddress(creator).endCell() },
             { type: "cell", cell: milestoneCell.endCell() },
             { type: "cell", cell: tierCell.endCell() },
@@ -56,7 +58,7 @@ export class KickFactory implements Contract {
     }
 
     // Setters. 
-    async sendKick(provider: ContractProvider, via: Sender, value: bigint, queryId: bigint, target: bigint, expiration: bigint, tier_number: bigint, milestones: Milestone[], tiers: Tier[]) {
+    async sendKick(provider: ContractProvider, via: Sender, value: bigint, queryId: bigint, target: bigint, expiration: bigint, usdtWallet: Address, milestones: Milestone[], tiers: Tier[]) {
         let milestoneCell = beginCell();
         for (const m of milestones) {
             milestoneCell = milestoneCell.storeUint(m.part, 8);
@@ -68,7 +70,15 @@ export class KickFactory implements Contract {
         await provider.internal(via, {
             value,
             sendMode: SendMode.PAY_GAS_SEPARATELY,
-            body: beginCell().storeUint(queryId, 64).storeUint(target, 64).storeUint(expiration, 64).storeUint(tier_number, 8).storeRef(milestoneCell.endCell()).storeRef(tierCell.endCell()).endCell()
+            body: beginCell()
+                .storeUint(queryId, 64)
+                .storeUint(target, 64)
+                .storeUint(expiration, 64)
+                .storeUint(tiers.length, 8)
+                .storeAddress(usdtWallet)
+                .storeRef(milestoneCell.endCell())
+                .storeRef(tierCell.endCell())
+                .endCell()
         })
     }
 

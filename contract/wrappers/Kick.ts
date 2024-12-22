@@ -7,7 +7,9 @@ export type KickConfig = {
     creator: Address,
     milestones: Milestone[],
     tiers: Tier[],
-    code: Cell
+    code: Cell,
+    usdtWallet: Address,
+    comissionWallet: Address
 };
 
 export function kickConfigToCell(config: KickConfig): Cell {
@@ -28,10 +30,17 @@ export function kickConfigToCell(config: KickConfig): Cell {
         .storeUint(0, 1)
         .storeUint(0, 8)
         .storeUint(config.tiers.length, 8)
+        .storeUint(1, 1)
         .storeAddress(config.creator)
         .storeRef(milestones.endCell())
         .storeRef(tiers.endCell())
         .storeRef(config.code)
+        .storeRef(
+            beginCell()
+                .storeAddress(config.usdtWallet)
+                .storeAddress(config.comissionWallet)
+                .endCell()
+        )
         .endCell();
 }
 
@@ -43,7 +52,9 @@ export type KickConfigFull = {
     milestones: Milestone[],
     tiers: Tier[],
     code: Cell,
-    collected: bigint
+    collected: bigint,
+    usdtWallet: Address,
+    comissionWallet: Address
 };
 
 // TEST-ONLY CONFIGS
@@ -65,10 +76,17 @@ export function kickConfigToCellFull(config: KickConfigFull): Cell {
         .storeUint(0, 1)
         .storeUint(0, 8)
         .storeUint(config.tiers.length, 8)
+        .storeUint(1, 1)
         .storeAddress(config.creator)
         .storeRef(milestones.endCell())
         .storeRef(tiers.endCell())
         .storeRef(config.code)
+        .storeRef(
+            beginCell()
+                .storeAddress(config.usdtWallet)
+                .storeAddress(config.comissionWallet)
+                .endCell()
+        )
         .endCell();
 }
 
@@ -158,14 +176,6 @@ export class Kick implements Contract {
             value,
             sendMode: SendMode.PAY_GAS_SEPARATELY,
             body: beginCell().storeUint(2, 32).storeUint(queryId, 64).endCell()
-        })
-    }
-
-    async sendUsdtWallet(provider: ContractProvider, via: Sender, value: bigint, queryId: bigint, usdt: Address) {
-        await provider.internal(via, {
-            value,
-            sendMode: SendMode.PAY_GAS_SEPARATELY,
-            body: beginCell().storeUint(6, 32).storeUint(queryId, 64).storeAddress(usdt).endCell()
         })
     }
 

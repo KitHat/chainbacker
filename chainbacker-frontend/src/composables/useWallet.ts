@@ -15,7 +15,9 @@ export function useWallet() {
         return new TonClient({ endpoint })
     }
     const initUserWallet = async () => {
+        console.log("initializing user wallet");
         wallet.value = unref(useTonWallet())
+        console.log(wallet.value)
 
         client.value = await getClient()
     }

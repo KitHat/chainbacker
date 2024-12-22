@@ -10,7 +10,7 @@ export async function run(provider: NetworkProvider) {
     }
     let backCode = await compile("Backer");
     let kickCode = await compile("Kick");
-    const kickFactory = provider.open(KickFactory.createFromConfig({ kickCode, backCode }, await compile('KickFactory')));
+    const kickFactory = provider.open(KickFactory.createFromConfig({ kickCode, backCode, comissionWallet: addr }, await compile('KickFactory')));
 
     await kickFactory.sendDeploy(provider.sender(), toNano('0.1'));
 
