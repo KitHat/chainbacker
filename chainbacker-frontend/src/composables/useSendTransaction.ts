@@ -1,6 +1,6 @@
 import { useWallet } from "@/composables/useWallet.ts";
 
-import {JettonMinter} from "@/compiled_contracts/wrappers/JettonMinter";
+import { JettonMinter } from "@/compiled_contracts/wrappers/JettonMinter";
 import { Address, beginCell, Cell, toNano } from "@ton/core";
 import {useCustomFetch} from "@/composables/useCustomFetch.ts";
 import {Endpoints} from "@/constants/endpoints.ts";
@@ -10,7 +10,7 @@ import { useTonConnect } from "./useTonConnectUI";
 import { JettonWallet } from "@/compiled_contracts/wrappers/JettonWallet";
 
 export const useSendTransaction = () => {
-    const { walletAddress, client, wallet } = useWallet();
+    const { walletAddress, client } = useWallet();
 
     const { sender } = useTonConnect();
 

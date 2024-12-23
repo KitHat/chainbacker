@@ -1,30 +1,26 @@
 <template>
   <section>
     <section>
-      <div class="pb-8 pt-8
-    ml-[-22px]
-    mr-[-28px]
-    pl-[22px]
-    pr-[24px]
-    overflow-scroll
-    gap-1
-    flex flex-nowrap grow whitespace-nowrap no-scrollbar sticky top-0 z-50">
-        <Tag v-for="chip in CHIPS_FILTER_MOCK"  :value="chip" :severity="'success'" />
+      <div class="pb-8 pt-8 ml-[-22px] mr-[-28px] pl-[22px] pr-[24px] overflow-scroll gap-1 flex flex-nowrap grow whitespace-nowrap no-scrollbar sticky top-0 z-50">
+        <Tag v-for="chip in CHIPS_FILTER_MOCK" :key="chip" :value="chip" :severity="'success'" />
       </div>
       <section class="mb-5 -mx-2">
-        <Carousel :value="CARDS_MOCK"
-                  :num-visible="1"
-                  circular
-                  :indicators-content-class="null"
-                  :show-indicators="false"
-                  :show-navigators="false"
-                  :autoplay-interval="5000"
+        <Carousel 
+          :value="kicks"
+          :num-visible="1"
+          circular
+          :indicators-content-class="null"
+          :show-indicators="false"
+          :show-navigators="false"
+          :autoplay-interval="5000"
         >
           <template #item="{ data }">
-            <router-link :to="{ name: 'ProjectPage', params: {  id: data.id } }">
-              <Card class="m-2"
-                    v-bind="data"
-                    :key="data.id" />
+            <router-link :to="{ name: 'ProjectPage', params: { id: data.id } }">
+              <Card 
+                class="m-2"
+                v-bind="data"
+                :key="data.id" 
+              />
             </router-link>
           </template>
         </Carousel>
@@ -37,16 +33,20 @@
         Detonate soon
       </h2>
       <section class="mb-8">
-        <Carousel :value="CARDS_MOCK.slice(Math.max(CARDS_MOCK.length - 5, 1))" :num-visible="2"
-                  :indicators-content-class="null"
-                  :show-indicators="false"
-                  :show-navigators="false"
+        <Carousel 
+          :value="kicks.slice(Math.max(kicks.length - 5, 1))" 
+          :num-visible="2"
+          :indicators-content-class="null"
+          :show-indicators="false"
+          :show-navigators="false"
         >
           <template #item="{ data }">
-            <router-link :to="{ name: 'ProjectPage', params: {  id: data.id } }">
-              <DetonateCard class="m-2"
-                    v-bind="data"
-                    :key="data.id" />
+            <router-link :to="{ name: 'ProjectPage', params: { id: data.id } }">
+              <DetonateCard 
+                class="m-2"
+                v-bind="data"
+                :key="data.id" 
+              />
             </router-link>
           </template>
         </Carousel>
@@ -59,39 +59,60 @@
       </section>
     </section>
     <section></section>
-   </section>
+  </section>
 </template>
 
 <script setup lang="ts">
-import {onMounted} from "vue";
+import { onMounted, ref } from "vue";
 import Tag from 'primevue/tag';
 import Card from "@/components/Card.vue";
 import Carousel from 'primevue/carousel';
 import MostActiveKick from "@/components/MostActiveKick.vue";
 import DetonateCard from "@/components/DetonateCard.vue";
-import { CARDS_MOCK } from "@/mocks/mocks.ts";
-import { useCustomFetch } from "@/composables/useCustomFetch.ts";
-import { Endpoints } from "@/constants/endpoints.ts";
+import { useCustomFetch } from "@/composables/useCustomFetch";
+import { Endpoints } from "@/constants/endpoints";
 
-const CHIPS_FILTER_MOCK = ['Art & Design',
+const CHIPS_FILTER_MOCK = [
+  'Art & Design',
   'Technology & Gadgets',
   'Games (Board Games, Video Games)',
   'Film & Video',
   'Music & Performance'
-]
+];
 
-// const kicks = reactive([])
+const CAT_MAPPING = new Map<string, string>([
+  ['art', 'Art & Design'],
+  ['tech', 'Technology & Gadgets']
+])
+
+const kicks = ref<any[]>([]);
 
 onMounted(async () => {
-  await useCustomFetch(Endpoints.KICKS).get().json()
+  try {
+    const response = await useCustomFetch(Endpoints.KICKS).get();
+    const data = await response.json().data.value;
 
-  // if (data) {
-    // kicks.push()
-  // }
-})
-
+    console.log(data);
+    
+    if (data.success) {
+      kicks.value.push(data.result.map((item: any) => {
+        return {
+          id: item.address,
+          titile: item.title,
+          raisedSum: item.raisedSum,
+          totalSum: item.totalSum,
+          backersCounter: 452, // TODO: calculate on backend
+          daysLeft: Math.floor((item.expirationDate - Date.now() / 1000) / 86400),
+          type: CAT_MAPPING.get(item.type),
+          tiers: item.tiers
+        };
+      }));
+    }
+  } catch (error) {
+    console.error('Error fetching kicks:', error);
+  }
+});
 </script>
 
 <style scoped>
-
 </style>

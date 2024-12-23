@@ -2,7 +2,7 @@ import { Sender, SenderArguments } from '@ton/core';
 import { useTonConnectUI } from '@townsquarelabs/ui-vue';
 
 export function useTonConnect(): { sender: Sender; connected: boolean } {
-    const { tonConnectUI, setOptions } = useTonConnectUI();
+    const { tonConnectUI } = useTonConnectUI();
 
     return {
         sender: {

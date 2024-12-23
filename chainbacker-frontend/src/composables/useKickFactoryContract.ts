@@ -1,7 +1,8 @@
-import { KickFactory } from "@/compiled_contracts/wrappers/KickFactory";
+// import { KickFactory } from ;  // Remove the .js extension
 import { useAsyncInitialize } from "./useAsyncInitialize";
 import { Address } from "@ton/core";
 import { useWallet } from "./useWallet";
+import { KickFactory } from "@/compiled_contracts/wrappers/KickFactory";
 
 export function useKickFactoryContract() {
     const { client } = useWallet();
