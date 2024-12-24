@@ -1,3 +1,4 @@
 export const Endpoints = {
-    KICKS: 'kicks'
+    KICKS: 'kicks',
+    KICK: (id: string | string[]) => `kicks/${id}`
 }

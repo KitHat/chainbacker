@@ -2,7 +2,7 @@
   <section>
     <div class="mt-[-20px] mr-[-28px] ml-[-28px] relative">
       <img :style="{ width: 'calc(100% + 120px)' }" class="block aspect-[4/3]  mb-2 absolute top-0 left-0 invisible" src="@/assets/images.jpeg" alt="">
-      <img :style="{ width: 'calc(100% + 120px)' }" class="block aspect-[4/3]  mb-2" :src="currentProject.img" alt="">
+      <img :style="{ width: 'calc(100% + 120px)' }" class="block aspect-[4/3]  mb-2" :src="currentProject.file" alt="">
     </div>
     <p class="mb-5 p-card-title">{{ currentProject.title }}</p>
     <section class="mb-5 flex justify-between">
@@ -62,16 +62,26 @@ import ProgressBar from 'primevue/progressbar';
 import Chip from "primevue/chip";
 import ClockIcon from "@/components/icons/ClockIcon.vue";
 import {Divider} from "primevue";
-import {computed, ref} from "vue";
+import {computed, onBeforeMount, ref} from "vue";
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
-import { CARDS_MOCK } from "@/mocks/mocks.ts";
 import { useRoute } from "vue-router";
 import KickStageBlock from "@/components/KickStageBlock.vue";
+import {useCustomFetch} from "@/composables/useCustomFetch.ts";
+import {Endpoints} from "@/constants/endpoints.ts";
+import {transformKick} from "@/composables/useKickTransformer.ts";
 
 const route = useRoute()
 
-const currentProject = ref(CARDS_MOCK.find(item => item.id === Number(route.params.id)) as typeof CARDS_MOCK[0])
+const currentProject = ref<any | null>()
+
+onBeforeMount(async () => {
+  const response = await useCustomFetch(Endpoints.KICK(route.params.id)).get().json();
+
+  if (response.data.value.success) {
+    currentProject.value = transformKick(response.data.value.result)
+  }
+})
 
 const progress = computed(() => (currentProject.value.raisedSum / currentProject.value.totalSum) * 100)
 </script>

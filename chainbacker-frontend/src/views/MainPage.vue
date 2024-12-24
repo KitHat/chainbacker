@@ -5,7 +5,7 @@
         <Tag v-for="chip in CHIPS_FILTER_MOCK" :key="chip" :value="chip" :severity="'success'" />
       </div>
       <section class="mb-5 -mx-2">
-        <Carousel 
+        <Carousel
           :value="kicks"
           :num-visible="1"
           circular
@@ -16,10 +16,10 @@
         >
           <template #item="{ data }">
             <router-link :to="{ name: 'ProjectPage', params: { id: data.id } }">
-              <Card 
+              <Card
                 class="m-2"
                 v-bind="data"
-                :key="data.id" 
+                :key="data.id"
               />
             </router-link>
           </template>
@@ -33,8 +33,8 @@
         Detonate soon
       </h2>
       <section class="mb-8">
-        <Carousel 
-          :value="kicks.slice(Math.max(kicks.length - 5, 1))" 
+        <Carousel
+          :value="kicks.slice(Math.max(kicks.length - 5, 1))"
           :num-visible="2"
           :indicators-content-class="null"
           :show-indicators="false"
@@ -42,10 +42,10 @@
         >
           <template #item="{ data }">
             <router-link :to="{ name: 'ProjectPage', params: { id: data.id } }">
-              <DetonateCard 
+              <DetonateCard
                 class="m-2"
                 v-bind="data"
-                :key="data.id" 
+                :key="data.id"
               />
             </router-link>
           </template>
@@ -71,6 +71,7 @@ import MostActiveKick from "@/components/MostActiveKick.vue";
 import DetonateCard from "@/components/DetonateCard.vue";
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import { Endpoints } from "@/constants/endpoints";
+import {transformKick} from "@/composables/useKickTransformer.ts";
 
 const CHIPS_FILTER_MOCK = [
   'Art & Design',
@@ -80,34 +81,31 @@ const CHIPS_FILTER_MOCK = [
   'Music & Performance'
 ];
 
-const CAT_MAPPING = new Map<string, string>([
-  ['art', 'Art & Design'],
-  ['tech', 'Technology & Gadgets']
-])
-
 const kicks = ref<any[]>([]);
 
 onMounted(async () => {
   try {
-    const response = await useCustomFetch(Endpoints.KICKS).get();
-    const data = await response.json().data.value;
+    const response = await useCustomFetch(Endpoints.KICKS).get().json();
 
-    console.log(data);
-    
-    if (data.success) {
-      kicks.value.push(data.result.map((item: any) => {
-        return {
-          id: item.address,
-          titile: item.title,
-          raisedSum: item.raisedSum,
-          totalSum: item.totalSum,
-          backersCounter: 452, // TODO: calculate on backend
-          daysLeft: Math.floor((item.expirationDate - Date.now() / 1000) / 86400),
-          type: CAT_MAPPING.get(item.type),
-          tiers: item.tiers
-        };
-      }));
+    if (response.data.value.success) {
+      kicks.value.push(...response.data.value.result.map((item: any) => transformKick(item)));
     }
+    // else {
+    //   kicks.value.push(...[KICK_REAL_MOCK].map((item: any) => {
+    //     return {
+    //       id: item._id,
+    //       title: item.title,
+    //       status: item.stage,
+    //       description: item.description,
+    //       raisedSum: item.raisedSum,
+    //       totalSum: item.totalSum,
+    //       backersCounter: 452, // TODO: calculate on backend
+    //       daysLeft: Math.floor((item.expirationDate - Date.now() / 1000) / 86400),
+    //       type: CAT_MAPPING.get(item.type),
+    //       tiers: item.tiers
+    //     };
+    //   }))
+    // }
   } catch (error) {
     console.error('Error fetching kicks:', error);
   }

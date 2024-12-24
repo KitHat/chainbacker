@@ -15,11 +15,11 @@ RUN npm install
 # Copy app source code
 COPY . .
 
-# Copy .env file if it exists (commented out by default for security)
+# Copy .env.development file if it exists (commented out by default for security)
 COPY .env .env
 
-# Create .env file from environment variables if needed
-# RUN touch .env
+# Create .env.development file from environment variables if needed
+# RUN touch .env.development
 
 # Expose the port your app runs on
 EXPOSE 3000
